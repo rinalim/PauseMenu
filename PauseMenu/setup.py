@@ -146,5 +146,5 @@ while event == -1:
             event = -1
     time.sleep(0.1)
 
-f.write(axis_up + "\n" + axis_down + "\n" + btn_select + "\n" + btn_start)
+f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
 f.close()
