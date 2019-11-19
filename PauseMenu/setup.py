@@ -111,39 +111,35 @@ f = open(PATH_PAUSEMENU + "button.cfg", 'w')
 js_devs, js_fds = open_devices()
 
 print "Move a lever for UP"
-while event == -1:
+while axis_up == -1:
     for fd in js_fds:
         event = read_event(fd)
         if event:
             axis_up = process_event(event)
-            event = -1
     time.sleep(0.1)
     
 print "Move a lever for DOWN"
-while event == -1:
+while axis_down == -1:
     for fd in js_fds:
         event = read_event(fd)
         if event:
             axis_down = process_event(event)
-            event = -1
     time.sleep(0.1)
 
 print "Push a button for SELECT"
-while event == -1:
+while btn_select == -1:
     for fd in js_fds:
         event = read_event(fd)
         if event:
             btn_select = process_event(event)
-            event = -1
     time.sleep(0.1)
 
 print "Push a button for START"
-while event == -1:
+while btn_start == -1:
     for fd in js_fds:
         event = read_event(fd)
         if event:
             btn_start = process_event(event)
-            event = -1
     time.sleep(0.1)
 
 f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
