@@ -91,10 +91,10 @@ def process_event(event):
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 print ">> axis:", str(js_number)+":2"
-                return str(js_number)+":2
+                return str(js_number)+":2"
             if js_value >= JS_MAX * JS_THRESH:
                 print ">> axis:", str(js_number)+":3"
-                return str(js_number)+":3
+                return str(js_number)+":3"
     
     if js_type == JS_EVENT_BUTTON and js_value == 1:
         print ">> button index:", js_number
