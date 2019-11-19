@@ -80,24 +80,25 @@ def process_event(event):
     if js_type & JS_EVENT_INIT:
         return -1
 
-    hex_chars = ""
     if js_type == JS_EVENT_AXIS and js_number <= 7:
         if js_number % 2 == 0:
             if js_value <= JS_MIN * JS_THRESH:
-                hex_chars = axis_codes[0]
+                print ">> axis:", str(js_number)+":0"
+                return str(js_number)+":0"
             if js_value >= JS_MAX * JS_THRESH:
-                hex_chars = axis_codes[1]
+                print ">> axis:", str(js_number)+":1"
+                return str(js_number)+":1"
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
-                hex_chars = axis_codes[2]
+                print ">> axis:", str(js_number)+":2"
+                return str(js_number)+":2
             if js_value >= JS_MAX * JS_THRESH:
-                hex_chars = axis_codes[3]
-        print ">> axis:", hex_chars
-        return hex_chars
+                print ">> axis:", str(js_number)+":3"
+                return str(js_number)+":3
     
     if js_type == JS_EVENT_BUTTON and js_value == 1:
         print ">> button index:", js_number
-        return js_number
+        return str(js_number)
 
     return -1
 
@@ -145,5 +146,5 @@ while event == -1:
             event = -1
     time.sleep(0.1)
 
-f.write(axis_up + "\n" + axis_down + "\n" + str(btn_select) + "\n" + str(btn_start))
+f.write(axis_up + "\n" + axis_down + "\n" + btn_select + "\n" + btn_start)
 f.close()
