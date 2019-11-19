@@ -92,6 +92,8 @@ def process_event(event):
                 hex_chars = axis_codes[2]
             if js_value >= JS_MAX * JS_THRESH:
                 hex_chars = axis_codes[3]
+        print ">> axis:", hex_chars
+        return hex_chars
     
     if js_type == JS_EVENT_BUTTON and js_value == 1:
         print ">> button index:", js_number
