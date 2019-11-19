@@ -84,26 +84,26 @@ def process_event(event):
         if js_number % 2 == 0:
             if js_value <= JS_MIN * JS_THRESH:
                 print ">> axis:", str(js_number)+":0"
-                return str(js_number)+":0"
+                return js_number*10
             if js_value >= JS_MAX * JS_THRESH:
                 print ">> axis:", str(js_number)+":1"
-                return str(js_number)+":1"
+                return js_number*10+1
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 print ">> axis:", str(js_number)+":2"
-                return str(js_number)+":2"
+                return js_number*10+3
             if js_value >= JS_MAX * JS_THRESH:
                 print ">> axis:", str(js_number)+":3"
-                return str(js_number)+":3"
+                return js_number*10+4
     
     if js_type == JS_EVENT_BUTTON and js_value == 1:
         print ">> button index:", js_number
-        return str(js_number)
+        return js_number
 
     return -1
 
-axis_up = ""
-axis_down = ""
+axis_up = -1
+axis_down = -1
 btn_select = -1
 btn_start = -1
 event = -1
