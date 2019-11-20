@@ -26,7 +26,7 @@ JS_EVENT_INIT = 0x80
 CONFIG_DIR = '/opt/retropie/configs/all/'
 RETROARCH_CFG = CONFIG_DIR + 'retroarch.cfg'
 PATH_VOLUMEJOY = '/opt/retropie/configs/all/VolumeJoy/'	
-VIEWER = "/opt/retropie/configs/all/PauseMenu/omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 10 -l 30001 -a center &"
+VIEWER = "/opt/retropie/configs/all/PauseMenu/omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 100 -l 30001 -a center &"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
@@ -116,11 +116,13 @@ def process_event(event):
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 print "Up pushed"
-                if PAUSE_MODE_ON == True and UP_DOWN_ON == True: 
+                if PAUSE_MODE_ON == True:
+                    UP_DOWN_ON = True: 
                     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
             if js_value >= JS_MAX * JS_THRESH:
                 print "Down pushed"
-                if PAUSE_MODE_ON == True and UP_DOWN_ON == False: 
+                if PAUSE_MODE_ON == True:
+                    UP_DOWN_ON = False: 
                     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
     
     if js_type == JS_EVENT_BUTTON:
