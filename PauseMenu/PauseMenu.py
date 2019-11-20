@@ -162,6 +162,7 @@ def process_event(event):
                 START_BTN_ON = False;
                 os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
                 os.system(VIEWER)
+                os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &");
     
     return True
 
