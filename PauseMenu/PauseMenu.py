@@ -38,6 +38,7 @@ event_size = struct.calcsize(event_format)
 js_fds = []
 btn_select = -1
 btn_start = -1
+btn_a = -1
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
