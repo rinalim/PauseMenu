@@ -133,6 +133,7 @@ def process_event(event):
                     print "Resume"
                     os.system("killall omxiv-pause")
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                    PAUSE_MODE_ON = False
                 if PAUSE_MODE_ON == True and UP_DOWN_ON == False:
                     print "Kill"
                     os.system("killall omxiv-pause")
