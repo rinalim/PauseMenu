@@ -32,8 +32,8 @@ START_BTN_ON = False
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
 js_fds = []
-btn_up = -1
-btn_down = -1
+btn_select = -1
+btn_start = -1
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
@@ -115,19 +115,19 @@ def process_event(event):
     
     if js_type == JS_EVENT_BUTTON:
         if js_value == 1:
-            if js_number == btn_down:
+            if js_number == btn_select:
                 SELECT_BTN_ON = True
                 print "Select pushed"
-            elif js_number == btn_up:
+            elif js_number == btn_start:
                 START_BTN_ON = True
                 print "Start pushed"
             else:
                 return False
         elif js_value == 0:
-            if js_number == btn_down:
+            if js_number == btn_select:
                 SELECT_BTN_ON = False
                 print "Select released"
-            elif js_number == btn_up:
+            elif js_number == btn_start:
                 START_BTN_ON = False
                 print "Start released"
             else:
