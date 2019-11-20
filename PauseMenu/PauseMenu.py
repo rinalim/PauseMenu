@@ -23,13 +23,15 @@ JS_EVENT_BUTTON = 0x01
 JS_EVENT_AXIS = 0x02
 JS_EVENT_INIT = 0x80
 
-CONFIG_DIR = '/opt/retropie/configs/'
-RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
+CONFIG_DIR = '/opt/retropie/configs/all/'
+RETROARCH_CFG = CONFIG_DIR + 'retroarch.cfg'
 PATH_VOLUMEJOY = '/opt/retropie/configs/all/VolumeJoy/'	
 VIEWER = "/opt/retropie/configs/all/PauseMenu/omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 10 -l 30001 -a center &"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
+PAUSE_MODE_ON = False
+UP_DOWN_ON = False
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
@@ -96,6 +98,8 @@ def process_event(event):
 
     global SELECT_BTN_ON
     global START_BTN_ON
+    global PAUSE_MODE_ON
+    global UP_DOWN_ON
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
@@ -112,8 +116,12 @@ def process_event(event):
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 print "Up pushed"
+                if PAUSE_MODE_ON == True and UP_DOWN_ON == True: 
+                    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
             if js_value >= JS_MAX * JS_THRESH:
                 print "Down pushed"
+                if PAUSE_MODE_ON == True and UP_DOWN_ON == False: 
+                    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
     
     if js_type == JS_EVENT_BUTTON:
         if js_value == 1:
@@ -132,9 +140,14 @@ def process_event(event):
                 return False
         
         if SELECT_BTN_ON == True and START_BTN_ON == True:
-            print "Select+Start Pushed"
-            os.system("echo /opt/retropie/configs/all/PauseMenu/pause_resume.png > /tmp/pause.txt")
-            os.system(VIEWER)
+            if PAUSE_MODE_ON == False:
+                print "Select+Start Pushed"
+                PAUSE_MODE_ON = 1;
+                UP_DOWN_ON = 1;	// up
+                SELECT_BTN_ON = 0;
+                START_BTN_ON = 0;
+                os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+                os.system(VIEWER)
     
     return True
 
