@@ -26,6 +26,9 @@ CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_VOLUMEJOY = '/opt/retropie/configs/all/VolumeJoy/'	
 
+SELECT_BTN_ON = False
+START_BTN_ON = False
+
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
 js_fds = []
@@ -89,6 +92,9 @@ def read_event(fd):
 
 def process_event(event):
 
+    global SELECT_BTN_ON
+    global START_BTN_ON
+    
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
     # ignore init events
@@ -107,18 +113,30 @@ def process_event(event):
             if js_value >= JS_MAX * JS_THRESH:
                 print "Down pushed"
     
-    if js_type == JS_EVENT_BUTTON and js_value == 1:
-        if js_number == btn_down:
-            print "Select pushed"
-        elif js_number == btn_up:
-            print "Start pushed"
+    if js_type == JS_EVENT_BUTTON:
+        if js_value == 1:
+            if js_number == btn_down:
+                SELECT_BTN_ON = True
+            elif js_number == btn_up:
+                START_BTN_ON = True
+            else:
+                return False
         else:
-            return False
+            if js_number == btn_down:
+                SELECT_BTN_ON = False
+            elif js_number == btn_up:
+                START_BTN_ON = False
+            else:
+                return False
+        
+        if SELECT_BTN_ON == True and START_BTN_ON == True:
+            print "Select+Start Pushed"
+    
     return True
 
 def main():
     
-    global btn_up, btn_down
+    global btn_select, btn_start
     
     if os.path.isfile(PATH_VOLUMEJOY + "button.cfg") == False:
         return False
@@ -126,8 +144,8 @@ def main():
     f = open(PATH_VOLUMEJOY + "button.cfg", 'r')
     line = f.readline()
     words = line.split()
-    btn_up = int(words[0])
-    btn_down = int(words[1])
+    btn_select = int(words[0])
+    btn_start = int(words[1])
 
     js_fds=[]
     rescan_time = time.time()
