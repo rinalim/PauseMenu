@@ -25,7 +25,7 @@ JS_EVENT_INIT = 0x80
 
 CONFIG_DIR = '/opt/retropie/configs/all/'
 RETROARCH_CFG = CONFIG_DIR + 'retroarch.cfg'
-PATH_VOLUMEJOY = '/opt/retropie/configs/all/PauseMenu/'	
+PATH_PAUSEMENU = '/opt/retropie/configs/all/PauseMenu/'	
 VIEWER = "/opt/retropie/configs/all/PauseMenu/omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center &"
 
 SELECT_BTN_ON = False
@@ -161,17 +161,17 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start
+    global btn_select, btn_start, btn_a
     
-    if os.path.isfile(PATH_VOLUMEJOY + "button.cfg") == False:
+    if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
    
-    f = open(PATH_VOLUMEJOY + "button.cfg", 'r')
+    f = open(PATH_PAUSEMENU + "button.cfg", 'r')
     line = f.readline()
     words = line.split()
     btn_select = int(words[0])
     btn_start = int(words[1])
-    btn_ = int(words[2])
+    btn_a = int(words[2])
 
     js_fds=[]
     rescan_time = time.time()
