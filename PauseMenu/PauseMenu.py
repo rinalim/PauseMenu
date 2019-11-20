@@ -120,6 +120,7 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     UP_DOWN_ON = True 
                     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+					PAUSE_MODE_ON = True
             if js_value >= JS_MAX * JS_THRESH:
                 print "Down pushed"
                 if PAUSE_MODE_ON == True:
@@ -131,8 +132,13 @@ def process_event(event):
             if js_number == btn_a:
                 if PAUSE_MODE_ON == True and UP_DOWN_ON == True:
                     print "Resume"
+                    os.system("killall omxiv-pause")
+                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                 if PAUSE_MODE_ON == True and UP_DOWN_ON == False:
                     print "Kill"
+                    os.system("killall omxiv-pause")
+                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
+                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
