@@ -117,15 +117,19 @@ def process_event(event):
         if js_value == 1:
             if js_number == btn_down:
                 SELECT_BTN_ON = True
+                print "Select pushed"
             elif js_number == btn_up:
                 START_BTN_ON = True
+                print "Start pushed"
             else:
                 return False
-        else:
+        elif js_value == 0:
             if js_number == btn_down:
                 SELECT_BTN_ON = False
+                print "Select released"
             elif js_number == btn_up:
                 START_BTN_ON = False
+                print "Start released"
             else:
                 return False
         
