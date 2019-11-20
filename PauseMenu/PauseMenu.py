@@ -100,28 +100,12 @@ def process_event(event):
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         #print vol
 
-        vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         if js_number == btn_down:
-            vol = (vol/6-1)*6+4
-            if vol < 5:
-                vol = 0
-            #print "Decrease volume... " + str(vol)
+            print "Select pushed"
         elif js_number == btn_up:
-            vol = (vol/6+1)*6+4
-            if vol > 95:
-                vol = 100
-            #print "Increase volume... " + str(vol)
+            print "Start pushed"
         else:
             return False
- 
-        #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
-        run_cmd("amixer set PCM -- " + str(vol) + "%")
-        #lines = run_cmd("ps -aux | grep pngvolume").splitlines()
-        #if len(lines) > 2:
-        #    run_cmd("killall -9 pngvolume")
-        kill_proc("pngvolume")
-        os.system(PATH_VOLUMEJOY + "pngvolume -b0x0000 -l30000 -t1000 " + PATH_VOLUMEJOY + "volume" + str(vol/6) + ".png &")
-
     return True
 
 def main():
