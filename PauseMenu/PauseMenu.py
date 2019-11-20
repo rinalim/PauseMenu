@@ -15,7 +15,7 @@ from subprocess import *
 JS_MIN = -32768
 JS_MAX = 32768
 #JS_REP = 0.20
-JS_REP = 0.01
+JS_REP = 0.001
 
 JS_THRESH = 0.75
 
