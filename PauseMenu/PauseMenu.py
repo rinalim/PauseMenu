@@ -134,6 +134,7 @@ def process_event(event):
         if SELECT_BTN_ON == True and START_BTN_ON == True:
             print "Select+Start Pushed"
             os.system("echo /home/pi/PauseMenu/pause_resume.png > /tmp/pause.txt")
+            os.system(VIEWER)
     
     return True
 
@@ -143,9 +144,7 @@ def main():
     
     if os.path.isfile(PATH_VOLUMEJOY + "button.cfg") == False:
         return False
-
-    os.system(VIEWER)
-    
+   
     f = open(PATH_VOLUMEJOY + "button.cfg", 'r')
     line = f.readline()
     words = line.split()
