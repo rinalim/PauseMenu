@@ -128,9 +128,9 @@ def process_event(event):
     if js_type == JS_EVENT_BUTTON:
         if js_value == 1:
             if js_number == btn_a:
-                if( PAUSE_MODE_ON == True and UP_DOWN_ON == True)
+                if PAUSE_MODE_ON == True and UP_DOWN_ON == True:
                     print "Resume"
-                if( PAUSE_MODE_ON == True and UP_DOWN_ON == False)
+                if PAUSE_MODE_ON == True and UP_DOWN_ON == False:
                     print "Kill"
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
