@@ -114,7 +114,7 @@ while btn_a == -1:
     for fd in js_fds:
         event = read_event(fd)
         if event:
-            btn_start = process_event(event)
+            btn_a = process_event(event)
     time.sleep(0.1)
 
 #f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
