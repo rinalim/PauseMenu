@@ -95,11 +95,19 @@ def process_event(event):
     if js_type & JS_EVENT_INIT:
         return False
 
+    if js_type == JS_EVENT_AXIS and js_number <= 7:
+        if js_number % 2 == 0:
+            if js_value <= JS_MIN * JS_THRESH:
+                print "Left pushed"
+            if js_value >= JS_MAX * JS_THRESH:
+                print "Right pushed"
+        if js_number % 2 == 1:
+            if js_value <= JS_MIN * JS_THRESH:
+                print "Up pushed"
+            if js_value >= JS_MAX * JS_THRESH:
+                print "Down pushed"
+    
     if js_type == JS_EVENT_BUTTON and js_value == 1:
-        #print "Button " + "number:" + str(js_number)
-        #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
-        #print vol
-
         if js_number == btn_down:
             print "Select pushed"
         elif js_number == btn_up:
