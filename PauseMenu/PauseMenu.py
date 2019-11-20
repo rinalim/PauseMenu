@@ -117,12 +117,12 @@ def process_event(event):
             if js_value <= JS_MIN * JS_THRESH:
                 print "Up pushed"
                 if PAUSE_MODE_ON == True:
-                    UP_DOWN_ON = True: 
+                    UP_DOWN_ON = True 
                     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
             if js_value >= JS_MAX * JS_THRESH:
                 print "Down pushed"
                 if PAUSE_MODE_ON == True:
-                    UP_DOWN_ON = False: 
+                    UP_DOWN_ON = False 
                     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
     
     if js_type == JS_EVENT_BUTTON:
