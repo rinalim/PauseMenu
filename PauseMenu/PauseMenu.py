@@ -133,7 +133,7 @@ def process_event(event):
         
         if SELECT_BTN_ON == True and START_BTN_ON == True:
             print "Select+Start Pushed"
-            os.system("echo /home/pi/PauseMenu/pause_resume.png > /tmp/pause.txt")
+            os.system("echo /opt/retropie/configs/all/PauseMenu/pause_resume.png > /tmp/pause.txt")
             os.system(VIEWER)
     
     return True
