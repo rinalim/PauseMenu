@@ -142,10 +142,10 @@ def process_event(event):
         if SELECT_BTN_ON == True and START_BTN_ON == True:
             if PAUSE_MODE_ON == False:
                 print "Select+Start Pushed"
-                PAUSE_MODE_ON = 1;
-                UP_DOWN_ON = 1;	// up
-                SELECT_BTN_ON = 0;
-                START_BTN_ON = 0;
+                PAUSE_MODE_ON = True;
+                UP_DOWN_ON = True;            # up
+                SELECT_BTN_ON = False;
+                START_BTN_ON = False;
                 os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
                 os.system(VIEWER)
     
