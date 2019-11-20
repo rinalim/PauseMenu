@@ -26,7 +26,7 @@ JS_EVENT_INIT = 0x80
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_VOLUMEJOY = '/opt/retropie/configs/all/VolumeJoy/'	
-VIEWER = "/opt/retropie/configs/all/PauseMenu/omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 10 &"
+VIEWER = "/opt/retropie/configs/all/PauseMenu/omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 10 -l 30000 -a center &"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
