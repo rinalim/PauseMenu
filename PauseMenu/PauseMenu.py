@@ -144,6 +144,8 @@ def main():
     if os.path.isfile(PATH_VOLUMEJOY + "button.cfg") == False:
         return False
 
+    os.system(VIEWER)
+    
     f = open(PATH_VOLUMEJOY + "button.cfg", 'r')
     line = f.readline()
     words = line.split()
