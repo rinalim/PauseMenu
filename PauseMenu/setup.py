@@ -142,5 +142,6 @@ while btn_start == -1:
             btn_start = process_event(event)
     time.sleep(0.1)
 
-f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
+#f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
+f.write(str(btn_select) + " " + str(btn_start))
 f.close()
