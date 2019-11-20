@@ -15,7 +15,7 @@ from subprocess import *
 JS_MIN = -32768
 JS_MAX = 32768
 #JS_REP = 0.20
-JS_REP = 0.02
+JS_REP = 0.01
 
 JS_THRESH = 0.75
 
@@ -118,19 +118,15 @@ def process_event(event):
         if js_value == 1:
             if js_number == btn_select:
                 SELECT_BTN_ON = True
-                print "Select pushed"
             elif js_number == btn_start:
                 START_BTN_ON = True
-                print "Start pushed"
             else:
                 return False
         elif js_value == 0:
             if js_number == btn_select:
                 SELECT_BTN_ON = False
-                print "Select released"
             elif js_number == btn_start:
                 START_BTN_ON = False
-                print "Start released"
             else:
                 return False
         
