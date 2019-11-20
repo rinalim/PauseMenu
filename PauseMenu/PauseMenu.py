@@ -120,7 +120,6 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     UP_DOWN_ON = True 
                     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
-					PAUSE_MODE_ON = True
             if js_value >= JS_MAX * JS_THRESH:
                 print "Down pushed"
                 if PAUSE_MODE_ON == True:
