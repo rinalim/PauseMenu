@@ -124,17 +124,17 @@ def process_event(event):
     if js_type == JS_EVENT_AXIS and js_number <= 7:
         if js_number % 2 == 0:
             if js_value <= JS_MIN * JS_THRESH:
-                print "Left pushed"
+                #print "Left pushed"
             if js_value >= JS_MAX * JS_THRESH:
-                print "Right pushed"
+                #print "Right pushed"
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
-                print "Up pushed"
+                #print "Up pushed"
                 if PAUSE_MODE_ON == True:
                     UP_DOWN_ON = True
                     change_viewer("UP")
             if js_value >= JS_MAX * JS_THRESH:
-                print "Down pushed"
+                #print "Down pushed"
                 if PAUSE_MODE_ON == True:
                     UP_DOWN_ON = False 
                     change_viewer("DOWN")
@@ -168,7 +168,7 @@ def process_event(event):
         
         if SELECT_BTN_ON == True and START_BTN_ON == True:
             if PAUSE_MODE_ON == False:
-                print "Select+Start Pushed"
+                #print "Select+Start Pushed"
                 PAUSE_MODE_ON = True;
                 UP_DOWN_ON = True;            # up
                 SELECT_BTN_ON = False;
