@@ -152,7 +152,8 @@ def process_event(event):
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
-                    return False
+                    close_fds(js_fds)
+                    sys.exit(0)
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
