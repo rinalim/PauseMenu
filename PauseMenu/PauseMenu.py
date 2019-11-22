@@ -25,8 +25,8 @@ JS_EVENT_INIT = 0x80
 
 CONFIG_DIR = '/opt/retropie/configs/all/'
 RETROARCH_CFG = CONFIG_DIR + 'retroarch.cfg'
-PATH_PAUSEMENU = '/opt/retropie/configs/all/PauseMenu/'	
-VIEWER = "/opt/retropie/configs/all/PauseMenu/omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center &"
+PATH_PAUSEMENU = CONFIG_DIR + 'PauseMenu/'	
+VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center &"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
@@ -40,6 +40,19 @@ btn_select = -1
 btn_start = -1
 btn_a = -1
 
+def start_viewer():
+    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+    os.system(VIEWER)
+
+def stop_viewer():
+    os.system("killall omxiv-pause")
+    
+def change_viewer(position):
+    if position == "UP":
+        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+    if position == "DOWN":
+        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
+        
 def run_cmd(cmd):
     # runs whatever in the cmd variable
     p = Popen(cmd, shell=True, stdout=PIPE)
@@ -118,25 +131,25 @@ def process_event(event):
             if js_value <= JS_MIN * JS_THRESH:
                 print "Up pushed"
                 if PAUSE_MODE_ON == True:
-                    UP_DOWN_ON = True 
-                    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+                    UP_DOWN_ON = True
+                    change_viewer("UP")
             if js_value >= JS_MAX * JS_THRESH:
                 print "Down pushed"
                 if PAUSE_MODE_ON == True:
                     UP_DOWN_ON = False 
-                    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
+                    change_viewer("DOWN")
     
     if js_type == JS_EVENT_BUTTON:
         if js_value == 1:
             if js_number == btn_a:
                 if PAUSE_MODE_ON == True and UP_DOWN_ON == True:
                     print "Resume"
-                    os.system("killall omxiv-pause")
+                    stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                     PAUSE_MODE_ON = False
                 if PAUSE_MODE_ON == True and UP_DOWN_ON == False:
                     print "Kill"
-                    os.system("killall omxiv-pause")
+                    stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
             elif js_number == btn_select:
@@ -160,8 +173,7 @@ def process_event(event):
                 UP_DOWN_ON = True;            # up
                 SELECT_BTN_ON = False;
                 START_BTN_ON = False;
-                os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
-                os.system(VIEWER)
+                start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &");
     
     return True
