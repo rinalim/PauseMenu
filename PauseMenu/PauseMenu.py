@@ -122,11 +122,13 @@ def process_event(event):
         return False
 
     if js_type == JS_EVENT_AXIS and js_number <= 7:
+        '''
         if js_number % 2 == 0:
             if js_value <= JS_MIN * JS_THRESH:
-                #print "Left pushed"
+                print "Left pushed"
             if js_value >= JS_MAX * JS_THRESH:
-                #print "Right pushed"
+                print "Right pushed"
+        '''
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 #print "Up pushed"
@@ -152,8 +154,7 @@ def process_event(event):
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
-                    close_fds(js_fds)
-                    sys.exit(0)
+                    return False
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
