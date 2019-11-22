@@ -41,11 +41,10 @@ btn_start = -1
 btn_a = -1
 
 def start_viewer():
-    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
-    os.system(VIEWER)
+    os.system("fbi /opt/retropie/configs/all/PauseMenu/pause_resume.png -d /dev/fb0")
 
 def stop_viewer():
-    os.system("killall omxiv-pause")
+    os.system("sudo killall fbi")
     
 def change_viewer(position):
     if position == "UP":
