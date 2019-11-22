@@ -213,7 +213,8 @@ def main():
                 event = read_event(fd)
                 if event:
                     do_sleep = False
-                    if time.time() - js_last[i] > JS_REP:
+                    #if time.time() - js_last[i] > JS_REP:
+                    if time.time() - js_last[i] > 0:                        
                         if process_event(event):
                             js_last[i] = time.time()
                 elif event == False:
