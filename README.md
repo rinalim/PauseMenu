@@ -12,5 +12,6 @@ sudo ./install.sh
 
 ## Uninstall
 <pre><code>
+cd /home/pi/PauseMenu
 sudo ./uninstall.sh
 </code></pre>
