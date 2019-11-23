@@ -49,7 +49,9 @@ def get_location():
     sysname = "fba"
     conf_file = "/opt/retropie/configs/"+sysname+"/retroarch.cfg"
     res = run_cmd("cat " + conf_file + " | grep video_rotation")
+    print res
     if len(res) > 1:
+        print res.split(' ')[2]
         if res.split(' ')[2] == '"1"':
             return " -o 270"
     return ""
