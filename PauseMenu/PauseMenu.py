@@ -49,7 +49,7 @@ def get_location():
     if is_running("bin/retroarch") == True:
         game_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").rstrip()+".zip"
         if os.path.isfile(game_conf) == True:
-            res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
+            res = run_cmd("cat " + game_conf + " | grep video_rotation").replace("\n","")
             if len(res) > 1:
                 print res.split(' ')[2]
                 if res.split(' ')[2] == '"1"':
@@ -57,7 +57,7 @@ def get_location():
             else:
                 print "No game conf"
         sys_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
-        res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
+        res = run_cmd("cat " + sys_conf + " | grep video_rotation").replace("\n","")
         if len(res) > 1:
             print res.split(' ')[2]
             if res.split(' ')[2] == '"1"':
