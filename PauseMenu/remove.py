@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-import os, sys, time, 
+import os, sys
 from subprocess import *
 import xml.etree.ElementTree as ET
 
