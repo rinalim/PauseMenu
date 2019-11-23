@@ -113,7 +113,7 @@ event = -1
 f = open(PATH_PAUSEMENU + "button.cfg", 'w')
 js_devs, js_fds = open_devices()
 
-print "Push a button for SELECT"
+print "\nPush a button for SELECT"
 while btn_select == -1:
     for fd in js_fds:
         event = read_event(fd)
@@ -142,6 +142,6 @@ f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
 
 os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
-          + "/opt/retropie/configs/all/retroarch/autoconfig/"
+          + "'/opt/retropie/configs/all/retroarch/autoconfig/"
           + dev_name
-          + ".cfg")
+          + ".cfg'")
