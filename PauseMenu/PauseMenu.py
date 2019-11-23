@@ -48,6 +48,8 @@ def run_cmd(cmd):
 def get_location():
     sysname = "fba"
     conf_file = "/opt/retropie/configs/"+sysname+"/retroarch.cfg"
+    if is_running("bin/retroarch") == True:
+        print run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
     res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
     print res
     if len(res) > 1:
@@ -68,7 +70,14 @@ def change_viewer(position):
         os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
     if position == "DOWN":
         os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
-        
+
+def is_running(pname):
+    ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
+    if len(ps_grep) > 1:
+        return True
+    else:
+        return False
+    
 def kill_proc(name):
     ps_grep = run_cmd("ps -aux | grep " + name + "| grep -v 'grep'")
     if len(ps_grep) > 1: 
