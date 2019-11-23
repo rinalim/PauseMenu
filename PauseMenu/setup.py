@@ -25,6 +25,7 @@ JS_EVENT_AXIS = 0x02
 JS_EVENT_INIT = 0x80
 
 PATH_PAUSEMENU = '/opt/retropie/configs/all/PauseMenu/'
+ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
 RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
 
 event_format = 'IhBB'
