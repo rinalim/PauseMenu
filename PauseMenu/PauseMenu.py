@@ -54,7 +54,7 @@ def get_location():
                 print res.split(' ')[2]
                 if res.split(' ')[2] == '"1"':
                     return " -o 270"
-            else
+            else:
                 print "No game conf"
         sys_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
         res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
