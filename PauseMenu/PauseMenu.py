@@ -26,7 +26,7 @@ JS_EVENT_INIT = 0x80
 CONFIG_DIR = '/opt/retropie/configs/all/'
 RETROARCH_CFG = CONFIG_DIR + 'retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'PauseMenu/'	
-VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center &"
+VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
@@ -42,7 +42,7 @@ btn_a = -1
 
 def start_viewer():
     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
-    os.system(VIEWER)
+    os.system(VIEWER + " &")
 
 def stop_viewer():
     os.system("killall omxiv-pause")
