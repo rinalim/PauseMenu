@@ -13,7 +13,3 @@ echo '/usr/bin/python /opt/retropie/configs/all/PauseMenu/PauseMenu.py /dev/inpu
 
 python ./PauseMenu/setup.py /dev/input/js0
 
-echo
-echo "Setup Completed. Reboot after 3 Seconds."
-sleep 3
-reboot
