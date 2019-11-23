@@ -39,9 +39,24 @@ btn_select = -1
 btn_start = -1
 btn_a = -1
 
+def run_cmd(cmd):
+    # runs whatever in the cmd variable
+    p = Popen(cmd, shell=True, stdout=PIPE)
+    output = p.communicate()[0]
+    return output
+
+def get_location():
+    sysname = "fba"
+    conf_file = "/opt/retropie/configs/"+sysname+"/retroarch.cfg"
+    res = run_cmd("cat " + conf_file + " | grep video_rotation")
+    if len(res) > 1:
+        if res.split(' ')[2] == '"1"'
+            return " -o 270"
+    return ""
+    
 def start_viewer():
     os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
-    os.system(VIEWER + " &")
+    os.system(VIEWER + get_location() + " &")
 
 def stop_viewer():
     os.system("killall omxiv-pause")
@@ -52,12 +67,6 @@ def change_viewer(position):
     if position == "DOWN":
         os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
         
-def run_cmd(cmd):
-    # runs whatever in the cmd variable
-    p = Popen(cmd, shell=True, stdout=PIPE)
-    output = p.communicate()[0]
-    return output
-
 def kill_proc(name):
     ps_grep = run_cmd("ps -aux | grep " + name + "| grep -v 'grep'")
     if len(ps_grep) > 1: 
