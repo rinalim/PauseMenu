@@ -4,6 +4,8 @@ import os, sys, struct, time, fcntl, termios, signal
 import curses, errno, re
 from pyudev import Context
 from subprocess import *
+import xml.etree.ElementTree as ET
+
 
 #    struct js_event {
 #        __u32 time;     /* event timestamp in milliseconds */
@@ -100,6 +102,9 @@ def process_event(event):
 
     return -1
 
+
+dev_name = load_es_cfg()
+
 btn_select = -1
 btn_start = -1
 btn_a = -1
@@ -135,7 +140,6 @@ while btn_a == -1:
 f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
 
-dev_name = load_es_cfg()
 os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
           + "/opt/retropie/configs/all/retroarch/autoconfig/"
           + dev_name
