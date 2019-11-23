@@ -41,7 +41,7 @@ btn_start = -1
 btn_a = -1
 
 def start_viewer():
-    os.system("sudo fbi /opt/retropie/configs/all/PauseMenu/pause_resume.png -d /dev/fb0")
+    os.system("display opt/retropie/configs/all/PauseMenu/pause_resume.png -backdrop")
 
 def stop_viewer():
     os.system("sudo killall fbi")
