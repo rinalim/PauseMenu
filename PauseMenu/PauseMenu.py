@@ -54,8 +54,8 @@ def get_location():
                 print res.split(' ')[2]
                 if res.split(' ')[2] == '"1"':
                     return " -o 270"
-            else:
-                print "No game conf"
+                else:
+                    print "No game conf"
         sys_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
         res = run_cmd("cat " + sys_conf + " | grep video_rotation").replace("\n","")
         if len(res) > 1:
@@ -179,7 +179,8 @@ def process_event(event):
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
-                    return False
+                    close_fds(js_fds)
+                    sys.exit(0)
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
