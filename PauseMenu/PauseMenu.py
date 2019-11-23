@@ -48,7 +48,7 @@ def run_cmd(cmd):
 def get_location():
     sysname = "fba"
     conf_file = "/opt/retropie/configs/"+sysname+"/retroarch.cfg"
-    res = run_cmd("cat " + conf_file + " | grep video_rotation")
+    res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
     print res
     if len(res) > 1:
         print res.split(' ')[2]
