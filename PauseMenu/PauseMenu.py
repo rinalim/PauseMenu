@@ -46,16 +46,22 @@ def run_cmd(cmd):
     return output
 
 def get_location():
-    sysname = "fba"
-    conf_file = "/opt/retropie/configs/"+sysname+"/retroarch.cfg"
     if is_running("bin/retroarch") == True:
-        print run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
-    res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
-    print res
-    if len(res) > 1:
-        print res.split(' ')[2]
-        if res.split(' ')[2] == '"1"':
-            return " -o 270"
+        game_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").rstrip()+".zip"
+        os.path.isfile(game_conf):
+            res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
+            if len(res) > 1:
+                print res.split(' ')[2]
+                if res.split(' ')[2] == '"1"':
+                    return " -o 270"
+            else
+                print "No game conf"
+        sys_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
+        res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
+        if len(res) > 1:
+            print res.split(' ')[2]
+            if res.split(' ')[2] == '"1"':
+                return " -o 270"
     return ""
     
 def start_viewer():
