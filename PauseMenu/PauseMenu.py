@@ -51,17 +51,15 @@ def get_location():
         if os.path.isfile(game_conf) == True:
             res = run_cmd("cat " + game_conf + " | grep video_rotation").replace("\n","")
             if len(res) > 1:
-                print res.split(' ')[2]
                 if res.split(' ')[2] == '"1"':
                     return " -o 270"
                 elif res.split(' ')[2] == '"3"':
                     return " -o 90"
-            else:
-                print "No game conf"
+            #else:
+            #    print "No game conf"
         sys_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
         res = run_cmd("cat " + sys_conf + " | grep video_rotation").replace("\n","")
         if len(res) > 1:
-            print res.split(' ')[2]
             if res.split(' ')[2] == '"1"':
                 return " -o 270"
             elif res.split(' ')[2] == '"3"':
