@@ -23,10 +23,24 @@ JS_EVENT_AXIS = 0x02
 JS_EVENT_INIT = 0x80
 
 PATH_PAUSEMENU = '/opt/retropie/configs/all/PauseMenu/'
+RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
 js_fds = []
+
+def load_es_cfg():
+    doc = ET.parse(ES_INPUT)
+    root = doc.getroot()
+    #tag = root.find('inputConfig')
+    tags = root.findall('inputConfig')
+    num = 1
+    for i in tags:
+        print str(num) + ". " + i.attrib['deviceName']
+        num = num+1
+    dev_select = input('\nSelect your joystick: ')
+
+    return tags[dev_select-1].attrib['deviceName']
 
 def signal_handler(signum, frame):
     close_fds(js_fds)
@@ -120,3 +134,9 @@ while btn_a == -1:
 #f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
 f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
+
+dev_name = load_es_cfg()
+os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
+          + "/opt/retropie/configs/all/retroarch/autoconfig/"
+          + dev_name
+          + ".cfg")
