@@ -48,7 +48,7 @@ def run_cmd(cmd):
 def get_location():
     if is_running("bin/retroarch") == True:
         game_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").rstrip()+".zip"
-        os.path.isfile(game_conf):
+        os.path.isfile(game_conf) == True:
             res = run_cmd("cat " + conf_file + " | grep video_rotation").replace("\n","")
             if len(res) > 1:
                 print res.split(' ')[2]
