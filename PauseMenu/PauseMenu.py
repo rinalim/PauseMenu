@@ -50,7 +50,7 @@ def get_location():
     conf_file = "/opt/retropie/configs/"+sysname+"/retroarch.cfg"
     res = run_cmd("cat " + conf_file + " | grep video_rotation")
     if len(res) > 1:
-        if res.split(' ')[2] == '"1"'
+        if res.split(' ')[2] == '"1"':
             return " -o 270"
     return ""
     
