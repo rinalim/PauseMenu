@@ -2,8 +2,7 @@
 Pause Menu for Retropie
 
 ## Install
-<pre><code>
-cd /home/pi
+<pre><code> cd /home/pi
 git clone https://github.com/rinalim/PauseMemu
 cd PauseMenu
 chmod 755 ./*.sh
