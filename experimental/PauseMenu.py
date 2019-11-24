@@ -14,8 +14,7 @@ from subprocess import *
 
 JS_MIN = -32768
 JS_MAX = 32768
-#JS_REP = 0.20
-JS_REP = 0.001
+JS_REP = 0.20
 
 JS_THRESH = 0.75
 
@@ -26,7 +25,8 @@ JS_EVENT_INIT = 0x80
 CONFIG_DIR = '/opt/retropie/configs/all/'
 RETROARCH_CFG = CONFIG_DIR + 'retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'PauseMenu/'	
-VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center &"
+VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center"
+VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
@@ -40,24 +40,54 @@ btn_select = -1
 btn_start = -1
 btn_a = -1
 
-def start_viewer():
-    os.system("display /opt/retropie/configs/all/PauseMenu/pause_resume.png -backdrop")
-
-def stop_viewer():
-    os.system("sudo killall fbi")
-    
-def change_viewer(position):
-    if position == "UP":
-        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
-    if position == "DOWN":
-        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
-        
 def run_cmd(cmd):
     # runs whatever in the cmd variable
     p = Popen(cmd, shell=True, stdout=PIPE)
     output = p.communicate()[0]
     return output
 
+def get_location():
+    if is_running("bin/retroarch") == True:
+        game_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").rstrip()+".cfg"
+        if os.path.isfile(game_conf) == True:
+            res = run_cmd("cat " + game_conf + " | grep video_rotation").replace("\n","")
+            if len(res) > 1:
+                if res.split(' ')[2] == '"1"':
+                    return " -o 270"
+                elif res.split(' ')[2] == '"3"':
+                    return " -o 90"
+            #else:
+            #    print "No game conf"
+        sys_conf = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $12}'").rstrip()
+        res = run_cmd("cat " + sys_conf + " | grep video_rotation").replace("\n","")
+        if len(res) > 1:
+            if res.split(' ')[2] == '"1"':
+                return " -o 270"
+            elif res.split(' ')[2] == '"3"':
+                return " -o 90"
+    return ""
+    
+def start_viewer():
+    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+    os.system(VIEWER_BG + " &")
+    os.system(VIEWER + get_location() + " &")
+
+def stop_viewer():
+    os.system("killall omxiv-pause")
+    
+def change_viewer(position):
+    if position == "UP":
+        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+    if position == "DOWN":
+        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
+
+def is_running(pname):
+    ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
+    if len(ps_grep) > 1:
+        return True
+    else:
+        return False
+    
 def kill_proc(name):
     ps_grep = run_cmd("ps -aux | grep " + name + "| grep -v 'grep'")
     if len(ps_grep) > 1: 
@@ -153,7 +183,8 @@ def process_event(event):
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
-                    return False
+                    close_fds(js_fds)
+                    sys.exit(0)
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
