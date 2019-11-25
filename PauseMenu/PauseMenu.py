@@ -297,7 +297,7 @@ def draw_picture(system, romname, buttons):
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROL
     run_cmd(cmd)
 
-    if system == "lr-fbalpha":
+    if system == "lr-fbneo":
         get_btn_layout(system, romname, buttons)
     
         # Configured button layout
@@ -337,7 +337,6 @@ def start_viewer():
 	buttons = get_info(romname)
         draw_picture(system, romname, buttons)
         os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
-	print PATH_PAUSEOPTION + romname + "_resume.png"
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
