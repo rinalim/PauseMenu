@@ -332,10 +332,6 @@ def control_on():
     
 def start_viewer():
     if control_on() == True:
-	system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
-	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-	buttons = get_info(romname)
-        draw_picture(system, romname, buttons)
         os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
@@ -485,12 +481,17 @@ def process_event(event):
 def main():
     
     global btn_select, btn_start, btn_a
-    
-    load_layout()
+
+    # Draw control images
+    if control_on() == True:
+        load_layout()
+        system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
+        romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
+        buttons = get_info(romname)
+        draw_picture(system, romname, buttons)
 
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
-   
     f = open(PATH_PAUSEMENU + "button.cfg", 'r')
     line = f.readline()
     words = line.split()
