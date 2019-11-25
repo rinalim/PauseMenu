@@ -262,9 +262,8 @@ def get_btn_layout(system, romname, buttons):
     btn_map['x'] = buttons[convert[btn_map['x']]]
     btn_map['y'] = buttons[convert[btn_map['y']]]
     btn_map['l'] = buttons[convert[btn_map['l']]]
-    btn_map['r'] = buttons[convert[btn_map['r']]]  
-    
-    print btn_map
+    btn_map['r'] = buttons[convert[btn_map['r']]]
+    #print btn_map
 
 def get_location():
     if is_running("bin/retroarch") == True:
@@ -300,7 +299,7 @@ def draw_picture(system, romname, buttons):
 
     if system == "lr-fbneo":
         get_btn_layout(system, romname, buttons)
-    
+        print "finish"
         # Configured button layout
         #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
         pos = ["90x25+62+68", "90x25+142+42", "90x25+222+19", "90x25+62+133", "90x25+142+108", "90x25+222+82"]
