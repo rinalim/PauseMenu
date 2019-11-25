@@ -72,8 +72,8 @@ def check_update(romname):
     RESUME = PATH_PAUSEOPTION + romname + '_resume.png'
     #CORECFG = CONFIG_DIR + 'fba/FB Alpha/FB Alpha.rmp'
     #GAMECFG = CONFIG_DIR + 'fba/FB Alpha/' + romname + '.rmp'
-    CORECFG = CONFIG_DIR + 'fba/FB Neo/FB Neo.rmp'
-    GAMECFG = CONFIG_DIR + 'fba/FB Neo/' + romname + '.rmp'
+    CORECFG = CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp'
+    GAMECFG = CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp'
    
     if os.path.isfile(RESUME) == False:
         return True
@@ -194,9 +194,9 @@ def get_btn_layout(system, romname, buttons):
 
     print "get_btn_layout"
 
-    if os.path.isfile(CONFIG_DIR + 'fba/FB Neo/' + romname + '.rmp') == True:
+    if os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp') == True:
         print 'Use game specific setting'
-        f = open(CONFIG_DIR + 'fba/FB Neo/' + romname + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -212,9 +212,9 @@ def get_btn_layout(system, romname, buttons):
                 btn_map[words[0][8]] = words[1]  
         f.close()
 	
-    elif os.path.isfile(CONFIG_DIR + 'fba/FB Neo/FB Neo.rmp') == True:
+    elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
         print 'Use FBA setting'
-        f = open(CONFIG_DIR + 'fba/FB Neo/FB Neo.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
