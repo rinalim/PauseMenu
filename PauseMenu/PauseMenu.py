@@ -486,6 +486,8 @@ def main():
     
     global btn_select, btn_start, btn_a
     
+    load_layout()
+
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
    
