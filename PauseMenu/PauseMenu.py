@@ -52,6 +52,7 @@ FONT = "'NanumBarunGothic-Bold'"
 user_key = {}
 btn_map = {}
 es_conf = 1
+romname = ""
 
 capcom_fight = [
     'mshvsf', 'vsav', 
@@ -68,7 +69,7 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
-def check_update(romname):
+def check_update():
     RESUME = PATH_PAUSEOPTION + romname + '_resume.png'
     #CORECFG = CONFIG_DIR + 'fba/FB Alpha/FB Alpha.rmp'
     #GAMECFG = CONFIG_DIR + 'fba/FB Alpha/' + romname + '.rmp'
@@ -129,7 +130,7 @@ def load_layout():
         user_key['5'] = 'b'
         user_key['6'] = 'a'
 
-def get_info(romname):
+def get_info():
 
     #INPUT = './controls.xml'   
     if os.path.isfile(XML+romname+'.xml') == False:
@@ -182,7 +183,7 @@ def get_info(romname):
     return buttons
 
 
-def get_btn_layout(system, romname, buttons):
+def get_btn_layout(system, buttons):
 
     # FBA button sequence   
     btn_map['b'] = '"0"'
@@ -286,7 +287,7 @@ def get_location():
                 return " -o 90"
     return ""
 
-def draw_picture(system, romname, buttons):
+def draw_picture(system, buttons):
 
     CONTROL = " " + PATH_PAUSEOPTION + romname + '_control.png'
     RESUME = " " + PATH_PAUSEOPTION + romname + '_resume.png'
@@ -298,7 +299,7 @@ def draw_picture(system, romname, buttons):
     run_cmd(cmd)
 
     if system == "lr-fbneo":
-        get_btn_layout(system, romname, buttons)
+        get_btn_layout(system, buttons)
         print "finish"
         # Configured button layout
         #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
@@ -480,15 +481,15 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a
+    global btn_select, btn_start, btn_a, romname
 
     # Draw control images
     if control_on() == True:
-        load_layout()
         system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-        buttons = get_info(romname)
-        draw_picture(system, romname, buttons)
+        load_layout()
+	buttons = get_info()
+        draw_picture(system, buttons)
 
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
