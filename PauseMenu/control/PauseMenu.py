@@ -19,7 +19,12 @@ user_key = {}
 btn_map = {}
 es_conf = 1
 
-capcom_fight = ['mshvsf', 'vsav', 'sfa', 'sfa2', 'sfa3', 'sf2', 'sf2ce', 'ssf2']
+capcom_fight = [
+    'mshvsf', 'vsav', 
+    'sfa', 'sfa2', 'sfa3', 
+    'sf2', 'sf2ce', 'ssf2',
+    'sfiii', 'sfiii3'
+    ]
 capcom_dd = ['ddtod', 'ddsom']
 
 
