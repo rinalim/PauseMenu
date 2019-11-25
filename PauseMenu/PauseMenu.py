@@ -336,7 +336,7 @@ def start_viewer():
 	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
 	buttons = get_info(romname)
         draw_picture(system, romname, buttons)
-        os.system("echo " + PATH_PAUSEOPTION + romname ".png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEOPTION + romname + ".png > /tmp/pause.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
