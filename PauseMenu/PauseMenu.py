@@ -69,7 +69,7 @@ def run_cmd(cmd):
     return output
 
 def check_update(romname):
-    RESUME = PATH_PAUSEOPTION+'result/' + romname + '_resume.png'
+    RESUME = PATH_PAUSEOPTION+'' + romname + '_resume.png'
     #CORECFG = CONFIG_DIR + 'fba/FB Alpha/FB Alpha.rmp'
     #GAMECFG = CONFIG_DIR + 'fba/FB Alpha/' + romname + '.rmp'
     CORECFG = CONFIG_DIR + 'fba/FB Neo/FB Neo.rmp'
@@ -288,9 +288,9 @@ def get_location():
 
 def draw_picture(system, romname, buttons):
 
-    CONTROL = " " + PATH_PAUSEOPTION+'result/' + romname + '_control.png'
-    RESUME = " " + PATH_PAUSEOPTION+'result/' + romname + '_resume.png'
-    STOP = " " + PATH_PAUSEOPTION+'result/' + romname + '_stop.png'
+    CONTROL = " " + PATH_PAUSEOPTION + romname + '_control.png'
+    RESUME = " " + PATH_PAUSEOPTION + romname + '_resume.png'
+    STOP = " " + PATH_PAUSEOPTION + romname + '_stop.png'
 
     # Layout
     #cmd = "composite -geometry 300x160+8+185 " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + " images/bg_resume.png" + RESUME
@@ -326,16 +326,17 @@ def draw_picture(system, romname, buttons):
 
 def control_on():
     if len(sys.argv) > 2 and sys.argv[2] == '-control':
-	system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
-	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-	print system, romname
         return True
     else:
         return False
     
 def start_viewer():
     if control_on() == True:
-        os.system("echo " + PATH_PAUSEMENU + "control/images/bg_resume.png > /tmp/pause.txt")
+	system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
+	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
+	buttons = get_info(romname)
+        draw_picture(system, romname, buttons)
+        os.system("echo " + PATH_PAUSEOPTION + romname ".png > /tmp/pause.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
