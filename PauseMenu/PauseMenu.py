@@ -326,8 +326,8 @@ def draw_picture(system, romname, buttons):
 
 def control_on():
     if len(sys.argv) > 2 and sys.argv[2] == '-control':
-	system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[3]
-	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[5]
+	system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
+	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6]
 	print system, romname
         return True
     else:
@@ -335,9 +335,9 @@ def control_on():
     
 def start_viewer():
     if control_on() == True:
-        os.system("echo " + CONFIG_DIR + "PauseMenu/control/bg_resume.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEMENU + "control/images/bg_resume.png > /tmp/pause.txt")
     else:
-        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
@@ -347,9 +347,9 @@ def stop_viewer():
     
 def change_viewer(position):
     if position == "UP":
-        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     if position == "DOWN":
-        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
