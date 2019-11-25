@@ -69,7 +69,7 @@ def run_cmd(cmd):
     return output
 
 def check_update(romname):
-    RESUME = PATH_PAUSEOPTION+'' + romname + '_resume.png'
+    RESUME = PATH_PAUSEOPTION + romname + '_resume.png'
     #CORECFG = CONFIG_DIR + 'fba/FB Alpha/FB Alpha.rmp'
     #GAMECFG = CONFIG_DIR + 'fba/FB Alpha/' + romname + '.rmp'
     CORECFG = CONFIG_DIR + 'fba/FB Neo/FB Neo.rmp'
@@ -337,6 +337,7 @@ def start_viewer():
 	buttons = get_info(romname)
         draw_picture(system, romname, buttons)
         os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
+	print PATH_PAUSEOPTION + romname + "_resume.png"
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
