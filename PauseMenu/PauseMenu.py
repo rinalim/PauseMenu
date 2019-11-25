@@ -68,7 +68,7 @@ def get_location():
     return ""
 
 def control_on():
-    if len(sys.argv) > 1 and sys.argv[1] == '-control':
+    if len(sys.argv) > 2 and sys.argv[2] == '-control':
         return True
     else:
         return False
