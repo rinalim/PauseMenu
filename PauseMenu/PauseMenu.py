@@ -75,9 +75,10 @@ def control_on():
     
 def start_viewer():
     if control_on() == True:
-        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
-    else:
         os.system("echo " + CONFIG_DIR + "PauseMenu/control/bg_resume.png > /tmp/pause.txt")
+    else:
+        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
 
