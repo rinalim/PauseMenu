@@ -192,6 +192,8 @@ def get_btn_layout(system, romname, buttons):
     btn_map['l'] = '"10"'
     btn_map['r'] = '"11"'
 
+    print "get_btn_layout"
+
     if os.path.isfile(CONFIG_DIR + 'fba/FB Neo/' + romname + '.rmp') == True:
         print 'Use game specific setting'
         f = open(CONFIG_DIR + 'fba/FB Neo/' + romname + '.rmp', 'r')
