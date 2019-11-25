@@ -327,7 +327,7 @@ def draw_picture(system, romname, buttons):
 def control_on():
     if len(sys.argv) > 2 and sys.argv[2] == '-control':
 	system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
-	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-4]
+	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
 	print system, romname
         return True
     else:
