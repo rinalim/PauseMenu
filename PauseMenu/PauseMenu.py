@@ -66,9 +66,18 @@ def get_location():
             elif res.split(' ')[2] == '"3"':
                 return " -o 90"
     return ""
+
+def control_on():
+    if len(sys.argv) > 1 and sys.argv[1] == '-control':
+        return True
+    else:
+        return False
     
 def start_viewer():
-    os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+    if control_on() == True:
+        os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
+    else:
+        os.system("echo " + CONFIG_DIR + "PauseMenu/control/bg_resume.png > /tmp/pause.txt")
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
 
@@ -80,7 +89,7 @@ def change_viewer(position):
         os.system("echo " + CONFIG_DIR + "PauseMenu/pause_resume.png > /tmp/pause.txt")
     if position == "DOWN":
         os.system("echo " + CONFIG_DIR + "PauseMenu/pause_stop.png > /tmp/pause.txt")
-
+        
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
     if len(ps_grep) > 1:
