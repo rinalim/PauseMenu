@@ -38,10 +38,11 @@ def load_es_cfg():
     #tag = root.find('inputConfig')
     tags = root.findall('inputConfig')
     num = 1
+    print "\n\n"
     for i in tags:
         print str(num) + ". " + i.attrib['deviceName']
         num = num+1
-    dev_select = input('\n\n\nSelect your joystick: ')
+    dev_select = input('\nSelect your joystick: ')
 
     return tags[dev_select-1].attrib['deviceName']
 
