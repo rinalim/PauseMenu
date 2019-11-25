@@ -143,7 +143,7 @@ def get_info(romname):
     #if game == None:
     #   print 'No Game Found'
         name = str(unicode(game.get('gamename')))
-        print name
+        print 'Generate pause images for ' + name
         player = game.find('player')
         controls = player.find('controls')
         labels = player.findall('labels')
@@ -179,7 +179,7 @@ def get_info(romname):
         for j in range(len(buttons), 6):
             buttons.append("None")
     
-    return name, buttons
+    return buttons
 
 
 def get_btn_layout(system, romname, buttons):
@@ -210,9 +210,9 @@ def get_btn_layout(system, romname, buttons):
                 btn_map[words[0][8]] = words[1]  
         f.close()
 	
-    elif os.path.isfile(CONFIG_DIR + 'fba/FB Neo/FB Alpha.rmp') == True:
+    elif os.path.isfile(CONFIG_DIR + 'fba/FB Neo/FB Neo.rmp') == True:
         print 'Use FBA setting'
-        f = open(CONFIG_DIR + 'fba/FB Neo/FB Alpha.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/FB Neo/FB Neo.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -286,7 +286,7 @@ def get_location():
                 return " -o 90"
     return ""
 
-def draw_picture(system, romname, name, buttons):
+def draw_picture(system, romname, buttons):
 
     CONTROL = " " + PATH_PAUSEOPTION+'result/' + romname + '_control.png'
     RESUME = " " + PATH_PAUSEOPTION+'result/' + romname + '_resume.png'
@@ -326,6 +326,9 @@ def draw_picture(system, romname, name, buttons):
 
 def control_on():
     if len(sys.argv) > 2 and sys.argv[2] == '-control':
+	system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[3]
+	romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[5]
+	print system, romname
         return True
     else:
         return False
