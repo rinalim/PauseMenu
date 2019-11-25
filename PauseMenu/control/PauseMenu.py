@@ -9,9 +9,8 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-CONFIG = '/home/csle/retro/PauseOptionDev/configs/'
-PATH_PAUSEOPTION = '/home/csle/retro/PauseOptionDev/'
-PATH_PAUSEMODE = '/home/csle/retro/PauseOptionDev/PauseMode/'
+CONFIG = '/opt/retropie/configs/'
+PATH_PAUSEOPTION = '/opt/retropie/configs/all/PauseOption/'
 XML = PATH_PAUSEOPTION+'xml/'
 FONT = "'NanumBarunGothic'"
 
