@@ -313,7 +313,7 @@ def draw_picture(system, buttons):
                 run_cmd(cmd)
 
 
-    #Generate a PAUSE image
+    # Generate a PAUSE image
     cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
     run_cmd(cmd)
     # Generate a STOP image
