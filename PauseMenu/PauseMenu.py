@@ -35,8 +35,9 @@ VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
+UP_ON = False
+DOWN_ON = False
 PAUSE_MODE_ON = False
-UP_DOWN_ON = False
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
@@ -436,23 +437,25 @@ def process_event(event):
             if js_value <= JS_MIN * JS_THRESH:
                 #print "Up pushed"
                 if PAUSE_MODE_ON == True:
-                    UP_DOWN_ON = True
+                    UP_ON = True
+		    DOWN_ON = False
                     change_viewer("UP")
             if js_value >= JS_MAX * JS_THRESH:
                 #print "Down pushed"
                 if PAUSE_MODE_ON == True:
-                    UP_DOWN_ON = False 
+                    DOWN_ON = True
+		    UP_ON = False
                     change_viewer("DOWN")
     
     if js_type == JS_EVENT_BUTTON:
         if js_value == 1:
             if js_number == btn_a:
-                if PAUSE_MODE_ON == True and UP_DOWN_ON == True:
+                if PAUSE_MODE_ON == True and UP_ON == True:
                     print "Resume"
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                     PAUSE_MODE_ON = False
-                if PAUSE_MODE_ON == True and UP_DOWN_ON == False:
+                if PAUSE_MODE_ON == True and DOWN_ON == True:
                     print "Kill"
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
@@ -482,6 +485,9 @@ def process_event(event):
                 START_BTN_ON = False;
                 start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &");
+	
+	elif SELECT_BTN_ON == True and UP_ON == True:
+		print "OSD mode"
     
     return True
 
