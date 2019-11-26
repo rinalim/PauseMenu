@@ -332,7 +332,7 @@ def control_on():
         return False
     
 def start_viewer():
-    if control_on() == True:
+    if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
@@ -345,9 +345,15 @@ def stop_viewer():
     
 def change_viewer(position):
     if position == "UP":
-        os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
+        if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
+	else
+            os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     if position == "DOWN":
-        os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
+        if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + romname + "_stop.png > /tmp/pause.txt")
+	else
+            os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
