@@ -347,12 +347,12 @@ def change_viewer(position):
     if position == "UP":
         if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
-	else
+	else:
             os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     if position == "DOWN":
         if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_stop.png > /tmp/pause.txt")
-	else
+	else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
         
 def is_running(pname):
