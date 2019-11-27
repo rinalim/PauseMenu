@@ -444,6 +444,9 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     MENU_INDEX = 1
                     change_viewer("UP")
+                elif SELECT_BTN_ON == True:
+                    print "OSD mode on"
+                    start_viewer_osd()	
             if js_value >= JS_MAX * JS_THRESH:
                 #print "Down pushed"
                 DOWN_ON = True
@@ -451,6 +454,9 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     MENU_INDEX = 2
                     change_viewer("DOWN")
+                elif SELECT_BTN_ON == True:
+                    print "OSD mode off"
+                    stop_viewer()
 	    if js_value == 0:
 		UP_ON = False
 		DOWN_ON = False
