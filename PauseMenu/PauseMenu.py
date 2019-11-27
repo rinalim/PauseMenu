@@ -512,7 +512,8 @@ def main():
     if control_on() == True:
         while True:
             if is_running("bin/retroarch") == False:
-                time.sleep(1)    # wait for launching game"
+                time.sleep(1)    # wait for launching game
+                print "wait for launching game"
                 continue
             else
                 break
