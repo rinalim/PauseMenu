@@ -346,7 +346,8 @@ def start_viewer_osd():
         os.system(VIEWER_OSD + " &")
 
 def stop_viewer():
-    os.system("killall omxiv-pause")
+	if is_running("omxiv-pause") == True:
+            os.system("killall omxiv-pause")
     
 def change_viewer(position):
     if position == "UP":
