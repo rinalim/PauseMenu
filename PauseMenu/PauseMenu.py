@@ -496,7 +496,7 @@ def process_event(event):
         elif SELECT_BTN_ON == True and UP_ON == True:
             print "OSD mode"
             if PAUSE_MODE_ON == False:
-            start_viewer()
+                start_viewer_osd()
 
     return True
 
