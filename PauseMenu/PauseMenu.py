@@ -32,12 +32,14 @@ RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'	
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
+VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center --win 980,864,300,160"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
 UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
+MENU_INDEX = 0
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
@@ -313,7 +315,6 @@ def draw_picture(system, buttons):
                 cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
                 run_cmd(cmd)
 
-
     # Generate a PAUSE image
     cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
     run_cmd(cmd)
@@ -323,7 +324,6 @@ def draw_picture(system, buttons):
     # Generate a Controll image
     cmd = "composite " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_control.png" + CONTROL
     run_cmd(cmd)
-
 
 
 def control_on():
@@ -340,6 +340,11 @@ def start_viewer():
 
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
+	
+def start_viewer_osd():
+    if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_control.png") == True :
+        os.system("echo " + PATH_PAUSEOPTION + romname + "_control.png > /tmp/pause.txt")
+        os.system(VIEWER_OSD + " &")
 
 def stop_viewer():
     os.system("killall omxiv-pause")
@@ -414,10 +419,8 @@ def read_event(fd):
 
 def process_event(event):
 
-    global SELECT_BTN_ON
-    global START_BTN_ON
-    global PAUSE_MODE_ON
-    global UP_DOWN_ON
+    global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
+    global UP_ON, DOWN_ON
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
@@ -436,32 +439,38 @@ def process_event(event):
         if js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 #print "Up pushed"
+                UP_ON = True
+                DOWN_ON = False
                 if PAUSE_MODE_ON == True:
-                    UP_ON = True
-		    DOWN_ON = False
+                    MENU_INDEX = 1
                     change_viewer("UP")
             if js_value >= JS_MAX * JS_THRESH:
                 #print "Down pushed"
+                DOWN_ON = True
+		UP_ON = False
                 if PAUSE_MODE_ON == True:
-                    DOWN_ON = True
-		    UP_ON = False
+                    MENU_INDEX = 2
                     change_viewer("DOWN")
+	    if js_value == 0:
+		UP_ON = False
+		DOWN_ON = False
     
     if js_type == JS_EVENT_BUTTON:
         if js_value == 1:
             if js_number == btn_a:
-                if PAUSE_MODE_ON == True and UP_ON == True:
-                    print "Resume"
-                    stop_viewer()
-                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                    PAUSE_MODE_ON = False
-                if PAUSE_MODE_ON == True and DOWN_ON == True:
-                    print "Kill"
-                    stop_viewer()
-                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
-                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
-                    close_fds(js_fds)
-                    sys.exit(0)
+                if PAUSE_MODE_ON == True:
+                    if MENU_INDEX == 1:
+                        print "Resume"
+                        stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        PAUSE_MODE_ON = False
+                    elif MENU_INDEX == 2:
+                        print "Kill"
+                        stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
+                        close_fds(js_fds)
+                        sys.exit(0)
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
@@ -480,15 +489,16 @@ def process_event(event):
             if PAUSE_MODE_ON == False:
                 #print "Select+Start Pushed"
                 PAUSE_MODE_ON = True;
-                UP_DOWN_ON = True;            # up
-                SELECT_BTN_ON = False;
-                START_BTN_ON = False;
+                MENU_INDEX = 1    # Resume
+                stop_viewer()
                 start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &");
 	
-	elif SELECT_BTN_ON == True and UP_ON == True:
-		print "OSD mode"
-    
+        elif SELECT_BTN_ON == True and UP_ON == True:
+            print "OSD mode"
+            if PAUSE_MODE_ON == False:
+            start_viewer()
+
     return True
 
 def main():
