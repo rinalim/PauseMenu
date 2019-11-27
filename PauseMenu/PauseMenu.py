@@ -486,8 +486,8 @@ def process_event(event):
                 return False
         
         if SELECT_BTN_ON == True and START_BTN_ON == True:
+            print "Select+Start Pushed"
             if PAUSE_MODE_ON == False:
-                print "Select+Start Pushed"
                 PAUSE_MODE_ON = True;
                 MENU_INDEX = 1    # Resume
                 stop_viewer()
