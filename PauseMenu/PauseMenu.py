@@ -299,7 +299,7 @@ def draw_picture(system, buttons):
     # Layout
     #cmd = "composite -geometry 300x160+8+185 " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + " images/bg_resume.png" + RESUME
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROL
-    run_cmd(cmd)
+    os.system(cmd)
 
     if system == "lr-fbneo":
         get_btn_layout(system, buttons)
@@ -310,19 +310,19 @@ def draw_picture(system, buttons):
             btn = btn_map[user_key[str(i)]]
             if btn != 'None':
                 cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:'" + btn + "' /tmp/text.png"
-                run_cmd(cmd)
+                os.system(cmd)
                 cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
-                run_cmd(cmd)
+                os.system(cmd)
 
     # Generate a PAUSE image
     cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
-    run_cmd(cmd)
+    os.system(cmd)
     # Generate a STOP image
     cmd = "composite " + PATH_PAUSEOPTION + "images/bg_stop.png " + RESUME + STOP
-    run_cmd(cmd)
+    os.system(cmd)
     # Generate a Controll image
     cmd = "composite " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_control.png" + CONTROL
-    run_cmd(cmd)
+    os.system(cmd)
 
 
 def control_on():
