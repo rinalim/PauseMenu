@@ -493,11 +493,14 @@ def process_event(event):
                 stop_viewer()
                 start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &");
-	
         elif SELECT_BTN_ON == True and UP_ON == True:
-            print "OSD mode"
+            print "OSD mode on"
             if PAUSE_MODE_ON == False:
-                start_viewer_osd()
+                start_viewer_osd()	
+	elif SELECT_BTN_ON == True and DOWN_ON == True:
+            print "OSD mode off"
+            if PAUSE_MODE_ON == False:
+                stop_viewer()
 
     return True
 
