@@ -80,6 +80,7 @@ def check_update():
     GAMECFG = CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp'
    
     if os.path.isfile(RESUME) == False:
+	print "no file"
         return True
     else:
         _time = os.path.getmtime(RESUME)
