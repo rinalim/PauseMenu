@@ -513,8 +513,8 @@ def main():
         while True:
             if is_running("bin/retroarch") == False:
                 time.sleep(1)    # wait for launching game
+		print "wait for launching game"
                 continue
-                break
         system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
         if check_update() == True:
