@@ -309,12 +309,11 @@ def draw_picture(system, buttons):
         for i in range(1,7):
             btn = btn_map[user_key[str(i)]]
             if btn != 'None':
-                cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:'" + btn + "' /tmp/text.png"
-                res = run_cmd(cmd)
-                print res
-                cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
+                cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:'" + btn + "' /home/pi/text.png"
                 os.system(cmd)
-        time.sleep(10)
+                print res
+                cmd = "composite -geometry " + pos[i-1] + " /home/pi/text.png" + CONTROL + CONTROL
+                os.system(cmd)
 
     # Generate a PAUSE image
     cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
