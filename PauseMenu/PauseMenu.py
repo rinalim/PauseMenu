@@ -419,7 +419,7 @@ def read_event(fd):
 def process_event(event):
 
     global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
-    global UP_ON, DOWN_ON
+    global UP_ON, DOWN_ON, MENU_INDEX
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
