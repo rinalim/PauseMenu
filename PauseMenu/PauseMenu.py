@@ -510,9 +510,10 @@ def main():
     if control_on() == True:
         system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-        load_layout()
-	buttons = get_info()
-        draw_picture(system, buttons)
+        if check_update() == True:
+	    load_layout()
+	    buttons = get_info()
+            draw_picture(system, buttons)
 
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
