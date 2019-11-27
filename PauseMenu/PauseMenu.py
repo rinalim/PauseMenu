@@ -32,7 +32,7 @@ RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'	
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
-VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center --win 980,864,300,160"
+VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center --win 980,864,1280,1024"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
@@ -80,12 +80,11 @@ def check_update():
     GAMECFG = CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp'
    
     if os.path.isfile(RESUME) == False:
-	print "no file"
         return True
     else:
         _time = os.path.getmtime(RESUME)
-        if _time < os.path.getmtime(PATH_PAUSEOPTION+'layout.cfg'):
-            return True
+        #if _time < os.path.getmtime(PATH_PAUSEOPTION+'layout.cfg'):
+        #    return True
         if os.path.isfile(XML+romname+'.xml') == True:
             if _time < os.path.getmtime(XML+romname+'.xml'):
                 return True
