@@ -310,7 +310,9 @@ def draw_picture(system, buttons):
             btn = btn_map[user_key[str(i)]]
             if btn != 'None':
                 cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:'" + btn + "' /tmp/text.png"
-                print run_cmd(cmd)
+                res = run_cmd(cmd)
+		print res
+		time.sleep(10)
                 cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
                 os.system(cmd)
 
