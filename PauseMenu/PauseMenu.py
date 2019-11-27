@@ -50,7 +50,8 @@ btn_a = -1
 
 PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
 XML = PATH_PAUSEOPTION+'xml/'
-FONT = 'NanumBarunGothic-Bold'
+FONT = "'NanumBarunGothic'"
+#FONT = "'NanumBarunGothic-Bold'"
 
 user_key = {}
 btn_map = {}
