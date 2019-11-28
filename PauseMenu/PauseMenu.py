@@ -78,7 +78,7 @@ kor_map = {
     " - ": "-"
 }
 sys_map = {
-    "lr-fbneo": "FinalBurn Neo"
+    "lr-fbneo": "FinalBurn Neo",
     "lr-fbalpha": "FB Alpha"
 }
 es_conf = 1
