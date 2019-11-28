@@ -106,19 +106,19 @@ def check_update():
         return True
     else:
         _time = os.path.getmtime(RESUME)
-        #if _time < os.path.getmtime(PATH_PAUSEOPTION+'layout.cfg'):
-        #    return True
-        if os.path.isfile(XML+romname+'.xml') == True:
+        if _time < os.path.getmtime(PATH_PAUSEOPTION+'layout.cfg'):
+            return True
+        elif os.path.isfile(XML+romname+'.xml') == True:
             if _time < os.path.getmtime(XML+romname+'.xml'):
                 return True
-        if os.path.isfile(CORECFG) == True:
+        elif os.path.isfile(CORECFG) == True:
             if _time < os.path.getmtime(CORECFG):
                 return True
-        if os.path.isfile(GAMECFG) == True:
+        elif os.path.isfile(GAMECFG) == True:
             if _time < os.path.getmtime(GAMECFG):
                 return True
         
-    #print 'No need to update PNG'
+    # print 'No need to update PNG'
     return False
 
 
@@ -131,8 +131,9 @@ def load_layout():
     #' | A B R |  | B A R |  | R B A | '
     #' ---------  ---------  --------- '
 
-    #f = open(PATH_PAUSEOPTION+"layout.cfg", 'r')
-    #es_conf = int(f.readline())
+    f = open(PATH_PAUSEOPTION+"layout.cfg", 'r')
+    es_conf = int(f.readline())
+    f.close()
     
     if es_conf == 1:
         user_key['1'] = 'x'
@@ -238,7 +239,6 @@ def get_btn_layout(system, buttons):
         f.close()
 
     #print btn_map
-
 
     # Convert from the FBA sequence to the normal sequence (0~5)
     convert = {}
