@@ -1,4 +1,4 @@
-ssaz#-*-coding: utf-8 -*-
+#-*-coding: utf-8 -*-
 #!/usr/bin/python
 
 import os, sys, struct, time, fcntl, termios, signal
