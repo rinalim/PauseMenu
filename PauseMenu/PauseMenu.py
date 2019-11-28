@@ -246,7 +246,7 @@ def get_btn_layout(system, buttons):
                 btn_map[words[0][8]] = words[1]  
         f.close()
 
-    #print btn_map
+    print btn_map
 
     # Convert from the FBA sequence to the normal sequence (0~5)
     convert = {}
