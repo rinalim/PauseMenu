@@ -227,10 +227,10 @@ def get_btn_layout(system, buttons):
         f.close()
 	
     #elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
-    elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' sys_map[system] + '.rmp') == True:
+    elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp') == True:
         print 'Use FinalBurn setting'
         #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
-        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' sys_map[system] + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp', 'r')
 	while True:
             line = f.readline()
             if not line: 
