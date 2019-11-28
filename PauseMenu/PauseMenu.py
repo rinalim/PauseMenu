@@ -146,7 +146,6 @@ def load_layout():
         user_key['4'] = 'a'
         user_key['5'] = 'b'
         user_key['6'] = 'r'
-	print "Use layout #1"
     elif es_conf == 2:
         user_key['1'] = 'y'
         user_key['2'] = 'x'
@@ -185,10 +184,12 @@ def get_info():
             if 'BUTTON' in i.get('name'):
                 btn = str(unicode(i.get('value')))
                 # Translate to Korean
-                for key in kor_map:
+                '''
+		for key in kor_map:
                     if key in btn:
                         btn = btn.replace(key, kor_map[key])
-                #btn = btn[:10]
+                '''
+		#btn = btn[:10]
                 buttons.append(btn)
                 print i.get('name'), btn
         for j in range(len(buttons), 6):
@@ -247,7 +248,7 @@ def get_btn_layout(system, buttons):
                 btn_map[words[0][8]] = words[1]  
         f.close()
 
-    print btn_map
+    #print btn_map
 
     # Convert from the FBA sequence to the normal sequence (0~5)
     convert = {}
