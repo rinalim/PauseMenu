@@ -184,11 +184,9 @@ def get_info():
             if 'BUTTON' in i.get('name'):
                 btn = str(unicode(i.get('value')))
                 # Translate to Korean
-                '''
 		for key in kor_map:
                     if key in btn:
                         btn = btn.replace(key, kor_map[key])
-                '''
 		#btn = btn[:10]
                 buttons.append(btn)
                 print i.get('name'), btn
@@ -208,11 +206,11 @@ def get_btn_layout(system, buttons):
     btn_map['l'] = '"10"'
     btn_map['r'] = '"11"'
 
-    if os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp') == True:
-    #if os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp') == True:
+    #if os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp') == True:
+    if os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp') == True:
         print 'Use game specific setting'
-        f = open(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp', 'r')
-        #f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp', 'r')
+        #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -323,11 +321,10 @@ def draw_picture(system, buttons):
         pos = ["90x25+62+68", "90x25+142+42", "90x25+222+19", "90x25+62+133", "90x25+142+108", "90x25+222+82"]
         for i in range(1,7):
             btn = btn_map[user_key[str(i)]]
-            print btn
             if btn != 'None':
-                cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:'" + btn + "' /temp/text.png"
+                cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
                 os.system(cmd)
-                cmd = "composite -geometry " + pos[i-1] + " /temp/text.png" + CONTROL + CONTROL
+                cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
                 os.system(cmd)
 
     # Generate a PAUSE image
