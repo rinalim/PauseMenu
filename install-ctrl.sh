@@ -18,4 +18,4 @@ echo '/usr/bin/python /opt/retropie/configs/all/PauseMenu/PauseMenu.py /dev/inpu
 chgrp -R -v pi /opt/retropie/configs/all/PauseMenu/
 chown -R -v pi /opt/retropie/configs/all/PauseMenu/
 
-python ./PauseMenu/setup.py /dev/input/js0
+python ./PauseMenu/setup.py /dev/input/js0 -control
