@@ -77,6 +77,10 @@ kor_map = {
     "Right": "오른쪽",
     " - ": "-"
 }
+sys_map = {
+    "lr-fbneo": "FinalBurn Neo"
+    "lr-fbalpha": "FB Alpha"
+}
 es_conf = 1
 romname = ""
 
@@ -202,9 +206,11 @@ def get_btn_layout(system, buttons):
     btn_map['l'] = '"10"'
     btn_map['r'] = '"11"'
 
-    if os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp') == True:
+    #if os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp') == True:
+    if os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp') == True:
         print 'Use game specific setting'
-        f = open(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp', 'r')
+        #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -220,10 +226,12 @@ def get_btn_layout(system, buttons):
                 btn_map[words[0][8]] = words[1]  
         f.close()
 	
-    elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
-        print 'Use FBA setting'
-        f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
-        while True:
+    #elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
+    elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' sys_map[system] + '.rmp') == True:
+        print 'Use FinalBurn setting'
+        #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' sys_map[system] + '.rmp', 'r')
+	while True:
             line = f.readline()
             if not line: 
                 break
@@ -306,7 +314,7 @@ def draw_picture(system, buttons):
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROL
     os.system(cmd)
 
-    if system == "lr-fbneo":
+    if system == "lr-fbneo" or system == "lr-fbalpha":
         get_btn_layout(system, buttons)
         # Configured button layout
         #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
@@ -517,7 +525,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname
+    global btn_select, btn_start, btn_a, romname, system
 
     # Draw control images
     if control_on() == True:
