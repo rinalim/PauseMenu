@@ -1,4 +1,4 @@
-#-*-coding: utf-8 -*-
+ssaz#-*-coding: utf-8 -*-
 #!/usr/bin/python
 
 import os, sys, struct, time, fcntl, termios, signal
@@ -323,6 +323,7 @@ def draw_picture(system, buttons):
         pos = ["90x25+62+68", "90x25+142+42", "90x25+222+19", "90x25+62+133", "90x25+142+108", "90x25+222+82"]
         for i in range(1,7):
             btn = btn_map[user_key[str(i)]]
+            print btn
             if btn != 'None':
                 cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:'" + btn + "' /temp/text.png"
                 os.system(cmd)
