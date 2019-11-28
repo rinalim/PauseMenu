@@ -146,6 +146,7 @@ def load_layout():
         user_key['4'] = 'a'
         user_key['5'] = 'b'
         user_key['6'] = 'r'
+	print "Use layout #1"
     elif es_conf == 2:
         user_key['1'] = 'y'
         user_key['2'] = 'x'
