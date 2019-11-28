@@ -50,11 +50,33 @@ btn_a = -1
 
 PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
 XML = PATH_PAUSEOPTION+'xml/'
-FONT = "'NanumBarunGothic'"
-#FONT = "'NanumBarunGothic-Bold'"
+FONT = "NanumBarunGothic-Bold"
 
 user_key = {}
 btn_map = {}
+kor_map = {
+    "Jab": "약",
+    "Strong": "중",
+    "Fierce": "강",
+    "Short": "약",
+    "Roundhouse": "강",
+    "Light": "약",
+    "Middle": "중",
+    "Heavy": "강",
+    "Punch": "펀치",
+    "Kick": "킥", 
+    "Attack": "공격",
+    "Jump": "점프",
+    "Select": "선택",
+    "Magic": "마법",
+    "Fire": "총알",
+    "Loop": "회전",
+    "Bubble": "방울",
+    "Left": "왼쪽",
+    "Center": "가운데",
+    "Right": "오른쪽",
+    " - ": "-"
+}
 es_conf = 1
 romname = ""
 
@@ -157,27 +179,9 @@ def get_info():
             if 'BUTTON' in i.get('name'):
                 btn = str(unicode(i.get('value')))
                 # Translate to Korean
-                btn = btn.replace("Jab", "약")
-                btn = btn.replace("Strong", "중")
-                btn = btn.replace("Fierce", "강")
-                btn = btn.replace("Short", "약")
-                btn = btn.replace("Roundhouse", "강")
-                btn = btn.replace("Light", "약")
-                btn = btn.replace("Middle", "중")
-                btn = btn.replace("Heavy", "강")
-                btn = btn.replace("Punch", "펀치")
-                btn = btn.replace("Kick", "킥")
-                btn = btn.replace("Attack", "공격")
-                btn = btn.replace("Jump", "점프")
-                btn = btn.replace("Select", "선택")
-                btn = btn.replace("Magic", "마법")
-                btn = btn.replace("Fire", "총알")
-                btn = btn.replace("Loop", "회전")
-                btn = btn.replace("Bubble", "방울")
-                btn = btn.replace("Left", "왼쪽")
-                btn = btn.replace("Center", "가운데")
-                btn = btn.replace("Right", "오른쪽")
-                btn = btn.replace(" - ", "-")
+                for key in kor_map:
+                    if key in btn:
+                        btn = btn.replace(key, kor_map[key])
                 #btn = btn[:10]
                 buttons.append(btn)
                 print i.get('name'), btn
@@ -310,7 +314,7 @@ def draw_picture(system, buttons):
         for i in range(1,7):
             btn = btn_map[user_key[str(i)]]
             if btn != 'None':
-                cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:'" + btn + "' '/temp/text.png'"
+                cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /temp/text.png"
                 os.system(cmd)
                 cmd = "composite -geometry " + pos[i-1] + " /temp/text.png" + CONTROL + CONTROL
                 os.system(cmd)
