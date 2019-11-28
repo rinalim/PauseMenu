@@ -46,6 +46,19 @@ def load_es_cfg():
 
     return tags[dev_select-1].attrib['deviceName']
 
+def set_layout():
+
+    print ' -(1)-----  -(2)-----  -(3)----- '
+    print ' | X Y L |  | Y X L |  | L Y X | '
+    print ' | A B R |  | B A R |  | R B A | '
+    print ' ---------  ---------  --------- '
+
+    es_conf = input('\nSelect your joystick layout: ')
+    
+    f = open(PATH_PAUSEMENU + "/control/layout.cfg", 'w')
+    f.write(str(es_conf))
+    f.close()
+
 def signal_handler(signum, frame):
     close_fds(js_fds)
     sys.exit(0)
@@ -106,6 +119,9 @@ def process_event(event):
 
 
 dev_name = load_es_cfg()
+
+if len(sys.argv) > 2 and sys.argv[2] == '-control':
+    set_layout()
 
 btn_select = -1
 btn_start = -1
