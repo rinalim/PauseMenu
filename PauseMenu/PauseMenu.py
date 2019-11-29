@@ -313,7 +313,7 @@ def draw_text(text, outfile):
         font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
         print font.getsize(unicode(btn))[0]
     '''
-    image = Image.new('RGBA', (250, 55), (255, 0, 0, 0))
+    image = Image.new('RGBA', (font.getsize(unicode(btn))[0], font.getsize(unicode(btn))[1]), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     draw.fontmode = "1"
     '''
@@ -340,7 +340,7 @@ def draw_picture(system, buttons):
         get_btn_layout(system, buttons)
         # Configured button layout
         #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
-        pos = ["90x25+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
+        pos = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
         for i in range(1,7):
             btn = btn_map[user_key[str(i)]]
             if btn != 'None':
