@@ -311,9 +311,9 @@ def draw_text(text, outfile):
     while font.getsize(unicode(text))[0] <= 50:
         fontsize -= 1
         font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
-        print font.getsize(unicode(btn))[0]
+        print font.getsize(unicode(text))[0]
     '''
-    image = Image.new('RGBA', (font.getsize(unicode(btn))[0], font.getsize(unicode(btn))[1]), (0, 0, 0, 0))
+    image = Image.new('RGBA', (font.getsize(unicode(text))[0], font.getsize(unicode(text))[1]), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     draw.fontmode = "1"
     '''
