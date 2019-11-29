@@ -2,6 +2,7 @@
 #!/usr/bin/python
 
 import os, sys, struct, time, fcntl, termios, signal
+import curses, errno
 from pyudev import Context
 from subprocess import *
 import xml.etree.ElementTree as ET
