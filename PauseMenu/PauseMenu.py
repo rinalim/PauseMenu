@@ -2,10 +2,10 @@
 #!/usr/bin/python
 
 import os, sys, struct, time, fcntl, termios, signal
-import curses, errno, re
 from pyudev import Context
 from subprocess import *
 import xml.etree.ElementTree as ET
+from PIL import Image, ImageDraw, ImageFont
 
 #    struct js_event {
 #        __u32 time;     /* event timestamp in milliseconds */
@@ -303,6 +303,27 @@ def get_location():
                 return " -o 90"
     return ""
 
+def draw_text(text, outfile):
+    font_size = 54
+    font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
+    '''
+    while font.getsize(unicode(text))[0] <= 50:
+        fontsize -= 1
+        font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
+        print font.getsize(unicode(btn))[0]
+    '''
+    image = Image.new('RGBA', (250, 55), (255, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    draw.fontmode = "1"
+    '''
+    draw.text((0,0), unicode(text), font=font, fill="white")
+    draw.text((1,0), unicode(text), font=font, fill="white")
+    draw.text((0,1), unicode(text), font=font, fill="white")
+    draw.text((1,1), unicode(text), font=font, fill="white")
+    '''
+    draw.text((0,0), unicode(text), font=font, fill="black")
+    image.save(outfile)
+
 def draw_picture(system, buttons):
 
     CONTROL = " " + PATH_PAUSEOPTION + romname + '_control.png'
@@ -322,8 +343,9 @@ def draw_picture(system, buttons):
         for i in range(1,7):
             btn = btn_map[user_key[str(i)]]
             if btn != 'None':
-                cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
-                print cmd
+                #cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
+                #run_cmd(cmd)
+                draw_text(btn, "/tmp/text.png")
 		os.system(cmd)
                 cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
                 os.system(cmd)
