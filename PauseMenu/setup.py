@@ -56,7 +56,7 @@ def set_layout():
     es_conf = input('\nSelect your joystick layout: ')
     
     f = open(PATH_PAUSEMENU + "/control/layout.cfg", 'w')
-    f.write(str(es_conf))
+    f.write(str(es_conf)+'\n')
     f.close()
 
 def load_retroarch_cfg(dev_name):
@@ -78,7 +78,7 @@ def load_retroarch_cfg(dev_name):
     f.close()
     
     f = open(PATH_PAUSEMENU + "/control/layout.cfg", 'a')
-    f.write(str(retroarch_key))
+    f.write(str(retroarch_key)+'\n')
     f.close()
 
 def signal_handler(signum, frame):
