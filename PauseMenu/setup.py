@@ -38,7 +38,6 @@ def load_es_cfg():
     #tag = root.find('inputConfig')
     tags = root.findall('inputConfig')
     num = 1
-    print "\n\n"
     for i in tags:
         print str(num) + ". " + i.attrib['deviceName']
         num = num+1
