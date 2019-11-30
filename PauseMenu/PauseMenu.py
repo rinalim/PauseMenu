@@ -316,6 +316,7 @@ def get_location():
 
 def get_turbo_key():
     rom_config = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'")+".cfg"
+    print rom_config
     if os.path.isfile(rom_config) == True:
         line = run_cmd("cat " + rom_config + " | grep input_player1_turbo_btn")
 	print line
