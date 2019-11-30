@@ -364,7 +364,7 @@ def draw_picture(system, buttons):
             if btn != 'None':
                 # check turbo key
                 if retroarch_key[user_key[str(i)]] == get_turbo_key():
-                    btn = btn+"**"
+                    btn = btn+"*"
                 #cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
                 #run_cmd(cmd)
                 draw_text(btn, "/tmp/text.png")
