@@ -60,9 +60,9 @@ def set_layout():
     f.close()
 
 def load_retroarch_cfg(dev_name):
-
     print 'Device Name: ', dev_name, '\n'
-
+    
+    retroarch_key = {}
     f = open(RETROARCH_CFG + dev_name + '.cfg', 'r')
     while True:
         line = f.readline()
