@@ -7,6 +7,7 @@ from pyudev import Context
 from subprocess import *
 import xml.etree.ElementTree as ET
 from PIL import Image, ImageDraw, ImageFont
+import ast
 
 #    struct js_event {
 #        __u32 time;     /* event timestamp in milliseconds */
@@ -53,6 +54,7 @@ PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
 XML = PATH_PAUSEOPTION+'xml/'
 FONT = "NanumBarunGothic-Bold"
 
+retroarch_key = {}
 user_key = {}
 btn_map = {}
 kor_map = {
@@ -126,10 +128,15 @@ def check_update():
     # print 'No need to update PNG'
     return False
 
+def control_on():
+    if len(sys.argv) > 2 and sys.argv[2] == '-control':
+        return True
+    else:
+        return False
 
 def load_layout():
 
-    global es_conf
+    global es_conf, retroarch_key
 
     #' -(1)-----  -(2)-----  -(3)----- '
     #' | X Y L |  | Y X L |  | L Y X | '
@@ -138,8 +145,7 @@ def load_layout():
 
     f = open(PATH_PAUSEOPTION+"layout.cfg", 'r')
     es_conf = int(f.readline())
-    f.close()
-    
+
     if es_conf == 1:
         user_key['1'] = 'x'
         user_key['2'] = 'y'
@@ -161,6 +167,10 @@ def load_layout():
         user_key['4'] = 'r'
         user_key['5'] = 'b'
         user_key['6'] = 'a'
+
+    if control_on() == True:
+        retroarch_key = ast.literal_eval(f.readline())
+    f.close()
 
 def get_info():
 
@@ -304,6 +314,14 @@ def get_location():
                 return " -o 90"
     return ""
 
+def get_turbo_key():
+    rom_config = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'")+".cfg"
+    if os.path.isfile(rom_config) == True:
+        line = run_cmd("cat " + rom_config + " | grep input_player1_turbo_btn")
+        if len(line.split()) == 3:
+            return line.split[2]
+    return '-1'
+
 def draw_text(text, outfile):
     font_size = 54
     font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
@@ -344,6 +362,9 @@ def draw_picture(system, buttons):
         for i in range(1,7):
             btn = btn_map[user_key[str(i)]]
             if btn != 'None':
+                # check turbo key
+                if retrocarch_key[user_key[str(i)]] == get_turbo_key():
+                    btn = btn+"**"
                 #cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
                 #run_cmd(cmd)
                 draw_text(btn, "/tmp/text.png")
@@ -360,13 +381,6 @@ def draw_picture(system, buttons):
     cmd = "composite " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_control.png" + CONTROL
     os.system(cmd)
 
-
-def control_on():
-    if len(sys.argv) > 2 and sys.argv[2] == '-control':
-        return True
-    else:
-        return False
-    
 def start_viewer():
     if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
@@ -558,8 +572,8 @@ def main():
                 continue
             else:
                 break
-        system = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $10}'").split("/")[4]
-        romname = run_cmd("ps -ef | grep emulators | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
+        system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
+        romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
         if check_update() == True:
 	    load_layout()
 	    buttons = get_info()
