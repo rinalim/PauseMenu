@@ -318,9 +318,8 @@ def get_turbo_key():
     rom_config = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").replace("\n","")+".cfg"
     if os.path.isfile(rom_config) == True:
         line = run_cmd("cat " + rom_config + " | grep input_player1_turbo_btn")
-	print line
         if len(line.split()) == 3:
-            return line.split[2]
+            return line.split()[2]
     return '-1'
 
 def draw_text(text, outfile):
