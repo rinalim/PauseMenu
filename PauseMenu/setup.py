@@ -59,6 +59,28 @@ def set_layout():
     f.write(str(es_conf))
     f.close()
 
+def load_retroarch_cfg(dev_name):
+
+    print 'Device Name: ', dev_name, '\n'
+
+    f = open(RETROARCH_CFG + dev_name + '.cfg', 'r')
+    while True:
+        line = f.readline()
+        if not line: 
+            break
+        #line = line.replace('\"','')
+        line = line.replace('\n','')
+        line = line.replace('input_','')
+        line = line.replace('_btn','')
+        line = line.replace('_axis','')
+        words = line.split()
+        retroarch_key[words[0]] = words[2].replace('"','')
+    f.close()
+    
+    f = open(PATH_PAUSEMENU + "/control/layout.cfg", 'a')
+    f.write(str(retroarch_key))
+    f.close()
+
 def signal_handler(signum, frame):
     close_fds(js_fds)
     sys.exit(0)
