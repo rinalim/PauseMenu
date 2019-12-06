@@ -239,7 +239,7 @@ def get_btn_layout(system, buttons):
 	
     #elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
     elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp') == True:
-        print 'Use FinalBurn setting'
+        print 'Use FinalBurn remap setting'
         #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
         f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp', 'r')
 	while True:
@@ -375,9 +375,9 @@ def draw_picture(system, buttons):
     cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
     os.system(cmd)
     # Generate a STOP image
-    cmd = "composite " + PATH_PAUSEOPTION + "images/bg_stop.png " + RESUME + STOP
+    cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_stop.png" + STOP
     os.system(cmd)
-    # Generate a Controll image
+    # Generate a Controller popup image
     cmd = "composite " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_control.png" + CONTROL
     os.system(cmd)
 
