@@ -2,11 +2,11 @@
 # https://github.com/RetroPie/RetroPie-Setup/blob/master/scriptmodules/supplementary/runcommand/joy2key.py
 # https://github.com/sana2dang/PauseMode
 
+sudo apt-get install libjpeg8 -y
+
 rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
 cp -f -r ./PauseMenu /opt/retropie/configs/all/
-
-sudo apt-get install libjpeg8 -y
 
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
