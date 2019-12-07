@@ -389,9 +389,10 @@ def start_viewer():
     os.system(VIEWER + get_location() + " &")
 	
 def start_viewer_osd():
-    if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_control.png") == True :
-        os.system("echo " + PATH_PAUSEOPTION + romname + "_control.png > /tmp/pause.txt")
-        os.system(VIEWER_OSD + " &")
+    if is_running("omxiv-pause") == False:
+	if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_control.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + romname + "_control.png > /tmp/pause.txt")
+            os.system(VIEWER_OSD + " &")
 
 def stop_viewer():
 	if is_running("omxiv-pause") == True:
