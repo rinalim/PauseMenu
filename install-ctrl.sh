@@ -2,6 +2,7 @@
 # https://github.com/RetroPie/RetroPie-Setup/blob/master/scriptmodules/supplementary/runcommand/joy2key.py
 # https://github.com/sana2dang/PauseMode
 
+sudo apt-get install libjpeg8 -y
 sudo apt-get install imagemagick -y
 sudo apt-get install fonts-nanum -y
 sudo apt-get install fonts-nanum-extra -y
