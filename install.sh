@@ -6,6 +6,8 @@ rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
 cp -f -r ./PauseMenu /opt/retropie/configs/all/
 
+sudo apt-get install libjpeg8 -y
+
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
 sudo sed -i '/PauseMenu.py/d' /opt/retropie/configs/all/runcommand-onstart.sh
