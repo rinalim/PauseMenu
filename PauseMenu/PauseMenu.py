@@ -102,12 +102,10 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
-def check_update():
+def check_update(system):
     RESUME = PATH_PAUSEOPTION + romname + '_resume.png'
-    #CORECFG = CONFIG_DIR + 'fba/FB Alpha/FB Alpha.rmp'
-    #GAMECFG = CONFIG_DIR + 'fba/FB Alpha/' + romname + '.rmp'
-    CORECFG = CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp'
-    GAMECFG = CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp'
+    CORECFG = CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp'
+    GAMECFG = CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp'
    
     if os.path.isfile(RESUME) == False:
         return True
@@ -574,7 +572,7 @@ def main():
                 break
         system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-        if check_update() == True:
+        if check_update(system) == True:
 	    load_layout()
 	    buttons = get_info()
             draw_picture(system, buttons)
