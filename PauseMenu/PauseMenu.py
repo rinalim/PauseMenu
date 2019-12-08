@@ -573,7 +573,7 @@ def main():
     if control_arg() == True:
         while True:
             if is_running("bin/retroarch") == True:
-                is_finalburn = True
+                is_retroarch = True
                 break
             elif is_running("bin/advmame") == True:
                 break
