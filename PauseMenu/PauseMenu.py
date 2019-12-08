@@ -328,12 +328,6 @@ def get_turbo_key():
 def draw_text(text, outfile):
     font_size = 54
     font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
-    '''
-    while font.getsize(unicode(text))[0] <= 50:
-        fontsize -= 1
-        font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
-        print font.getsize(unicode(text))[0]
-    '''
     image = Image.new('RGBA', (font.getsize(unicode(text))[0], font.getsize(unicode(text))[1]), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     draw.fontmode = "1"
@@ -499,7 +493,7 @@ def process_event(event):
                     MENU_INDEX = 1
                     change_viewer("UP")
                 elif SELECT_BTN_ON == True:
-                    print "OSD mode on"
+                    #print "OSD mode on"
                     start_viewer_osd()	
             if js_value >= JS_MAX * JS_THRESH:
                 #print "Down pushed"
@@ -509,7 +503,7 @@ def process_event(event):
                     MENU_INDEX = 2
                     change_viewer("DOWN")
                 elif SELECT_BTN_ON == True:
-                    print "OSD mode off"
+                    #print "OSD mode off"
                     stop_viewer()
 	    if js_value == 0:
 		UP_ON = False
@@ -520,12 +514,12 @@ def process_event(event):
             if js_number == btn_a:
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1:
-                        print "Resume"
+                        #print "Resume"
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 2:
-                        print "Kill"
+                        #print "Kill"
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
@@ -546,7 +540,7 @@ def process_event(event):
                 return False
         
         if SELECT_BTN_ON == True and START_BTN_ON == True:
-            print "Select+Start Pushed"
+            #print "Select+Start Pushed"
             if PAUSE_MODE_ON == False:
                 PAUSE_MODE_ON = True;
                 MENU_INDEX = 1    # Resume
@@ -554,11 +548,11 @@ def process_event(event):
                 start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &");
         elif SELECT_BTN_ON == True and UP_ON == True:
-            print "OSD mode on"
+            #print "OSD mode on"
             if PAUSE_MODE_ON == False:
                 start_viewer_osd()	
 	elif SELECT_BTN_ON == True and DOWN_ON == True:
-            print "OSD mode off"
+            #print "OSD mode off"
             if PAUSE_MODE_ON == False:
                 stop_viewer()
 
