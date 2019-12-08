@@ -566,7 +566,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, system
+    global btn_select, btn_start, btn_a, romname, system, CONTROL_VIEW
 
     # Draw control images
     is_retroarch = False
