@@ -577,7 +577,7 @@ def main():
                 break
             elif is_running("bin/advmame") == True:
                 break
-            else
+            else:
                 time.sleep(1)    # wait for launching game
 
     if is_retroarch == True:
