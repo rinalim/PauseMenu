@@ -41,6 +41,8 @@ START_BTN_ON = False
 UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
+
+CONTROL_VIEW = False
 MENU_INDEX = 0
 
 event_format = 'IhBB'
@@ -103,6 +105,10 @@ def run_cmd(cmd):
     return output
 
 def check_update(system):
+    
+    if system != 'lr-fbneo' and system != 'lr-fbalpha':
+        return False
+    
     RESUME = PATH_PAUSEOPTION + romname + '_resume.png'
     CORECFG = CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp'
     GAMECFG = CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp'
@@ -126,7 +132,7 @@ def check_update(system):
     # print 'No need to update PNG'
     return False
 
-def control_on():
+def control_arg():
     if len(sys.argv) > 2 and sys.argv[2] == '-control':
         return True
     else:
@@ -166,8 +172,7 @@ def load_layout():
         user_key['5'] = 'b'
         user_key['6'] = 'a'
 
-    if control_on() == True:
-        retroarch_key = ast.literal_eval(f.readline())
+    retroarch_key = ast.literal_eval(f.readline())
     f.close()
 
 def get_info():
@@ -380,7 +385,7 @@ def draw_picture(system, buttons):
     os.system(cmd)
 
 def start_viewer():
-    if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
+    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
@@ -390,7 +395,7 @@ def start_viewer():
 	
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-	if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_control.png") == True :
+	if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_control.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_control.png > /tmp/pause.txt")
             os.system(VIEWER_OSD + " &")
 
@@ -400,12 +405,12 @@ def stop_viewer():
     
 def change_viewer(position):
     if position == "UP":
-        if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
 	else:
             os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     if position == "DOWN":
-        if control_on() == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_stop.png > /tmp/pause.txt")
 	else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
@@ -564,19 +569,25 @@ def main():
     global btn_select, btn_start, btn_a, romname, system
 
     # Draw control images
-    if control_on() == True:
+    is_retroarch = False
+    if control_arg() == True:
         while True:
-            if is_running("bin/retroarch") == False:
-                time.sleep(1)    # wait for launching game
-                continue
-            else:
+            if is_running("bin/retroarch") == True:
+                is_finalburn = True
                 break
+            elif is_running("bin/advmame") == True:
+                break
+            else
+                time.sleep(1)    # wait for launching game
+
+    if is_retroarch == True:
         system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
         if check_update(system) == True:
-	    load_layout()
-	    buttons = get_info()
+	        load_layout()
+	        buttons = get_info()
             draw_picture(system, buttons)
+            CONTROL_VIEW = True
 
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
