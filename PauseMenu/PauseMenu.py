@@ -661,11 +661,11 @@ def main():
 
     if is_retroarch == True:
         system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
-        if system == "lr-fbneo" or system == "lr-fbalpha":
+        romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
+	if system == "lr-fbneo" or system == "lr-fbalpha":
             CONTROL_VIEW = True
             buttons, button_num = get_info()
             if check_update(system) == True:
-                romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
                 load_layout()
                 draw_picture(system, buttons, button_num)
                 
