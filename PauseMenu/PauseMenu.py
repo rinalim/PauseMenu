@@ -201,7 +201,7 @@ def get_info():
             if 'BUTTON' in i.get('name'):
                 btn = str(unicode(i.get('value')))
                 # Translate to Korean
-		        for key in kor_map:
+                for key in kor_map:
                     if key in btn:
                         btn = btn.replace(key, kor_map[key])
                 #btn = btn[:10]
