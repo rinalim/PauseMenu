@@ -434,8 +434,8 @@ def draw_picture(system, buttons, button_num):
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
             elif i == 4:
-                print_map['1'] = buttons[2]
-                print_map['2'] = buttons[1]
+                print_map['1'] = buttons[1]
+                print_map['2'] = buttons[2]
                 print_map['3'] = 'None'
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[0]+'*'
