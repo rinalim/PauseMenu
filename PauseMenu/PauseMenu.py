@@ -347,7 +347,7 @@ def draw_text(text, outfile):
 def draw_picture(system, buttons, button_num):
 
     CONTROL = " " + PATH_PAUSEOPTION + romname + '_control.png'
-    CONTROLx = " " + PATH_PAUSEOPTION+'result/' + romname + '_control'
+    CONTROLx = " " + PATH_PAUSEOPTION + romname + '_control'
     RESUME = " " + PATH_PAUSEOPTION + romname + '_resume.png'
     STOP = " " + PATH_PAUSEOPTION + romname + '_stop.png'
 
