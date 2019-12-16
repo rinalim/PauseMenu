@@ -51,6 +51,7 @@ js_fds = []
 btn_select = -1
 btn_start = -1
 btn_a = -1
+button_num = 0
 
 PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
 XML = PATH_PAUSEOPTION+'xml/'
@@ -182,6 +183,7 @@ def get_info():
         print 'No xml found'
         name = romname
         buttons = ['A 버튼', 'B 버튼', 'C 버튼', 'D 버튼', 'None', 'None']
+        button_num = 4
     else:
         doc = ET.parse(XML+romname+'.xml')
         game = doc.getroot()
@@ -194,20 +196,22 @@ def get_info():
         controls = player.find('controls')
         labels = player.findall('labels')
         buttons = []
+        button_num = 0
         for i in labels[0]:
             if 'BUTTON' in i.get('name'):
                 btn = str(unicode(i.get('value')))
                 # Translate to Korean
-		for key in kor_map:
+		        for key in kor_map:
                     if key in btn:
                         btn = btn.replace(key, kor_map[key])
-		#btn = btn[:10]
+                #btn = btn[:10]
                 buttons.append(btn)
+                button_num = button_num+1
                 print i.get('name'), btn
         for j in range(len(buttons), 6):
             buttons.append("None")
     
-    return buttons
+    return buttons, button_num
 
 
 def get_btn_layout(system, buttons):
@@ -340,9 +344,10 @@ def draw_text(text, outfile):
     draw.text((0,0), unicode(text), font=font, fill="black")
     image.save(outfile)
 
-def draw_picture(system, buttons):
+def draw_picture(system, buttons, button_num):
 
     CONTROL = " " + PATH_PAUSEOPTION + romname + '_control.png'
+    CONTROLx = " " + PATH_PAUSEOPTION+'result/' + romname + '_control'
     RESUME = " " + PATH_PAUSEOPTION + romname + '_resume.png'
     STOP = " " + PATH_PAUSEOPTION + romname + '_stop.png'
 
@@ -351,23 +356,22 @@ def draw_picture(system, buttons):
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROL
     os.system(cmd)
 
-    if system == "lr-fbneo" or system == "lr-fbalpha":
-        get_btn_layout(system, buttons)
-        # Configured button layout
-        #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
-        pos = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
-        for i in range(1,7):
-            btn = btn_map[user_key[str(i)]]
-            if btn != 'None':
-                # check turbo key
-                if retroarch_key[user_key[str(i)]] == get_turbo_key():
-                    btn = btn+"*"
-                #cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
-                #run_cmd(cmd)
-                draw_text(btn, "/tmp/text.png")
-                cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
-                os.system(cmd)
-
+    get_btn_layout(system, buttons)
+    # Configured button layout
+    #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
+    pos = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
+    for i in range(1,7):
+        btn = btn_map[user_key[str(i)]]
+        if btn != 'None':
+            # check turbo key
+            if retroarch_key[user_key[str(i)]] == get_turbo_key():
+                btn = btn+"*"
+            #cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
+            #run_cmd(cmd)
+            draw_text(btn, "/tmp/text.png")
+            cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
+            os.system(cmd)
+            
     # Generate a PAUSE image
     cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
     os.system(cmd)
@@ -377,6 +381,87 @@ def draw_picture(system, buttons):
     # Generate a Controller popup image
     cmd = "composite " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_control.png" + CONTROL
     os.system(cmd)
+    
+    # Generate control setup images
+    # capcom fighting games
+    if button_num == 6: 
+        for i in range(1,3):
+            print_map = {}
+            if i == 1:
+                print_map['1'] = buttons[0]
+                print_map['2'] = buttons[1]
+                print_map['3'] = buttons[2]
+                print_map['4'] = buttons[3]
+                print_map['5'] = buttons[4]
+                print_map['6'] = buttons[5] 
+            elif i == 2:
+                print_map['1'] = buttons[3]
+                print_map['2'] = buttons[4]
+                print_map['3'] = buttons[5]
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = buttons[2] 
+            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROLx+str(i)+".png"
+            run_cmd(cmd)
+            for j in range(1,7):
+                btn = print_map[str(j)]
+                if btn != 'None':
+                    draw_text(btn, "/tmp/text.png")
+                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + CONTROLx+str(i)+".png" + CONTROLx+str(i)+".png"
+                    run_cmd(cmd)
+    else:
+        for i in range(1,7):
+            print_map = {}
+            if i == 1:
+                print_map['1'] = buttons[2]
+                print_map['2'] = buttons[3]
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = 'None' 
+            elif i == 2:
+                print_map['1'] = buttons[0]
+                print_map['2'] = buttons[1]
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[2]
+                print_map['5'] = buttons[3]
+                print_map['6'] = 'None'
+            elif i == 3:
+                print_map['1'] = buttons[3]
+                print_map['2'] = 'None'
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = buttons[2]
+            elif i == 4:
+                print_map['1'] = buttons[2]
+                print_map['2'] = buttons[1]
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[0]+'*'
+                print_map['6'] = 'None' 
+            elif i == 5:
+                print_map['1'] = buttons[0]
+                print_map['2'] = buttons[0]+'*'
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[1]
+                print_map['5'] = buttons[2]
+                print_map['6'] = 'None'
+            elif i == 6:
+                print_map['1'] = buttons[0]+'*'
+                print_map['2'] = buttons[1]
+                print_map['3'] = buttons[2]
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = buttons[2]
+            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROLx+str(i)+".png"
+            run_cmd(cmd)
+            for j in range(1,7):
+                btn = print_map[str(j)]
+                if btn != 'None':
+                    draw_text(btn, "/tmp/text.png")
+                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + CONTROLx+str(i)+".png" + CONTROLx+str(i)+".png"
+                    run_cmd(cmd)
 
 def start_viewer():
     if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
@@ -560,7 +645,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, system, CONTROL_VIEW
+    global btn_select, btn_start, btn_a, romname, system, button_num, CONTROL_VIEW
 
     # Draw control images
     is_retroarch = False
@@ -576,13 +661,14 @@ def main():
 
     if is_retroarch == True:
         system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
-        romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-        if check_update(system) == True:
-            load_layout()
-            buttons = get_info()
-            draw_picture(system, buttons)
+        if system == "lr-fbneo" or system == "lr-fbalpha":
             CONTROL_VIEW = True
-
+            buttons, button_num = get_info()
+            if check_update(system) == True:
+                romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
+                load_layout()
+                draw_picture(system, buttons, button_num)
+                
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
     f = open(PATH_PAUSEMENU + "button.cfg", 'r')
