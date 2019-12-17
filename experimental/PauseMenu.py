@@ -662,7 +662,7 @@ def process_event(event):
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
                         close_fds(js_fds)
                         sys.exit(0)
-                    elif MENU_INDEX == 2:
+                    elif MENU_INDEX == 3:
                         #print "Return"
                         change_viewer("RESUME")
                         os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
