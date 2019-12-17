@@ -501,7 +501,7 @@ def start_viewer():
 	
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-	    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
+	if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_osd.png > /tmp/pause.txt")
             os.system(VIEWER_OSD + get_location() +" &")
 
