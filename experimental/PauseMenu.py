@@ -90,12 +90,6 @@ sys_map = {
 es_conf = 1
 romname = ""
 
-capcom_fight = [
-    'mshvsf', 'vsav', 
-    'sfa', 'sfa2', 'sfa3', 
-    'sf2', 'sf2ce', 'ssf2',
-    'sfiii', 'sfiii3'
-    ]
 capcom_dd = ['ddtod', 'ddsom']
 
 
@@ -212,7 +206,7 @@ def get_info():
             buttons.append("None")
     return buttons, button_num
 
-def get_btn_layout(system, buttons):
+def get_btn_layout(system, buttons, button_num):
 
     # FBA button sequence   
     btn_map['b'] = '"0"'
@@ -267,7 +261,7 @@ def get_btn_layout(system, buttons):
     # Convert from the FBA sequence to the normal sequence (0~5)
     convert = {}
 
-    if romname in capcom_fight:
+    if button_num == 6:
         convert['"0"'] = 3
         convert['"8"'] = 4
         convert['"1"'] = 0
@@ -354,7 +348,7 @@ def draw_picture(system, buttons, button_num):
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROL
     os.system(cmd)
 
-    get_btn_layout(system, buttons)
+    get_btn_layout(system, buttons, button_num)
     # Configured button layout
     #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
     pos = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
