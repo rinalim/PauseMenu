@@ -522,8 +522,8 @@ def change_viewer(position):
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
     elif position == "RETURN":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_stop.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + "bg_stop.png > /tmp/pause.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_return.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + "bg_return.png > /tmp/pause.txt")
     elif position == "SAVE":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_save.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + "bg_save.png > /tmp/pause.txt")
@@ -608,6 +608,11 @@ def process_event(event):
                         LAYOUT_INDEX = 1
             if js_value >= JS_MAX * JS_THRESH:
                 print "Right pushed"
+                if PAUSE_MODE_ON == True:                     
+                    if MENU_INDEX == 1 or MENU_INDEX == 2:
+                        change_viewer("RETURN")
+                        MENU_INDEX = 3
+                        LAYOUT_INDEX = 1
         elif js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 print "Up pushed"
