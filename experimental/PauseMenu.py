@@ -210,9 +210,7 @@ def get_info():
                 print i.get('name'), btn
         for j in range(len(buttons), 6):
             buttons.append("None")
-    
     return buttons, button_num
-
 
 def get_btn_layout(system, buttons):
 
@@ -383,8 +381,7 @@ def draw_picture(system, buttons, button_num):
     os.system(cmd)
     
     # Generate control setup images
-    # capcom fighting games
-    if button_num == 6: 
+    if button_num == 6:     # capcom fighting games
         for i in range(1,3):
             print_map = {}
             if i == 1:
@@ -408,6 +405,38 @@ def draw_picture(system, buttons, button_num):
                 if btn != 'None':
                     draw_text(btn, "/tmp/text.png")
                     cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + CONTROLx+str(i)+".png" + CONTROLx+str(i)+".png"
+                    run_cmd(cmd)
+    elif romname in capcom_dd:     # capcom d&d games
+        for i in range(1,4):
+            print_map = {}
+            if i == 1:
+                print_map['1'] = buttons[3]
+                print_map['2'] = buttons[2]
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = 'None' 
+            elif i == 2:
+                print_map['1'] = buttons[0]
+                print_map['2'] = buttons[1]
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[3]
+                print_map['5'] = buttons[2]
+                print_map['6'] = 'None'
+            elif i == 3:
+                print_map['1'] = buttons[2]
+                print_map['2'] = 'None'
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = buttons[3]
+            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
+            run_cmd(cmd)
+            for j in range(1,7):
+                btn = print_map[str(j)]
+                if btn != 'None':
+                    draw_text(btn, "/tmp/text.png")
+                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     run_cmd(cmd)
     else:
         for i in range(1,7):
