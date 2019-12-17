@@ -511,22 +511,22 @@ def stop_viewer():
     
 def change_viewer(position):
     if position == "RESUME":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_resume.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
-            #os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
+            os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     elif position == "STOP":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "bg_stop.png > /tmp/pause.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_stop.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + "bg_stop.png > /tmp/pause.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
     elif position == "RETURN":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "bg_return.png > /tmp/pause.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_stop.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + "bg_stop.png > /tmp/pause.txt")
     elif position == "SAVE":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "bg_save.png > /tmp/pause.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_save.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + "bg_save.png > /tmp/pause.txt")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
@@ -600,6 +600,7 @@ def process_event(event):
             UP_ON = False
             DOWN_ON = False
             if js_value <= JS_MIN * JS_THRESH:
+		print "Right pushed"
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1 or MENU_INDEX == 2:
                         change_viewer("RETURN")
@@ -609,7 +610,7 @@ def process_event(event):
                 print "Right pushed"
         elif js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
-                #print "Up pushed"
+                print "Up pushed"
                 UP_ON = True
                 DOWN_ON = False
                 if PAUSE_MODE_ON == True:
@@ -623,7 +624,7 @@ def process_event(event):
                     #print "OSD mode on"
                     start_viewer_osd()	
             if js_value >= JS_MAX * JS_THRESH:
-                #print "Down pushed"
+                print "Down pushed"
                 DOWN_ON = True
                 UP_ON = False
                 if PAUSE_MODE_ON == True:
