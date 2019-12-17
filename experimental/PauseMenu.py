@@ -33,6 +33,7 @@ CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'	
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center"
+VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 200 -l 30002 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
 VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center --win 724,608,1024,768"
 
@@ -44,6 +45,7 @@ PAUSE_MODE_ON = False
 
 CONTROL_VIEW = False
 MENU_INDEX = 0
+LAYOUT_INDEX = 0
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
@@ -338,14 +340,14 @@ def draw_text(text, outfile):
 
 def draw_picture(system, buttons, button_num):
 
-    CONTROL = " " + PATH_PAUSEOPTION + romname + '_control.png'
-    CONTROLx = " " + PATH_PAUSEOPTION + romname + '_control'
+    LAYOUT = " " + PATH_PAUSEOPTION + romname + '_layout'
+    OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
     RESUME = " " + PATH_PAUSEOPTION + romname + '_resume.png'
     STOP = " " + PATH_PAUSEOPTION + romname + '_stop.png'
 
     # Layout
     #cmd = "composite -geometry 300x160+8+185 " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + " images/bg_resume.png" + RESUME
-    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROL
+    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+"0.png"
     os.system(cmd)
 
     get_btn_layout(system, buttons, button_num)
@@ -361,17 +363,17 @@ def draw_picture(system, buttons, button_num):
             #cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
             #run_cmd(cmd)
             draw_text(btn, "/tmp/text.png")
-            cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + CONTROL + CONTROL
+            cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + LAYOUT+"0.png" + LAYOUT+"0.png"
             os.system(cmd)
             
     # Generate a PAUSE image
-    cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
-    os.system(cmd)
+    #cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
+    #os.system(cmd)
     # Generate a STOP image
-    cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_stop.png" + STOP
-    os.system(cmd)
-    # Generate a Controller popup image
-    cmd = "composite " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_control.png" + CONTROL
+    #cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_stop.png" + STOP
+    #os.system(cmd)
+    # Generate a Controller OSD image
+    cmd = "composite " + LAYOUT+"0.png" + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
     os.system(cmd)
     
     # Generate control setup images
@@ -392,13 +394,13 @@ def draw_picture(system, buttons, button_num):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2] 
-            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROLx+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
             run_cmd(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
                 if btn != 'None':
                     draw_text(btn, "/tmp/text.png")
-                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + CONTROLx+str(i)+".png" + CONTROLx+str(i)+".png"
+                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     run_cmd(cmd)
     elif romname in capcom_dd:     # capcom d&d games
         for i in range(1,4):
@@ -477,45 +479,54 @@ def draw_picture(system, buttons, button_num):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + CONTROLx+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
             run_cmd(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
                 if btn != 'None':
                     draw_text(btn, "/tmp/text.png")
-                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + CONTROLx+str(i)+".png" + CONTROLx+str(i)+".png"
+                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     run_cmd(cmd)
 
 def start_viewer():
     if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
-        os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
+    os.system(VIEWER_OSD + get_location() + " &")
 	
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-	if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_control.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_control.png > /tmp/pause.txt")
-            os.system(VIEWER_OSD + " &")
+	if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + romname + "_osd.png > /tmp/pause.txt")
+            os.system(VIEWER_OSD + get_location() +" &")
 
 def stop_viewer():
 	if is_running("omxiv-pause") == True:
             os.system("killall omxiv-pause")
     
 def change_viewer(position):
-    if position == "UP":
+    if position == "RESUME":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_resume.png > /tmp/pause.txt")
-	else:
+            os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
+            #os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
+            else:
             os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
-    if position == "DOWN":
+    elif position == "STOP":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_stop.png > /tmp/pause.txt")
-	else:
+            os.system("echo " + PATH_PAUSEOPTION + romname + "bg_stop.png > /tmp/pause.txt")
+        else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
+    elif position == "RETURN":
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + romname + "bg_return.png > /tmp/pause.txt")
+    elif position == "SAVE":
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_stop.png") == True :
+            os.system("echo " + PATH_PAUSEOPTION + romname + "bg_save.png > /tmp/pause.txt")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
@@ -585,31 +596,43 @@ def process_event(event):
         return False
 
     if js_type == JS_EVENT_AXIS and js_number <= 7:
-        '''
         if js_number % 2 == 0:
+            UP_ON = False
+            DOWN_ON = False
             if js_value <= JS_MIN * JS_THRESH:
-                print "Left pushed"
+                if PAUSE_MODE_ON == True:
+                    if MENU_INDEX == 1 or MENU_INDEX == 2:
+                        change_viewer("RETURN")
+                        MENU_INDEX = 3
+                        LAYOUT_INDEX = 1
             if js_value >= JS_MAX * JS_THRESH:
                 print "Right pushed"
-        '''
-        if js_number % 2 == 1:
+        elif js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 #print "Up pushed"
                 UP_ON = True
                 DOWN_ON = False
                 if PAUSE_MODE_ON == True:
-                    MENU_INDEX = 1
-                    change_viewer("UP")
+                    if MENU_INDEX == 2:
+                        change_viewer("RESUME")
+                        MENU_INDEX = 1
+                    elif MENU_INDEX == 4:
+                        change_viewer("RETURN")
+                        MENU_INDEX = 3
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode on"
                     start_viewer_osd()	
             if js_value >= JS_MAX * JS_THRESH:
                 #print "Down pushed"
                 DOWN_ON = True
-		UP_ON = False
+                UP_ON = False
                 if PAUSE_MODE_ON == True:
-                    MENU_INDEX = 2
-                    change_viewer("DOWN")
+                    if MENU_INDEX == 1:
+                        change_viewer("STOP")
+                        MENU_INDEX = 2
+                    elif MENU_INDEX == 3:
+                        change_viewer("SAVE")
+                        MENU_INDEX = 4
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode off"
                     stop_viewer()
