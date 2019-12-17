@@ -519,6 +519,7 @@ def change_viewer(position):
     elif position == "STOP":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_stop.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + "bg_stop.png > /tmp/pause.txt")
+            os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
     elif position == "RETURN":
@@ -600,7 +601,7 @@ def process_event(event):
             UP_ON = False
             DOWN_ON = False
             if js_value <= JS_MIN * JS_THRESH:
-		print "Right pushed"
+                print "Left pushed"
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1 or MENU_INDEX == 2:
                         change_viewer("RETURN")
