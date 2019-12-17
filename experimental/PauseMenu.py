@@ -513,13 +513,12 @@ def change_viewer(position):
     if position == "RESUME":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_resume.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
+            #os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     elif position == "STOP":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_stop.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + "bg_stop.png > /tmp/pause.txt")
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
     elif position == "RETURN":
