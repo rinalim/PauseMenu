@@ -497,7 +497,7 @@ def start_viewer():
 
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
-    os.system(VIEWER_OSD + get_location() + " &")
+    os.system(VIEWER_LAYOUT + get_location() + " &")
 	
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
