@@ -642,7 +642,7 @@ def process_event(event):
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode off"
                     stop_viewer()
-	    if js_value == 0:
+        if js_value == 0:
             UP_ON = False
             DOWN_ON = False
     
