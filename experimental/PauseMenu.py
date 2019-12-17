@@ -501,7 +501,7 @@ def start_viewer():
 	
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-	if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
+	    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_osd.png > /tmp/pause.txt")
             os.system(VIEWER_OSD + get_location() +" &")
 
@@ -643,8 +643,8 @@ def process_event(event):
                     #print "OSD mode off"
                     stop_viewer()
 	    if js_value == 0:
-		UP_ON = False
-		DOWN_ON = False
+            UP_ON = False
+            DOWN_ON = False
     
     if js_type == JS_EVENT_BUTTON:
         if js_value == 1:
@@ -662,6 +662,11 @@ def process_event(event):
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
                         close_fds(js_fds)
                         sys.exit(0)
+                    elif MENU_INDEX == 2:
+                        #print "Return"
+                        change_viewer("RESUME")
+                        os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
+                        MENU_INDEX = 1
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
