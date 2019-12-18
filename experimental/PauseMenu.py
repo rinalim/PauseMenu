@@ -342,39 +342,35 @@ def draw_picture(system, buttons, button_num):
 
     LAYOUT = " " + PATH_PAUSEOPTION + romname + '_layout'
     OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
-    RESUME = " " + PATH_PAUSEOPTION + romname + '_resume.png'
-    STOP = " " + PATH_PAUSEOPTION + romname + '_stop.png'
 
     # Layout
-    #cmd = "composite -geometry 300x160+8+185 " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + " images/bg_resume.png" + RESUME
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+"0.png"
     os.system(cmd)
 
     get_btn_layout(system, buttons, button_num)
-    # Configured button layout
-    #pos = ["90x25+70+253", "90x25+150+227", "90x25+230+204", "90x25+70+318", "90x25+150+293", "90x25+230+267"]
-    pos = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
+
+    # Generate OSD image
+    pos_osd = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
+    for i in range(1,7):
+        btn = btn_map[user_key[str(i)]]
+        if btn != 'None':
+            draw_text(btn, "/tmp/text.png")
+            cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png" + OSD + OSD
+            os.system(cmd)
+    
+    # Generate current layout image
+    pos = ["80x22+70+252", "80x22+150+226", "80x22+230+202", "80x22+70+317", "80x22+150+293", "80x22+230+267"]
+    cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+"0.png"
+    os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
         if btn != 'None':
             # check turbo key
             if retroarch_key[user_key[str(i)]] == get_turbo_key():
                 btn = btn+"*"
-            #cmd = "convert -background none -fill black -font " + FONT + " -pointsize 20 label:\'" + btn + "\' /tmp/text.png"
-            #run_cmd(cmd)
             draw_text(btn, "/tmp/text.png")
             cmd = "composite -geometry " + pos[i-1] + " /tmp/text.png" + LAYOUT+"0.png" + LAYOUT+"0.png"
             os.system(cmd)
-            
-    # Generate a PAUSE image
-    #cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_resume.png" + RESUME
-    #os.system(cmd)
-    # Generate a STOP image
-    #cmd = "composite -geometry 300x160+8+185 " + CONTROL + " " + PATH_PAUSEOPTION + "images/bg_stop.png" + STOP
-    #os.system(cmd)
-    # Generate a Controller OSD image
-    cmd = "composite " + LAYOUT+"0.png" + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
-    os.system(cmd)
     
     # Generate control setup images
     if button_num == 6:     # capcom fighting games
@@ -394,39 +390,7 @@ def draw_picture(system, buttons, button_num):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2] 
-            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
-            run_cmd(cmd)
-            for j in range(1,7):
-                btn = print_map[str(j)]
-                if btn != 'None':
-                    draw_text(btn, "/tmp/text.png")
-                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
-                    run_cmd(cmd)
-    elif romname in capcom_dd:     # capcom d&d games
-        for i in range(1,4):
-            print_map = {}
-            if i == 1:
-                print_map['1'] = buttons[3]
-                print_map['2'] = buttons[2]
-                print_map['3'] = 'None'
-                print_map['4'] = buttons[0]
-                print_map['5'] = buttons[1]
-                print_map['6'] = 'None' 
-            elif i == 2:
-                print_map['1'] = buttons[0]
-                print_map['2'] = buttons[1]
-                print_map['3'] = 'None'
-                print_map['4'] = buttons[3]
-                print_map['5'] = buttons[2]
-                print_map['6'] = 'None'
-            elif i == 3:
-                print_map['1'] = buttons[2]
-                print_map['2'] = 'None'
-                print_map['3'] = 'None'
-                print_map['4'] = buttons[0]
-                print_map['5'] = buttons[1]
-                print_map['6'] = buttons[3]
-            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+str(i)+".png"
             run_cmd(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -479,7 +443,7 @@ def draw_picture(system, buttons, button_num):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+str(i)+".png"
             run_cmd(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
