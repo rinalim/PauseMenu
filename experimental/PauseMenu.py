@@ -54,6 +54,7 @@ btn_select = -1
 btn_start = -1
 btn_a = -1
 button_num = 0
+layout_num = 0
 
 PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
 XML = PATH_PAUSEOPTION+'xml/'
@@ -206,10 +207,17 @@ def get_info():
                 print i.get('name'), btn
         for j in range(len(buttons), 6):
             buttons.append("None")
-    return buttons, button_num
+    if button_num == 6:
+        layout_num = 2
+    elif romname in capcom_dd:
+        layout_num = 3
+    else:
+        layout_num = 6
+            
+    return buttons, button_num, layout_num
 
-def get_btn_layout(system, buttons, button_num):
-
+def get_btn_layout(system, buttons):
+    
     # FBA button sequence   
     btn_map['b'] = '"0"'
     btn_map['a'] = '"8"'
@@ -283,7 +291,7 @@ def get_btn_layout(system, buttons, button_num):
         convert['"1"'] = 2
         convert['"9"'] = 3
         convert['"10"'] = 4
-        convert['"11"'] = 5 
+        convert['"11"'] = 5
 
     # Map the button sequnece and the button description   
     btn_map['a'] = buttons[convert[btn_map['a']]]
@@ -347,7 +355,7 @@ def draw_picture(system, buttons):
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+"0.png"
     os.system(cmd)
 
-    get_btn_layout(system, buttons, button_num)
+    get_btn_layout(system, buttons)
 
     # Generate OSD image
     pos_osd = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
@@ -399,6 +407,41 @@ def draw_picture(system, buttons):
                     cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     os.system(cmd)
             draw_text("[" + str(i) + "/2]", "/tmp/text.png")
+            cmd = "composite -geometry " + "80x22+250+317" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
+            os.system(cmd)
+    elif romname in capcom_dd:
+        for i in range(1,4):
+            print_map = {}
+            if i == 1:
+                print_map['1'] = buttons[2]
+                print_map['2'] = buttons[3]
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = 'None' 
+            elif i == 2:
+                print_map['1'] = buttons[0]
+                print_map['2'] = buttons[1]
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[2]
+                print_map['5'] = buttons[3]
+                print_map['6'] = 'None'
+            elif i == 3:
+                print_map['1'] = buttons[3]
+                print_map['2'] = 'None'
+                print_map['3'] = 'None'
+                print_map['4'] = buttons[0]
+                print_map['5'] = buttons[1]
+                print_map['6'] = buttons[2]
+            cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+str(i)+".png"
+            os.system(cmd)
+            for j in range(1,4):
+                btn = print_map[str(j)]
+                if btn != 'None':
+                    draw_text(btn, "/tmp/text.png")
+                    cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
+                    os.system(cmd)
+            draw_text("[" + str(i) + "/3]", "/tmp/text.png")
             cmd = "composite -geometry " + "80x22+250+317" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
     else:
@@ -580,7 +623,7 @@ def process_event(event):
                         change_viewer("RETURN", "0")
                     else:
                         if LAYOUT_INDEX == 1:
-                            LAYOUT_INDEX = button_num
+                            LAYOUT_INDEX = layout_num
                         else:
                             LAYOUT_INDEX = LAYOUT_INDEX-1
                         change_viewer("LAYOUT", str(LAYOUT_INDEX))
@@ -592,7 +635,7 @@ def process_event(event):
                         LAYOUT_INDEX = 1
                         change_viewer("RETURN", "0")
                     else:
-                        if LAYOUT_INDEX == button_num:
+                        if LAYOUT_INDEX == layout_num:
                             LAYOUT_INDEX = 1
                         else:
                             LAYOUT_INDEX = LAYOUT_INDEX+1
@@ -694,7 +737,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, system, button_num, CONTROL_VIEW
+    global btn_select, btn_start, btn_a, romname, system, button_num, layout_num, CONTROL_VIEW
 
     # Draw control images
     is_retroarch = False
@@ -713,7 +756,7 @@ def main():
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
 	if system == "lr-fbneo" or system == "lr-fbalpha":
             CONTROL_VIEW = True
-            buttons, button_num = get_info()
+            buttons, button_num, layout_num = get_info()
             if check_update(system) == True:
                 load_layout()
                 draw_picture(system, buttons)
