@@ -59,7 +59,7 @@ def set_layout():
     f.write(str(es_conf)+'\n')
     f.close()
     
-    os.system("cp " + PATH_PAUSEMENU + "control/images/layout" + str(es_conf) + '/ ' + PATH_PAUSEMENU + "control/")
+    os.system("cp " + PATH_PAUSEMENU + "control/images/layout" + str(es_conf) + '/* ' + PATH_PAUSEMENU + "control/")
 
 def load_retroarch_cfg(dev_name):
     print 'Device Name: ', dev_name, '\n'
