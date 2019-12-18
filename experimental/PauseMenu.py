@@ -188,7 +188,7 @@ def get_info():
     #if game == None:
     #   print 'No Game Found'
         name = str(unicode(game.get('gamename')))
-        print 'Generate pause images for ' + name
+        #print 'Generate pause images for ' + name
         player = game.find('player')
         controls = player.find('controls')
         labels = player.findall('labels')
@@ -204,7 +204,7 @@ def get_info():
                 #btn = btn[:10]
                 buttons.append(btn)
                 button_num = button_num+1
-                print i.get('name'), btn
+                #print i.get('name'), btn
         for j in range(len(buttons), 6):
             buttons.append("None")
     if button_num == 6:
