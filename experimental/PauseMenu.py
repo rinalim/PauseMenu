@@ -365,6 +365,8 @@ def draw_picture(system, buttons):
             draw_text(btn, "/tmp/text.png")
             cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png" + OSD + OSD
             os.system(cmd)
+    cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
+    os.system(cmd)
     
     # Generate current layout image
     pos = ["80x22+70+252", "80x22+150+226", "80x22+230+202", "80x22+70+317", "80x22+150+293", "80x22+230+267"]
