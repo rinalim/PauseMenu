@@ -437,7 +437,7 @@ def draw_picture(system, buttons):
                 print_map['6'] = buttons[2]
             cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
-            for j in range(1,4):
+            for j in range(1,7):
                 btn = print_map[str(j)]
                 if btn != 'None':
                     draw_text(btn, "/tmp/text.png")
