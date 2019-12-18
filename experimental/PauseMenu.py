@@ -504,7 +504,7 @@ def draw_picture(system, buttons):
             os.system(cmd)
 
 def start_viewer():
-    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_resume.png") == True :
+    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_resume.png") == True :
         os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
         os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
     else:
