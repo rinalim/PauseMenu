@@ -694,7 +694,8 @@ def process_event(event):
                         MENU_INDEX = 1
                     elif MENU_INDEX == 4:
                         #print "Save"
-                        print system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
+                        cmd = "pyhton " + PATH_PAUSEMENU + "KeyMapper.py " system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
+                        os.system(cmd)
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
