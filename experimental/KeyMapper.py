@@ -71,7 +71,7 @@ def set_keymap(romname, layout_index):
             key_map['0'] = user_key['4']     # LK
             key_map['8'] = user_key['5']     # MK
             key_map['11'] = user_key['6']    # HK
-        elif layout_index[0] == 2:
+        elif layout_index[0] == '2':
             key_map['1'] = user_key['4']
             key_map['9'] = user_key['5']
             key_map['10'] = user_key['6']
