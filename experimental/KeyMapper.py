@@ -62,7 +62,7 @@ def set_keymap(romname, layout_index):
     
     global turbo_key
     
-    if layout_index[2] == '2'    # capcom fighting game
+    if layout_index[2] == '2':    # capcom fighting game
         if layout_index[0] == '1':
             key_map['1'] = user_key['1']     # LP
             key_map['9'] = user_key['2']     # MP
