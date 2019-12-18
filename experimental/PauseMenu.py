@@ -33,9 +33,9 @@ CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'	
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center"
-VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 200 -l 30002 -a center"
+VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 20 -l 30002 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
-VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 200 -l 30001 -a center --win 724,608,1024,768"
+VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center --win 724,608,1024,768"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
@@ -542,7 +542,7 @@ def change_viewer(menu, index):
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_save.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + "bg_save.png > /tmp/pause.txt")
     elif menu == "LAYOUT":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_save.png") == True :
+        if CONTROL_VIEW == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_layout" + index + ".png > /tmp/pause_layout.txt")
         
 def is_running(pname):
@@ -628,7 +628,7 @@ def process_event(event):
                             LAYOUT_INDEX = layout_num
                         else:
                             LAYOUT_INDEX = LAYOUT_INDEX-1
-                        change_viewer("LAYOUT", str(LAYOUT_INDEX))
+                    change_viewer("LAYOUT", str(LAYOUT_INDEX))
             if js_value >= JS_MAX * JS_THRESH:
                 print "Right pushed"
                 if PAUSE_MODE_ON == True:                     
@@ -641,7 +641,7 @@ def process_event(event):
                             LAYOUT_INDEX = 1
                         else:
                             LAYOUT_INDEX = LAYOUT_INDEX+1
-                        change_viewer("LAYOUT", str(LAYOUT_INDEX))
+                    change_viewer("LAYOUT", str(LAYOUT_INDEX))
         elif js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 print "Up pushed"
@@ -698,7 +698,7 @@ def process_event(event):
                         MENU_INDEX = 1
                     elif MENU_INDEX == 4:
                         #print "Save"
-                        print system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(button_num)
+                        print system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
