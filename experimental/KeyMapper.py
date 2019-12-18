@@ -1,6 +1,7 @@
 import sys, os, time
 import xml.etree.ElementTree as ET
 from subprocess import *
+import ast
 
 ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
 CONFIG_DIR = '/opt/retropie/configs/'
