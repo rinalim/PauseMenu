@@ -617,7 +617,6 @@ def process_event(event):
             UP_ON = False
             DOWN_ON = False
             if js_value <= JS_MIN * JS_THRESH:
-                print "Left pushed"
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1 or MENU_INDEX == 2:
                         MENU_INDEX = 3
@@ -630,7 +629,6 @@ def process_event(event):
                             LAYOUT_INDEX = LAYOUT_INDEX-1
                     change_viewer("LAYOUT", str(LAYOUT_INDEX))
             if js_value >= JS_MAX * JS_THRESH:
-                print "Right pushed"
                 if PAUSE_MODE_ON == True:                     
                     if MENU_INDEX == 1 or MENU_INDEX == 2:
                         MENU_INDEX = 3
@@ -644,7 +642,6 @@ def process_event(event):
                     change_viewer("LAYOUT", str(LAYOUT_INDEX))
         elif js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
-                print "Up pushed"
                 UP_ON = True
                 DOWN_ON = False
                 if PAUSE_MODE_ON == True:
@@ -658,7 +655,6 @@ def process_event(event):
                     #print "OSD mode on"
                     start_viewer_osd()	
             if js_value >= JS_MAX * JS_THRESH:
-                print "Down pushed"
                 DOWN_ON = True
                 UP_ON = False
                 if PAUSE_MODE_ON == True:
