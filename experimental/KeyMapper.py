@@ -16,6 +16,11 @@ turbo_key = ''
 
 capcom_dd = ['ddtod', 'ddsom']
 
+sys_map = {
+    "lr-fbneo": "FinalBurn Neo",
+    "lr-fbalpha": "FB Alpha"
+}
+
 def run_cmd(cmd):
 # runs whatever in the cmd variable
     p = Popen(cmd, shell=True, stdout=PIPE)
@@ -129,11 +134,11 @@ def set_keymap(romname, layout_index):
 
 def update_fba_rmp(system, romname, index):
 
-    if os.path.isdir('/opt/retropie/configs/fba/FinalBurn Neo') == False:
-        run_cmd('mkdir /opt/retropie/configs/fba/FinalBurn\ Neo')
+    if os.path.isdir('/opt/retropie/configs/fba/'+sys_map[system]) == False:
+        run_cmd('mkdir /opt/retropie/configs/fba/'+sys_map[system].replace(" ","\ "))
     buf = ''
-    run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/FinalBurn\ Neo/" + romname + ".rmp")
-    f = open('/opt/retropie/configs/fba/FinalBurn Neo/' + romname + '.rmp', 'a')
+    run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + romname + ".rmp")
+    f = open('/opt/retropie/configs/fba/'+sys_map[system] + '/'  + romname + '.rmp', 'a')
     for key in key_map:
         res = 'input_player' + str(index) + '_btn_' + key_map[key][0] + ' = ' + '\"' + key + '\"'
         buf += res + '\n'
