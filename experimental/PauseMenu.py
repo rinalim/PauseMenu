@@ -352,7 +352,7 @@ def draw_picture(system, buttons):
     OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
 
     # Layout
-    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + LAYOUT+"0.png"
+    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + OSD
     os.system(cmd)
 
     get_btn_layout(system, buttons)
