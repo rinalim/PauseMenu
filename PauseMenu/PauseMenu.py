@@ -504,15 +504,15 @@ def draw_picture(system, buttons):
             os.system(cmd)
 
 def start_viewer():
+    os.system(VIEWER_BG + " &")
     if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_resume.png") == True :
         os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
         os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
+        os.system(VIEWER + get_location() + " &")
+        os.system(VIEWER_LAYOUT + get_location() + " &")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
-
-    os.system(VIEWER_BG + " &")
-    os.system(VIEWER + get_location() + " &")
-    os.system(VIEWER_LAYOUT + get_location() + " &")
+        os.system(VIEWER_LAYOUT + get_location() + " &")
 
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
