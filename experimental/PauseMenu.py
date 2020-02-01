@@ -719,11 +719,12 @@ def process_event(event):
                         sys.exit(0)
                     elif MENU_INDEX == 3:
                         #print "Reset"
-                        stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         keyboard.press("1")
                         time.sleep(0.1)
                         keyboard.release("1")
-                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        time.sleep(0.1)
+                        stop_viewer()
                         keyboard.press("1")
                         time.sleep(0.1)
                         keyboard.press("z")
