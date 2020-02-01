@@ -612,7 +612,20 @@ def read_event(fd):
 
         else:
             return event
-
+            
+def send_hotkey(key):
+    keyboard.press("1")
+    time.sleep(0.1)
+    keyboard.release("1")
+    time.sleep(0.1)
+    keyboard.press("1")
+    time.sleep(0.1)
+    keyboard.press(key)
+    time.sleep(0.1)
+    keyboard.release(key)
+    time.sleep(0.1)
+    keyboard.release("1")
+    
 def process_event(event):
 
     global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
@@ -720,42 +733,20 @@ def process_event(event):
                     elif MENU_INDEX == 3:
                         #print "Reset"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        #keyboard.press("1")
-                        #time.sleep(0.1)
-                        #keyboard.release("1")
-                        time.sleep(0.1)
-                        keyboard.press("1")
-                        time.sleep(0.1)
-                        keyboard.press("z")
-                        time.sleep(0.1)
-                        keyboard.release("z")
-                        time.sleep(0.1)
-                        keyboard.release("1")
+                        send_hotkey("z")
                         stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
-                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        keyboard.press("1")
-                        time.sleep(0.1)
-                        keyboard.press("f2")
-                        time.sleep(0.1)
-                        keyboard.release("f2")
-                        time.sleep(0.1)
-                        keyboard.release("1")
+                        send_hotkey("f2")
+                        stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
-                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        keyboard.press("1")
-                        time.sleep(0.1)
-                        keyboard.press("f4")
-                        time.sleep(0.1)
-                        keyboard.release("f4")
-                        time.sleep(0.1)
-                        keyboard.release("1")
+                        send_hotkey("f4")
+                        stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 6:
                         #print "Button"
