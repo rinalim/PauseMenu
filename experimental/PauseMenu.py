@@ -830,6 +830,8 @@ def main():
     btn_select = int(words[0])
     btn_start = int(words[1])
     btn_a = int(words[2])
+    
+    print "PauseMenu is ready.."
 
     js_fds=[]
     rescan_time = time.time()
