@@ -754,7 +754,7 @@ def process_event(event):
                         time.sleep(0.1)
                         send_hotkey("f8")
                         stop_viewer()
-                        os.system("sudo rm /opt/retropie/configs/all/retroarch/screenshots/*")
+                        #os.system("sudo rm /opt/retropie/configs/all/retroarch/screenshots/*")
                         save_picture()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
