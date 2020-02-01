@@ -348,7 +348,7 @@ def draw_text(text, outfile):
 
 def draw_picture(system, buttons):
 
-    LAYOUT = " " + PATH_PAUSEMENU + "images/contorl/" + romname + '_layout'
+    LAYOUT = " " + PATH_PAUSEMENU + "images/control/" + romname + '_layout'
     OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
 
     # Layout
@@ -370,7 +370,7 @@ def draw_picture(system, buttons):
     
     # Generate current layout image
     pos = ["80x22+330+152", "80x22+410+126", "80x22+490+102", "80x22+330+117", "80x22+410+193", "80x22+490+167"]
-    cmd = "cp " + PATH_PAUSEMENU + "images/contorl/bg_empty.png" + LAYOUT+"0.png"
+    cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
@@ -507,7 +507,7 @@ def start_viewer():
     sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
     if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
-        os.system("echo " + PATH_PAUSEMENU + "images/contorl/" + romname + "_layout0.png > /tmp/pause_layout.txt")
+        os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
