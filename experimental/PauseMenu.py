@@ -1,7 +1,7 @@
 #-*-coding: utf-8 -*-
 #!/usr/bin/python
 
-import os, sys, struct, time, fcntl, termios, signal
+import os, sys, struct, time, fcntl, termios, signal, keyboard
 import curses, errno
 from pyudev import Context
 from subprocess import *
@@ -700,10 +700,16 @@ def process_event(event):
                         close_fds(js_fds)
                         sys.exit(0)
                     elif MENU_INDEX == 3:
-                        #print "Return"
-                        change_viewer("RESUME", "0")
-                        os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
-                        MENU_INDEX = 1
+                        #print "Reset"
+                        stop_viewer()
+                        keyboard.press("1")
+                        time.sleep(0.1)
+                        keyboard.press("z")
+                        time.sleep(0.1)
+                        keyboard.release("z")
+                        time.sleep(0.1)
+                        keyboard.press("1")
+                        PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
                         cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
