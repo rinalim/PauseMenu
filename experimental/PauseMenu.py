@@ -713,6 +713,30 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
+                        stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        keyboard.press("1")
+                        time.sleep(0.1)
+                        keyboard.press("f2")
+                        time.sleep(0.1)
+                        keyboard.release("f2")
+                        time.sleep(0.1)
+                        keyboard.release("1")
+                        PAUSE_MODE_ON = False
+                    elif MENU_INDEX == 5:
+                        #print "Load"
+                        stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        keyboard.press("1")
+                        time.sleep(0.1)
+                        keyboard.press("f4")
+                        time.sleep(0.1)
+                        keyboard.release("f4")
+                        time.sleep(0.1)
+                        keyboard.release("1")
+                        PAUSE_MODE_ON = False
+                    elif MENU_INDEX == 6:
+                        #print "Button"
                         cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
                         os.system(cmd)
                         stop_viewer()
