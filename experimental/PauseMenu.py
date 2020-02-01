@@ -92,6 +92,7 @@ sys_map = {
 }
 es_conf = 1
 romname = ""
+sysname = ""
 
 capcom_dd = ['ddtod', 'ddsom']
 
@@ -504,7 +505,6 @@ def draw_picture(system, buttons):
             os.system(cmd)
 
 def start_viewer():
-    sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
     if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
         os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
@@ -527,24 +527,35 @@ def stop_viewer():
     
 def change_viewer(menu, index):
     if menu == "RESUME":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_resume.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     elif menu == "STOP":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_stop.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + "bg_stop.png > /tmp/pause.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_stop.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_stop.png > /tmp/pause.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
-    elif menu == "RETURN":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_return.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + "bg_return.png > /tmp/pause.txt")
+    elif menu == "RESET":
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_reset.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_reset.png > /tmp/pause.txt")
+        else:
+            os.system("echo " + PATH_PAUSEMENU + "pause_reset.png > /tmp/pause.txt")
     elif menu == "SAVE":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_save.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + "bg_save.png > /tmp/pause.txt")
-    elif menu == "LAYOUT":
-        if CONTROL_VIEW == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_layout" + index + ".png > /tmp/pause_layout.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_save.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_save.png > /tmp/pause.txt")
+        else:
+            os.system("echo " + PATH_PAUSEMENU + "pause_save.png > /tmp/pause.txt")
+    elif menu == "LOAD":
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_load.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_load.png > /tmp/pause.txt")
+        else:
+            os.system("echo " + PATH_PAUSEMENU + "pause_load.png > /tmp/pause.txt")
+    elif menu == "BUTTON":
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_button.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_button.png > /tmp/pause.txt")
+        else:
+            os.system("echo " + PATH_PAUSEMENU + "pause_button.png > /tmp/pause.txt")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
@@ -737,7 +748,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, system, button_num, layout_num, CONTROL_VIEW
+    global btn_select, btn_start, btn_a, romname, sysname, button_num, layout_num, CONTROL_VIEW
 
     # Draw control images
     is_retroarch = False
@@ -750,7 +761,8 @@ def main():
                 break
             else:
                 time.sleep(1)    # wait for launching game
-
+    
+    sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
     if is_retroarch == True:
         system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
