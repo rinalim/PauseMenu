@@ -722,11 +722,11 @@ def process_event(event):
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         keyboard.press("1")
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         keyboard.press("z")
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         keyboard.release("z")
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         keyboard.release("1")
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
