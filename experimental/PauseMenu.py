@@ -369,8 +369,8 @@ def draw_picture(system, buttons):
     os.system(cmd)
     
     # Generate current layout image
-    pos = ["80x22+330+152", "80x22+410+126", "80x22+490+102", "80x22+330+117", "80x22+410+193", "80x22+490+167"]
-    cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+"0.png"
+    pos = ["80x22+330+152", "80x22+410+126", "80x22+490+102", "80x22+330+217", "80x22+410+193", "80x22+490+167"]
+	cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
