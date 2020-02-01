@@ -628,11 +628,12 @@ def send_hotkey(key):
     
 def save_picture():
     path = "/opt/retropie/configs/all/retroarch/screenshots/"
-    os.system("sudo rm " + path + "*")
     while True:
         file_list = os.listdir(path)
         if len(file_list) > 0:
             break
+        else:
+            time.sleep(0.1)
     print file_list[0]
         
     
@@ -753,6 +754,7 @@ def process_event(event):
                         time.sleep(0.1)
                         send_hotkey("f8")
                         stop_viewer()
+                        os.system("sudo rm /opt/retropie/configs/all/retroarch/screenshots/*")
                         save_picture()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
