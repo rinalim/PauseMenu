@@ -663,6 +663,15 @@ def process_event(event):
                     elif MENU_INDEX == 3:
                         MENU_INDEX = 2
                         change_viewer("STOP", "0")
+                    elif MENU_INDEX == 4:
+                        MENU_INDEX = 3
+                        change_viewer("RESET", "0")
+                    elif MENU_INDEX == 5:
+                        MENU_INDEX = 4
+                        change_viewer("SAVE", "0")
+                    elif MENU_INDEX == 6:
+                        MENU_INDEX = 5
+                        change_viewer("LOAD", "0")
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode on"
                     start_viewer_osd()
@@ -676,6 +685,15 @@ def process_event(event):
                     elif MENU_INDEX == 2:
                         change_viewer("RESET", "0")
                         MENU_INDEX = 3
+                    elif MENU_INDEX == 3:
+                        change_viewer("SAVE", "0")
+                        MENU_INDEX = 4
+                    elif MENU_INDEX == 4:
+                        change_viewer("LOAD", "0")
+                        MENU_INDEX = 5
+                    elif MENU_INDEX == 5:
+                        change_viewer("BUTTON", "0")
+                        MENU_INDEX = 6
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode off"
                     stop_viewer()
