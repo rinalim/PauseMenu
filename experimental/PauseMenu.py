@@ -720,11 +720,10 @@ def process_event(event):
                     elif MENU_INDEX == 3:
                         #print "Reset"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        keyboard.press("1")
+                        #keyboard.press("1")
+                        #time.sleep(0.1)
+                        #keyboard.release("1")
                         time.sleep(0.1)
-                        keyboard.release("1")
-                        time.sleep(0.1)
-                        stop_viewer()
                         keyboard.press("1")
                         time.sleep(0.1)
                         keyboard.press("z")
@@ -732,6 +731,7 @@ def process_event(event):
                         keyboard.release("z")
                         time.sleep(0.1)
                         keyboard.release("1")
+                        stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
