@@ -636,7 +636,7 @@ def save_picture():
             time.sleep(0.1)
     print file_list[0]
     
-    cmd = "convert " + path + file_list[0] " -resize 320x224\! " + PATH_PAUSEMENU + "images/" + romname + "_save.png" 
+    cmd = "convert " + path + file_list[0] + " -resize 320x224\! " + PATH_PAUSEMENU + "images/" + romname + "_save.png" 
     os.system(cmd)    
     
 def process_event(event):
