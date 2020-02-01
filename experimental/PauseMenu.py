@@ -626,6 +626,16 @@ def send_hotkey(key):
     time.sleep(0.1)
     keyboard.release("1")
     
+def save_picture():
+    path = "/opt/retropie/configs/all/retroarch/screenshots/"
+    os.system("sudo rm " + path + "*")
+    while True:
+        file_list = os.listdir(path)
+        if len(file_list) > 0:
+            break
+    print file_list[0]
+        
+    
 def process_event(event):
 
     global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
@@ -743,7 +753,7 @@ def process_event(event):
                         time.sleep(0.1)
                         send_hotkey("f8")
                         stop_viewer()
-                        #save_picture()
+                        save_picture()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
