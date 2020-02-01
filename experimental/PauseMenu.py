@@ -738,6 +738,7 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
+                        send_hotkey("f8")
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         send_hotkey("f2")
                         stop_viewer()
