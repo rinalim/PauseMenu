@@ -31,7 +31,7 @@ JS_EVENT_INIT = 0x80
 
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
-PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'	
+PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 20 -l 30002 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
@@ -245,13 +245,13 @@ def get_btn_layout(system, buttons):
             if 'player1' in words[0]:    # input_player1_btn_a = "1"
                 btn_map[words[0][8]] = words[1]  
         f.close()
-	
+
     #elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
     elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp') == True:
         #print 'Use FinalBurn remap setting'
         #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
         f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp', 'r')
-	while True:
+        while True:
             line = f.readline()
             if not line: 
                 break
@@ -348,7 +348,7 @@ def draw_text(text, outfile):
 
 def draw_picture(system, buttons):
 
-    LAYOUT = " " + PATH_PAUSEOPTION + romname + '_layout'
+    LAYOUT = " " + PATH_PAUSEMENU + "images/contorl/" + romname + '_layout'
     OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
 
     # Layout
@@ -369,8 +369,8 @@ def draw_picture(system, buttons):
     os.system(cmd)
     
     # Generate current layout image
-    pos = ["80x22+70+252", "80x22+150+226", "80x22+230+202", "80x22+70+317", "80x22+150+293", "80x22+230+267"]
-    cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+"0.png"
+    pos = ["80x22+330+152", "80x22+410+126", "80x22+490+102", "80x22+330+117", "80x22+410+193", "80x22+490+167"]
+    cmd = "cp " + PATH_PAUSEMENU + "images/contorl/bg_empty.png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
@@ -504,25 +504,26 @@ def draw_picture(system, buttons):
             os.system(cmd)
 
 def start_viewer():
-    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + "bg_resume.png") == True :
-        os.system("echo " + PATH_PAUSEOPTION + "bg_resume.png > /tmp/pause.txt")
-        os.system("echo " + PATH_PAUSEOPTION + romname + "_layout0.png > /tmp/pause_layout.txt")
+    sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
+    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
+        os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEMENU + "images/contorl/" + romname + "_layout0.png > /tmp/pause_layout.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
     os.system(VIEWER_LAYOUT + get_location() + " &")
-	
+
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-	if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
+    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
             os.system("echo " + PATH_PAUSEOPTION + romname + "_osd.png > /tmp/pause.txt")
             os.system(VIEWER_OSD + get_location() +" &")
 
 def stop_viewer():
-	if is_running("omxiv-pause") == True:
-            os.system("killall omxiv-pause")
+    if is_running("omxiv-pause") == True:
+        os.system("killall omxiv-pause")
     
 def change_viewer(menu, index):
     if menu == "RESUME":
@@ -653,7 +654,7 @@ def process_event(event):
                         change_viewer("RETURN", "0")
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode on"
-                    start_viewer_osd()	
+                    start_viewer_osd()
             if js_value >= JS_MAX * JS_THRESH:
                 DOWN_ON = True
                 UP_ON = False
@@ -726,8 +727,8 @@ def process_event(event):
         elif SELECT_BTN_ON == True and UP_ON == True:
             #print "OSD mode on"
             if PAUSE_MODE_ON == False:
-                start_viewer_osd()	
-	elif SELECT_BTN_ON == True and DOWN_ON == True:
+                start_viewer_osd()
+        elif SELECT_BTN_ON == True and DOWN_ON == True:
             #print "OSD mode off"
             if PAUSE_MODE_ON == False:
                 stop_viewer()
@@ -753,7 +754,7 @@ def main():
     if is_retroarch == True:
         system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-	if system == "lr-fbneo" or system == "lr-fbalpha":
+        if system == "lr-fbneo" or system == "lr-fbalpha":
             CONTROL_VIEW = True
             buttons, button_num, layout_num = get_info()
             if check_update(system) == True:
