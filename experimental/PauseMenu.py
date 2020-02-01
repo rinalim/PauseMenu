@@ -739,12 +739,11 @@ def process_event(event):
                     elif MENU_INDEX == 4:
                         #print "Save"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        send_hotkey("p")
+                        send_hotkey("f2")
                         time.sleep(0.1)
                         send_hotkey("f8")
-                        time.sleep(0.1)
-                        send_hotkey("f2")
                         stop_viewer()
+                        #save_picture()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
