@@ -702,6 +702,7 @@ def process_event(event):
                     elif MENU_INDEX == 3:
                         #print "Reset"
                         stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         keyboard.press("1")
                         time.sleep(0.1)
                         keyboard.press("z")
