@@ -708,7 +708,7 @@ def process_event(event):
                         time.sleep(0.1)
                         keyboard.release("z")
                         time.sleep(0.1)
-                        keyboard.press("1")
+                        keyboard.release("1")
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
