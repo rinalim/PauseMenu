@@ -627,17 +627,12 @@ def send_hotkey(key):
     keyboard.release("1")
     
 def save_picture():
-    path = "/opt/retropie/configs/all/retroarch/screenshots/"
-    while True:
-        file_list = os.listdir(path)
-        if len(file_list) > 0:
-            break
-        else:
-            time.sleep(0.1)
-    print file_list[0]
-    time.sleep(2)
-    cmd = "convert " + path + file_list[0] + " -resize 320x224\! " + PATH_PAUSEMENU + "images/" + romname + "_save.png" 
-    os.system(cmd)    
+    time.sleep(1) 258 64
+    cmd = "composite -geometry " + "304x224+258+64" 
+          + " /home/pi/RetroPie/roms/fba/sf2ce.state.png"
+          + " " + PATH_PAUSEMENU + "images/save/state1.png" 
+          + " " + PATH_PAUSEMENU + "images/save/sf2ce.state1.png" 
+    os.system(cmd)
     
 def process_event(event):
 
@@ -754,7 +749,7 @@ def process_event(event):
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
                         send_hotkey("f2")
-                        #save_picture()
+                        save_picture()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
