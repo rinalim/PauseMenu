@@ -754,10 +754,7 @@ def process_event(event):
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
                         send_hotkey("f2")
-                        os.system("sudo rm /opt/retropie/configs/all/retroarch/screenshots/*")
-                        time.sleep(0.1)
-                        send_hotkey("f8")
-                        save_picture()
+                        #save_picture()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
