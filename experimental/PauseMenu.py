@@ -628,7 +628,7 @@ def send_hotkey(key):
     
 def save_picture():
     time.sleep(1)
-    cmd = "composite -geometry 304x224+258+104 " + \
+    cmd = "composite -geometry 304x224+260+96 " + \
           "/home/pi/RetroPie/roms/fba/kof98.state.png " + \
           PATH_PAUSEMENU + "images/save/state1.png " + \
           PATH_PAUSEMENU + "images/save/kof98.state1.png" 
