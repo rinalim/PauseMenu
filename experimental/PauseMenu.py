@@ -1,7 +1,7 @@
 #-*-coding: utf-8 -*-
 #!/usr/bin/python
 
-import os, sys, struct, time, fcntl, termios, signal, keyboard
+import os, sys, struct, time, fcntl, termios, signal, keyboard, datetime
 import curses, errno
 from pyudev import Context
 from subprocess import *
@@ -544,6 +544,11 @@ def change_viewer(menu, index):
     elif menu == "SAVE":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_save.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_save.png > /tmp/pause.txt")
+            if index == "0":
+                state_index = ".state"
+            else:
+                state_index = ".state" + index
+            os.system("echo " + PATH_PAUSEMENU + "images/save/" + romname + state_index + ".png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_save.png > /tmp/pause.txt")
     elif menu == "LOAD":
@@ -613,26 +618,45 @@ def read_event(fd):
         else:
             return event
             
-def send_hotkey(key):
+def send_hotkey(key, repeat):
+    # Press and release "1" once before actual input (bug?)
     keyboard.press("1")
     time.sleep(0.1)
     keyboard.release("1")
     time.sleep(0.1)
+
     keyboard.press("1")
     time.sleep(0.1)
-    keyboard.press(key)
-    time.sleep(0.1)
-    keyboard.release(key)
-    time.sleep(0.1)
+    
+    for i range(repeat):
+        keyboard.press(key)
+        time.sleep(0.1)
+        keyboard.release(key)
+        time.sleep(0.1)
+    
     keyboard.release("1")
     
-def save_picture():
+def save_picture(index):
     time.sleep(1)
+    if index == 0:
+        pngname = "state.png"
+    else:
+        pngname = "state" + str(index) + "png"
     cmd = "composite -geometry 304x224+260+95 " + \
-          "/home/pi/RetroPie/roms/fba/kof98.state.png " + \
-          PATH_PAUSEMENU + "images/save/state1.png " + \
-          PATH_PAUSEMENU + "images/save/kof98.state1.png" 
+          "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
+          PATH_PAUSEMENU + "images/save/" + pngname + " " + \
+          PATH_PAUSEMENU + "images/save/" romname + "." + pngname 
     os.system(cmd)
+
+    now = datetime.datetime.now()
+    nowDatetime = now.strftime('%Y-%m-%d %H:%M:%S')
+    font_size = 10
+    font = ImageFont.truetype('NanumBarunGothic.ttf', font_size)
+    image = Image.new('RGBA', (300, 20), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    draw.fontmode = "1"
+    draw.text((0,0), unicode(text), font=font, fill="white")
+    image.save(outfile)
     
 def process_event(event):
 
@@ -734,27 +758,27 @@ def process_event(event):
                     elif MENU_INDEX == 2:
                         #print "Kill"
                         stop_viewer()
-                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
-                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT")
                         close_fds(js_fds)
                         sys.exit(0)
                     elif MENU_INDEX == 3:
                         #print "Reset"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        send_hotkey("z")
+                        send_hotkey("z", 1)
                         stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
-                        send_hotkey("f2")
-                        save_picture()
+                        send_hotkey("f2", 1)
+                        save_picture(0)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        send_hotkey("f4")
+                        send_hotkey("f4", 1)
                         stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 6:
@@ -762,8 +786,8 @@ def process_event(event):
                         cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
                         os.system(cmd)
                         stop_viewer()
-                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &");
-                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT");
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT")
                         close_fds(js_fds)
                         sys.exit(0)                
             elif js_number == btn_select:
@@ -783,11 +807,11 @@ def process_event(event):
         if SELECT_BTN_ON == True and START_BTN_ON == True:
             #print "Select+Start Pushed"
             if PAUSE_MODE_ON == False:
-                PAUSE_MODE_ON = True;
+                PAUSE_MODE_ON = True
                 MENU_INDEX = 1    # Resume
                 stop_viewer()
                 start_viewer()
-                os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &");
+                os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &")
         elif SELECT_BTN_ON == True and UP_ON == True:
             #print "OSD mode on"
             if PAUSE_MODE_ON == False:
