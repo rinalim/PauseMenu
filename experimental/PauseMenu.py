@@ -540,11 +540,15 @@ def change_viewer(menu, index):
     elif menu == "STOP":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_stop.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_stop.png > /tmp/pause.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
     elif menu == "RESET":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_reset.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_reset.png > /tmp/pause.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_reset.png > /tmp/pause.txt")
     elif menu == "SAVE":
@@ -699,11 +703,11 @@ def process_event(event):
                     if MENU_INDEX == 4:
                         if STATE_INDEX > 0:
                             STATE_INDEX = STATE_INDEX-1
-                            change_viewer("SAVE", str(LAYOUT_INDEX))
+                            change_viewer("SAVE", str(STATE_INDEX))
                     elif MENU_INDEX == 5:
                         if STATE_INDEX > 0:
                             STATE_INDEX = STATE_INDEX-1
-                            change_viewer("LOAD", str(LAYOUT_INDEX))
+                            change_viewer("LOAD", str(STATE_INDEX))
                     elif MENU_INDEX == 6:
                         if LAYOUT_INDEX > 1:
                             LAYOUT_INDEX = LAYOUT_INDEX-1
@@ -713,11 +717,11 @@ def process_event(event):
                     if MENU_INDEX == 4:
                         if STATE_INDEX < 3:
                             STATE_INDEX = STATE_INDEX+1
-                            change_viewer("SAVE", str(LAYOUT_INDEX))
+                            change_viewer("SAVE", str(STATE_INDEX))
                     elif MENU_INDEX == 5:
                         if STATE_INDEX < 3:
                             STATE_INDEX = STATE_INDEX+1
-                            change_viewer("LOAD", str(LAYOUT_INDEX))
+                            change_viewer("LOAD", str(STATE_INDEX))
                     elif MENU_INDEX == 6:
                         if LAYOUT_INDEX < layout_num:
                             LAYOUT_INDEX = LAYOUT_INDEX+1
