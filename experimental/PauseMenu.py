@@ -678,9 +678,9 @@ def save_picture(index):
     font = ImageFont.truetype('NanumBarunGothic.ttf', font_size)
     image = Image.new('RGBA', (256, 20), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
-    w, h = draw.textsize(msg)
+    w, h = draw.textsize(nowDatetime)
     draw.fontmode = "1"
-    draw.text(((256-w)/2,(20-h)/2), unicode(text), font=font, fill="white")
+    draw.text(((256-w)/2,(20-h)/2), nowDatetime, font=font, fill="white")
     image.save(outfile)
     
 def process_event(event):
