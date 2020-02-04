@@ -675,7 +675,7 @@ def save_picture(index):
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
     font_size = 14
-    #font = ImageFont.truetype('NanumBarunGothic.ttf', font_size)
+    font = ImageFont.truetype('NanumBarunGothic.ttf', font_size)
     image = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
     draw = ImageDraw.Draw(image)
     w, h = draw.textsize(nowDatetime)
