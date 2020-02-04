@@ -401,7 +401,7 @@ def draw_picture(system, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2] 
-            cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
