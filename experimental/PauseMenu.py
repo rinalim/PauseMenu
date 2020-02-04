@@ -700,11 +700,11 @@ def process_event(event):
                         if STATE_INDEX > 0:
                             STATE_INDEX = STATE_INDEX-1
                             change_viewer("SAVE", str(LAYOUT_INDEX))
-                    if MENU_INDEX == 4:
+                    elif MENU_INDEX == 4:
                         if STATE_INDEX > 0:
                             STATE_INDEX = STATE_INDEX-1
                             change_viewer("LOAD", str(LAYOUT_INDEX))
-                    if MENU_INDEX == 5:
+                    elif MENU_INDEX == 5:
                         if LAYOUT_INDEX > 1:
                             LAYOUT_INDEX = LAYOUT_INDEX-1
                             change_viewer("BUTTON", str(LAYOUT_INDEX))
@@ -714,11 +714,11 @@ def process_event(event):
                         if STATE_INDEX < 3:
                             STATE_INDEX = STATE_INDEX+1
                             change_viewer("SAVE", str(LAYOUT_INDEX))
-                    if MENU_INDEX == 4:
+                    elif MENU_INDEX == 4:
                         if STATE_INDEX < 3:
                             STATE_INDEX = STATE_INDEX+1
                             change_viewer("LOAD", str(LAYOUT_INDEX))
-                    if MENU_INDEX == 5:
+                    elif MENU_INDEX == 5:
                         if LAYOUT_INDEX < layout_num:
                             LAYOUT_INDEX = LAYOUT_INDEX+1
                             change_viewer("BUTTON", str(LAYOUT_INDEX))
