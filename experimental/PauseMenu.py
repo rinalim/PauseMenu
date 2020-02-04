@@ -45,6 +45,7 @@ PAUSE_MODE_ON = False
 
 CONTROL_VIEW = False
 MENU_INDEX = 0
+STATE_INDEX = 0
 LAYOUT_INDEX = 0
 
 event_format = 'IhBB'
@@ -507,7 +508,8 @@ def draw_picture(system, buttons):
 def start_viewer():
     if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
-        os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
 
@@ -548,7 +550,8 @@ def change_viewer(menu, index):
                 state_index = ".state"
             else:
                 state_index = ".state" + index
-            os.system("echo " + PATH_PAUSEMENU + "images/save/" + romname + state_index + ".png > /tmp/pause_layout.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + romname + state_index + ".png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/save/" + romname + state_index + ".png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_save.png > /tmp/pause.txt")
     elif menu == "LOAD":
@@ -559,6 +562,8 @@ def change_viewer(menu, index):
     elif menu == "BUTTON":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_button.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_button.png > /tmp/pause.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout" + index + ".png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout" + index + ".png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_button.png > /tmp/pause.txt")
         
@@ -635,6 +640,7 @@ def send_hotkey(key, repeat):
         time.sleep(0.1)
     
     keyboard.release("1")
+    time.sleep(0.1)
     
 def save_picture(index):
     time.sleep(1)
@@ -642,7 +648,7 @@ def save_picture(index):
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + "png"
-    cmd = "composite -geometry 304x224+260+95 " + \
+    cmd = "composite -geometry 260x195+282+109 " + \
           "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
           PATH_PAUSEMENU + "images/save/" + pngname + " " + \
           PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
@@ -650,18 +656,19 @@ def save_picture(index):
 
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y-%m-%d %H:%M:%S')
-    font_size = 10
+    font_size = 16
     font = ImageFont.truetype('NanumBarunGothic.ttf', font_size)
-    image = Image.new('RGBA', (300, 20), (0, 0, 0, 0))
+    image = Image.new('RGBA', (256, 20), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
+    w, h = draw.textsize(msg)
     draw.fontmode = "1"
-    draw.text((0,0), unicode(text), font=font, fill="white")
+    draw.text(((256-w)/2,(20-h)/2, unicode(text), font=font, fill="white")
     image.save(outfile)
     
 def process_event(event):
 
     global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
-    global UP_ON, DOWN_ON, MENU_INDEX, LAYOUT_INDEX
+    global UP_ON, DOWN_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
@@ -675,28 +682,32 @@ def process_event(event):
             DOWN_ON = False
             if js_value <= JS_MIN * JS_THRESH:
                 if PAUSE_MODE_ON == True:
-                    if MENU_INDEX == 1 or MENU_INDEX == 2:
-                        MENU_INDEX = 3
-                        LAYOUT_INDEX = 1
-                        change_viewer("RETURN", "0")
-                    else:
-                        if LAYOUT_INDEX == 1:
-                            LAYOUT_INDEX = layout_num
-                        else:
+                    if MENU_INDEX == 3:
+                        if STATE_INDEX > 0:
+                            STATE_INDEX = STATE_INDEX-1
+                            change_viewer("SAVE", str(LAYOUT_INDEX))
+                    if MENU_INDEX == 4:
+                        if STATE_INDEX > 0:
+                            STATE_INDEX = STATE_INDEX-1
+                            change_viewer("LOAD", str(LAYOUT_INDEX))
+                    if MENU_INDEX == 5:
+                        if LAYOUT_INDEX > 1:
                             LAYOUT_INDEX = LAYOUT_INDEX-1
-                    change_viewer("LAYOUT", str(LAYOUT_INDEX))
+                            change_viewer("BUTTON", str(LAYOUT_INDEX))
             if js_value >= JS_MAX * JS_THRESH:
                 if PAUSE_MODE_ON == True:                     
-                    if MENU_INDEX == 1 or MENU_INDEX == 2:
-                        MENU_INDEX = 3
-                        LAYOUT_INDEX = 1
-                        change_viewer("RETURN", "0")
-                    else:
-                        if LAYOUT_INDEX == layout_num:
-                            LAYOUT_INDEX = 1
-                        else:
+                    if MENU_INDEX == 3:
+                        if STATE_INDEX < 3:
+                            STATE_INDEX = STATE_INDEX+1
+                            change_viewer("SAVE", str(LAYOUT_INDEX))
+                    if MENU_INDEX == 4:
+                        if STATE_INDEX < 3:
+                            STATE_INDEX = STATE_INDEX+1
+                            change_viewer("LOAD", str(LAYOUT_INDEX))
+                    if MENU_INDEX == 5:
+                        if LAYOUT_INDEX < layout_num:
                             LAYOUT_INDEX = LAYOUT_INDEX+1
-                    change_viewer("LAYOUT", str(LAYOUT_INDEX))
+                            change_viewer("BUTTON", str(LAYOUT_INDEX))
         elif js_number % 2 == 1:
             if js_value <= JS_MIN * JS_THRESH:
                 UP_ON = True
@@ -713,9 +724,11 @@ def process_event(event):
                         change_viewer("RESET", "0")
                     elif MENU_INDEX == 5:
                         MENU_INDEX = 4
+                        STATE_INDEX = 0
                         change_viewer("SAVE", "0")
                     elif MENU_INDEX == 6:
                         MENU_INDEX = 5
+                        STATE_INDEX = 0
                         change_viewer("LOAD", "0")
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode on"
@@ -725,20 +738,23 @@ def process_event(event):
                 UP_ON = False
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1:
-                        change_viewer("STOP", "0")
                         MENU_INDEX = 2
+                        change_viewer("STOP", "0")
                     elif MENU_INDEX == 2:
-                        change_viewer("RESET", "0")
                         MENU_INDEX = 3
+                        change_viewer("RESET", "0")
                     elif MENU_INDEX == 3:
-                        change_viewer("SAVE", "0")
                         MENU_INDEX = 4
+                        STATE_INDEX = 0
+                        change_viewer("SAVE", "0")
                     elif MENU_INDEX == 4:
-                        change_viewer("LOAD", "0")
                         MENU_INDEX = 5
+                        STATE_INDEX = 0
+                        change_viewer("LOAD", "0")
                     elif MENU_INDEX == 5:
-                        change_viewer("BUTTON", "0")
                         MENU_INDEX = 6
+                        LAYOUT_INDEX = 1
+                        change_viewer("BUTTON", "1")
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode off"
                     stop_viewer()
@@ -772,12 +788,18 @@ def process_event(event):
                         #print "Save"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
+                        if STATE_INDEX != 0:
+                            send_hotkey("left", 3)
+                            send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
-                        save_picture(0)
+                        save_picture(STATE_INDEX)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        if STATE_INDEX != 0:
+                            send_hotkey("left", 3)
+                            send_hotkey("right", STATE_INDEX)
                         send_hotkey("f4", 1)
                         stop_viewer()
                         PAUSE_MODE_ON = False
