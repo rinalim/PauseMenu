@@ -645,7 +645,7 @@ def save_picture(index):
     cmd = "composite -geometry 304x224+260+95 " + \
           "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
           PATH_PAUSEMENU + "images/save/" + pngname + " " + \
-          PATH_PAUSEMENU + "images/save/" romname + "." + pngname 
+          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
     os.system(cmd)
 
     now = datetime.datetime.now()
