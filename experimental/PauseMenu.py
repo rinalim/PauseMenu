@@ -370,7 +370,7 @@ def draw_picture(system, buttons):
     os.system(cmd)
     
     # Generate current layout image
-    pos = ["80x22+330+152", "80x22+410+126", "80x22+490+102", "80x22+330+217", "80x22+410+193", "80x22+490+167"]
+    pos = ["80x22+320+152", "80x22+400+126", "80x22+480+102", "80x22+320+217", "80x22+400+193", "80x22+480+167"]
     cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
@@ -410,7 +410,7 @@ def draw_picture(system, buttons):
                     cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     os.system(cmd)
             draw_text("[" + str(i) + "/2]", "/tmp/text.png")
-            cmd = "composite -geometry " + "80x22+510+217" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
+            cmd = "composite -geometry " + "80x22+500+217" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
     elif romname in capcom_dd:
         for i in range(1,4):
