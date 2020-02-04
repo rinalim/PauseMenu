@@ -439,7 +439,7 @@ def draw_picture(system, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -448,7 +448,7 @@ def draw_picture(system, buttons):
                     cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     os.system(cmd)
             draw_text("[" + str(i) + "/3]", "/tmp/text.png")
-            cmd = "composite -geometry " + "80x22+250+317" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
+            cmd = "composite -geometry " + "80x22+490+252" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
     else:
         for i in range(1,7):
@@ -495,7 +495,7 @@ def draw_picture(system, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEOPTION + "images/bg_empty.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -504,7 +504,7 @@ def draw_picture(system, buttons):
                     cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     os.system(cmd)
             draw_text("[" + str(i) + "/6]", "/tmp/text.png")
-            cmd = "composite -geometry " + "80x22+250+317" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
+            cmd = "composite -geometry " + "80x22+490+252" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
 
 def start_viewer():
