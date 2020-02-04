@@ -680,8 +680,13 @@ def save_picture(index):
     draw = ImageDraw.Draw(image)
     w, h = draw.textsize(nowDatetime)
     draw.fontmode = "1"
-    draw.text(((256-w)/2,(20-h)/2), nowDatetime, font=font, fill="white")
-    image.save(outfile)
+    draw.text(((260-w)/2,(20-h)/2), nowDatetime, font=font, fill="white")
+    image.save("/tmp/date.png")
+    cmd = "composite -geometry 260x20+282+304 " + \
+          "/tmp/date.png" + \
+          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname + " " + \
+          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
+    os.system(cmd)
     
 def process_event(event):
 
