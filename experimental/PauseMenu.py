@@ -204,6 +204,8 @@ def get_info():
                     if key in btn:
                         btn = btn.replace(key, kor_map[key])
                 #btn = btn[:10]
+                if btn == '':
+                    btn = "None"
                 buttons.append(btn)
                 button_num = button_num+1
                 #print i.get('name'), btn
