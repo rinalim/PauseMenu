@@ -628,7 +628,7 @@ def send_hotkey(key, repeat):
     keyboard.press("1")
     time.sleep(0.1)
     
-    for i range(repeat):
+    for i in range(repeat):
         keyboard.press(key)
         time.sleep(0.1)
         keyboard.release(key)
