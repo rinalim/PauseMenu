@@ -829,7 +829,7 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 6:
                         #print "Button"
-                        cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + system + " " + corename + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
+                        cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + corename + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
                         os.system(cmd)
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
