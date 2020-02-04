@@ -662,7 +662,7 @@ def save_picture(index):
     draw = ImageDraw.Draw(image)
     w, h = draw.textsize(msg)
     draw.fontmode = "1"
-    draw.text(((256-w)/2,(20-h)/2, unicode(text), font=font, fill="white")
+    draw.text(((256-w)/2,(20-h)/2), unicode(text), font=font, fill="white")
     image.save(outfile)
     
 def process_event(event):
