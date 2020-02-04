@@ -696,29 +696,29 @@ def process_event(event):
             DOWN_ON = False
             if js_value <= JS_MIN * JS_THRESH:
                 if PAUSE_MODE_ON == True:
-                    if MENU_INDEX == 3:
+                    if MENU_INDEX == 4:
                         if STATE_INDEX > 0:
                             STATE_INDEX = STATE_INDEX-1
                             change_viewer("SAVE", str(LAYOUT_INDEX))
-                    elif MENU_INDEX == 4:
+                    elif MENU_INDEX == 5:
                         if STATE_INDEX > 0:
                             STATE_INDEX = STATE_INDEX-1
                             change_viewer("LOAD", str(LAYOUT_INDEX))
-                    elif MENU_INDEX == 5:
+                    elif MENU_INDEX == 6:
                         if LAYOUT_INDEX > 1:
                             LAYOUT_INDEX = LAYOUT_INDEX-1
                             change_viewer("BUTTON", str(LAYOUT_INDEX))
             if js_value >= JS_MAX * JS_THRESH:
                 if PAUSE_MODE_ON == True:                     
-                    if MENU_INDEX == 3:
+                    if MENU_INDEX == 4:
                         if STATE_INDEX < 3:
                             STATE_INDEX = STATE_INDEX+1
                             change_viewer("SAVE", str(LAYOUT_INDEX))
-                    elif MENU_INDEX == 4:
+                    elif MENU_INDEX == 5:
                         if STATE_INDEX < 3:
                             STATE_INDEX = STATE_INDEX+1
                             change_viewer("LOAD", str(LAYOUT_INDEX))
-                    elif MENU_INDEX == 5:
+                    elif MENU_INDEX == 6:
                         if LAYOUT_INDEX < layout_num:
                             LAYOUT_INDEX = LAYOUT_INDEX+1
                             change_viewer("BUTTON", str(LAYOUT_INDEX))
