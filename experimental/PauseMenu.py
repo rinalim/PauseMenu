@@ -682,7 +682,7 @@ def save_picture(index):
           PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
     os.system(cmd)
     
-    time.sleep(1)
+    time.sleep(3)
     
     cmd = "composite -geometry 260x195+282+109 " + \
           "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
