@@ -665,7 +665,7 @@ def save_picture(index):
     if index == 0:
         pngname = "state.png"
     else:
-        pngname = "state" + str(index) + "png"
+        pngname = "state" + str(index) + ".png"
     cmd = "composite -geometry 260x195+282+109 " + \
           "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
           PATH_PAUSEMENU + "images/save/" + pngname + " " + \
@@ -675,7 +675,7 @@ def save_picture(index):
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
     font_size = 14
-    font = ImageFont.truetype('NanumBarunGothic.ttf', font_size)
+    #font = ImageFont.truetype('NanumBarunGothic.ttf', font_size)
     image = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
     draw = ImageDraw.Draw(image)
     w, h = draw.textsize(nowDatetime)
