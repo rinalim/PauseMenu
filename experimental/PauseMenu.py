@@ -661,17 +661,11 @@ def send_hotkey(key, repeat):
     time.sleep(0.1)
     
 def save_picture(index):
-    time.sleep(1)
     if index == 0:
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + ".png"
-    cmd = "composite -geometry 260x195+282+109 " + \
-          "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
-          PATH_PAUSEMENU + "images/save/" + pngname + " " + \
-          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
-    os.system(cmd)
-
+    
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
     font_size = 14
@@ -680,10 +674,18 @@ def save_picture(index):
     draw = ImageDraw.Draw(image)
     w, h = draw.textsize(nowDatetime)
     draw.fontmode = "1"
-    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
+    draw.text(((260-w)/2,(20-h)/2-3), nowDatetime, font=font, fill="white")
     image.save("/tmp/date.png")
     cmd = "composite -geometry 260x20+282+304 " + \
           "/tmp/date.png " + \
+          PATH_PAUSEMENU + "images/save/" + pngname + " " + \
+          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
+    os.system(cmd)
+    
+    time.sleep(1)
+    
+    cmd = "composite -geometry 260x195+282+109 " + \
+          "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
           PATH_PAUSEMENU + "images/save/" + romname + "." + pngname + " " + \
           PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
     os.system(cmd)
