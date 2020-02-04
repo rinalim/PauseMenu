@@ -94,6 +94,7 @@ sys_map = {
 es_conf = 1
 romname = ""
 sysname = ""
+corename = ""
 
 capcom_dd = ['ddtod', 'ddsom']
 
@@ -220,7 +221,7 @@ def get_info():
             
     return buttons, button_num, layout_num
 
-def get_btn_layout(system, buttons):
+def get_btn_layout(corename, buttons):
     
     # FBA button sequence   
     btn_map['b'] = '"0"'
@@ -231,10 +232,10 @@ def get_btn_layout(system, buttons):
     btn_map['r'] = '"11"'
 
     #if os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp') == True:
-    if os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp') == True:
+    if os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + romname + '.rmp') == True:
         #print 'Use game specific setting'
         #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp', 'r')
-        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + romname + '.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -251,10 +252,10 @@ def get_btn_layout(system, buttons):
         f.close()
 
     #elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
-    elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp') == True:
+    elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + sys_map[corename] + '.rmp') == True:
         #print 'Use FinalBurn remap setting'
         #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
-        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + sys_map[corename] + '.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -350,7 +351,7 @@ def draw_text(text, outfile):
     draw.text((0,0), unicode(text), font=font, fill="black")
     image.save(outfile)
 
-def draw_picture(system, buttons):
+def draw_picture(corename, buttons):
 
     LAYOUT = " " + PATH_PAUSEMENU + "images/control/" + romname + '_layout'
     OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
@@ -359,7 +360,7 @@ def draw_picture(system, buttons):
     cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + OSD
     os.system(cmd)
 
-    get_btn_layout(system, buttons)
+    get_btn_layout(corename, buttons)
 
     # Generate OSD image
     pos_osd = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
@@ -828,7 +829,7 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 6:
                         #print "Button"
-                        cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + system + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
+                        cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + system + " " + corename + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
                         os.system(cmd)
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
@@ -870,7 +871,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, sysname, button_num, layout_num, CONTROL_VIEW
+    global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, CONTROL_VIEW
 
     # Draw control images
     is_retroarch = False
@@ -887,14 +888,14 @@ def main():
     sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
     print "Check update.."
     if is_retroarch == True:
-        system = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
+        corename = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-        if system == "lr-fbneo" or system == "lr-fbalpha":
+        if corename == "lr-fbneo" or corename == "lr-fbalpha":
             CONTROL_VIEW = True
             buttons, button_num, layout_num = get_info()
-            if check_update(system) == True:
+            if check_update(corename) == True:
                 load_layout()
-                draw_picture(system, buttons)
+                draw_picture(corename, buttons)
                 
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
