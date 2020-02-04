@@ -410,7 +410,7 @@ def draw_picture(system, buttons):
                     cmd = "composite -geometry " + pos[j-1] + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
                     os.system(cmd)
             draw_text("[" + str(i) + "/2]", "/tmp/text.png")
-            cmd = "composite -geometry " + "80x22+490+217" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
+            cmd = "composite -geometry " + "80x22+490+252" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
     elif romname in capcom_dd:
         for i in range(1,4):
