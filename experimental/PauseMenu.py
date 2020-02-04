@@ -370,7 +370,7 @@ def draw_picture(system, buttons):
     os.system(cmd)
     
     # Generate current layout image
-    pos = ["80x22+320+187", "80x22+400+161", "80x22+480+137", "80x22+320+252", "80x22+400+228", "80x22+480+202"]
+    pos = ["80x22+320+188", "80x22+400+162", "80x22+480+138", "80x22+320+253", "80x22+400+229", "80x22+480+203"]
     cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
