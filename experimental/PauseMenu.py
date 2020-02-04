@@ -811,18 +811,16 @@ def process_event(event):
                         #print "Save"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
-                        if STATE_INDEX != 0:
-                            send_hotkey("left", 3)
-                            send_hotkey("right", STATE_INDEX)
+                        send_hotkey("left", 3)
+                        send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
                         save_picture(STATE_INDEX)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        if STATE_INDEX != 0:
-                            send_hotkey("left", 3)
-                            send_hotkey("right", STATE_INDEX)
+                        send_hotkey("left", 3)
+                        send_hotkey("right", STATE_INDEX)
                         send_hotkey("f4", 1)
                         stop_viewer()
                         PAUSE_MODE_ON = False
