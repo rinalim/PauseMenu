@@ -35,7 +35,7 @@ PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 20 -l 30002 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
-VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
+VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 #VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center --win 724,608,1024,768"
 
 SELECT_BTN_ON = False
@@ -518,8 +518,14 @@ def start_viewer():
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_osd.png > /tmp/pause.txt")
+            os.system("echo " + PATH_PAUSEOPTION + romname + "_osd.png > /tmp/pause_osd.txt")
             os.system(VIEWER_OSD + get_location() +" &")
+
+def start_viewer_saving():
+    if is_running("omxiv-pause") == False:
+        if os.path.isfile(PATH_PAUSEMENU + "images/saving.gif") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/saving.gif > /tmp/pause.txt")
+            os.system(VIEWER + get_location() +" &")
 
 def stop_viewer():
     if is_running("omxiv-pause") == True:
@@ -814,10 +820,12 @@ def process_event(event):
                         #print "Save"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
+                        start_viewer_saving()
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
                         save_snapshot(STATE_INDEX)
+                        stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
@@ -880,10 +888,10 @@ def main():
             if is_running("bin/retroarch") == True:
                 is_retroarch = True
                 break
-            elif is_running("bin/advmame") == True:
+            elif is_running("emulators") == True and is_running("bin/retroarch") == False:
                 break
             else:
-                time.sleep(1)    # wait for launching game
+                time.sleep(0.5)    # wait for launching game
     
     sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
     print "Check update.."
@@ -895,7 +903,7 @@ def main():
 
             fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replaceAll('"', '')
             res_x = fbset.split("x")[0]
-            res_y = fbset.split("x")[0]
+            res_y = fbset.split("x")[1]
             VIEWER_OSD = VIEWER_OSD + " --win " + \
                 str(int(res_x-300)) + "," + str(int(res_y-160)) + "," + res_x + "," + res_y
             
