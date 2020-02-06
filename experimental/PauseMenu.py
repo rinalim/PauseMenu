@@ -364,11 +364,11 @@ def draw_picture(corename, buttons):
     image = Image.new('RGBA', (300, 160), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     draw.fontmode = "L"
-    backgroud = Image.open(OSD, "r")
     for i in range(1,2):
         btn = btn_map[user_key[str(i)]]
         if btn != 'None':
             draw.text(position_osd(i), unicode(text), font=font, fill="black")
+    backgroud = Image.open(OSD, "r")
     backgroud.paste(image, (0, 0))
     backgroud.save(OSD)
 
