@@ -367,7 +367,7 @@ def draw_picture(corename, buttons):
     for i in range(1,2):
         btn = btn_map[user_key[str(i)]]
         if btn != 'None':
-            draw.text(position_osd[i-1], unicode(text), font=font, fill="black")
+            draw.text(position_osd[i-1], unicode(btn), font=font, fill="black")
     backgroud = Image.open(OSD, "r")
     backgroud.paste(image, (0, 0))
     backgroud.save(OSD)
