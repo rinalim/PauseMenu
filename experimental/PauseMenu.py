@@ -35,7 +35,8 @@ PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 20 -l 30002 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
-VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center --win 724,608,1024,768"
+VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
+#VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center --win 724,608,1024,768"
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
@@ -870,7 +871,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, CONTROL_VIEW
+    global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, CONTROL_VIEW, VIEWER_OSD
 
     # Draw control images
     is_retroarch = False
@@ -891,6 +892,13 @@ def main():
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
         if corename == "lr-fbneo" or corename == "lr-fbalpha":
             CONTROL_VIEW = True
+
+            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replaceAll('"', '')
+            res_x = fbset.split("x")[0]
+            res_y = fbset.split("x")[0]
+            VIEWER_OSD = VIEWER_OSD + " --win " + \
+                str(int(res_x-300)) + "," + str(int(res_y-160)) + "," + res_x + "," + res_y
+            
             buttons, button_num, layout_num = get_info()
             if check_update(corename) == True:
                 load_layout()
