@@ -342,12 +342,6 @@ def draw_text(text, outfile):
     image = Image.new('RGBA', (font.getsize(unicode(text))[0], font.getsize(unicode(text))[1]), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     draw.fontmode = "1"
-    '''
-    draw.text((0,0), unicode(text), font=font, fill="white")
-    draw.text((1,0), unicode(text), font=font, fill="white")
-    draw.text((0,1), unicode(text), font=font, fill="white")
-    draw.text((1,1), unicode(text), font=font, fill="white")
-    '''
     draw.text((0,0), unicode(text), font=font, fill="black")
     image.save(outfile)
 
@@ -534,21 +528,21 @@ def change_viewer(menu, index):
     if menu == "RESUME":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
-            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
+            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
     elif menu == "STOP":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_stop.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_stop.png > /tmp/pause.txt")
-            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
+            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
     elif menu == "RESET":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_reset.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_reset.png > /tmp/pause.txt")
-            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
+            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_reset.png > /tmp/pause.txt")
@@ -661,7 +655,7 @@ def send_hotkey(key, repeat):
     keyboard.release("1")
     time.sleep(0.1)
     
-def save_picture(index):
+def save_snapshot(index):
     if index == 0:
         pngname = "state.png"
     else:
@@ -674,7 +668,8 @@ def save_picture(index):
     image = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
     draw = ImageDraw.Draw(image)
     w, h = draw.textsize(nowDatetime)
-    draw.fontmode = "1"
+    #draw.fontmode = "1"
+    draw.fontmode = "L"
     draw.text(((260-w)/2,(20-h)/2-3), nowDatetime, font=font, fill="white")
     image.save("/tmp/date.png")
     cmd = "composite -geometry 260x20+282+304 " + \
@@ -683,13 +678,17 @@ def save_picture(index):
           PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
     os.system(cmd)
     
-    time.sleep(3)
-    
-    cmd = "composite -geometry 260x195!+282+109 " + \
-          "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname + " " + \
-          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname + " " + \
-          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
-    os.system(cmd)
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    if os.path.isfile(pngpath):
+        while True:
+            if os.path.getsize(pngpath) > 0:
+                break
+            time.sleep(0.1)    
+        cmd = "composite -geometry 260x195!+282+109 " + \
+              pngpath + " " + \
+              PATH_PAUSEMENU + "images/save/" + romname + "." + pngname + " " + \
+              PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
+        os.system(cmd)
     
 def process_event(event):
 
@@ -741,10 +740,10 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 2:
                         MENU_INDEX = 1
-                        change_viewer("RESUME", "0")
+                        change_viewer("RESUME", "-1")
                     elif MENU_INDEX == 3:
                         MENU_INDEX = 2
-                        change_viewer("STOP", "0")
+                        change_viewer("STOP", "-1")
                     elif MENU_INDEX == 4:
                         MENU_INDEX = 3
                         change_viewer("RESET", "0")
@@ -765,10 +764,10 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1:
                         MENU_INDEX = 2
-                        change_viewer("STOP", "0")
+                        change_viewer("STOP", "-1")
                     elif MENU_INDEX == 2:
                         MENU_INDEX = 3
-                        change_viewer("RESET", "0")
+                        change_viewer("RESET", "-1")
                     elif MENU_INDEX == 3:
                         MENU_INDEX = 4
                         STATE_INDEX = 0
@@ -817,7 +816,7 @@ def process_event(event):
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
-                        save_picture(STATE_INDEX)
+                        save_snapshot(STATE_INDEX)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
