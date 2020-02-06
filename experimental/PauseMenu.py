@@ -60,7 +60,6 @@ layout_num = 0
 
 PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
 XML = PATH_PAUSEOPTION+'xml/'
-FONT = "NanumBarunGothic-Bold"
 
 retroarch_key = {}
 user_key = {}
@@ -677,19 +676,11 @@ def save_snapshot(index):
     w, h = draw.textsize(nowDatetime)
     #draw.fontmode = "1"
     draw.fontmode = "L"
-    draw.text(((260-w)/2,(20-h)/2-3), nowDatetime, font=font, fill="white")
+    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
     
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
     backgroud.paste(image, (282, 304))
     backgroud.save(PATH_PAUSEMENU + "images/save/" + romname + "." + pngname )
-    '''
-    image.save("/tmp/date.png")
-    cmd = "composite -geometry 260x20+282+304 " + \
-          "/tmp/date.png " + \
-          PATH_PAUSEMENU + "images/save/" + pngname + " " + \
-          PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
-    os.system(cmd)
-    '''
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
