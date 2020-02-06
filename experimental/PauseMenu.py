@@ -349,37 +349,23 @@ def draw_text(text, outfile):
 def draw_picture(corename, buttons):
 
     LAYOUT = " " + PATH_PAUSEMENU + "images/control/" + romname + '_layout'
-    OSD = PATH_PAUSEOPTION + romname + '_osd.png'
+    OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
 
     # Layout
-    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png " + OSD
+    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + OSD
     os.system(cmd)
 
     get_btn_layout(corename, buttons)
 
     # Generate OSD image
-    position_osd = [(62,67)]
-    font_size = 24
-    font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
-    image = Image.new('RGBA', (300, 160), (0, 0, 0, 0))
-    draw = ImageDraw.Draw(image)
-    draw.fontmode = "L"
-    for i in range(1,2):
-        btn = btn_map[user_key[str(i)]]
-        if btn != 'None':
-            draw.text(position_osd[i-1], unicode(btn), font=font, fill="black")
-    backgroud = Image.open(OSD, "r")
-    backgroud.paste(image, (0, 0))
-    backgroud.save(OSD)
-
     pos_osd = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
-    for i in range(2,7):
+    for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
         if btn != 'None':
             draw_text(btn, "/tmp/text.png")
-            cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png " + OSD + " " + OSD
+            cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png" + OSD + OSD
             os.system(cmd)
-    cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png " + OSD
+    cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
     os.system(cmd)
     
     # Generate current layout image
