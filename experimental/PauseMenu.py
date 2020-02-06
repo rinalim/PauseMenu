@@ -358,8 +358,22 @@ def draw_picture(corename, buttons):
     get_btn_layout(corename, buttons)
 
     # Generate OSD image
+    position_osd = [(62,67)]
+    font_size = 24
+    font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
+    image = Image.new('RGBA', (300, 160), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(image)
+    draw.fontmode = "L"
+    backgroud = Image.open(OSD, "r")
+    for i in range(1,2):
+        btn = btn_map[user_key[str(i)]]
+        if btn != 'None':
+            draw.text(position_osd(i), unicode(text), font=font, fill="black")
+    backgroud.paste(image, (0, 0))
+    backgroud.save(OSD)
+
     pos_osd = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
-    for i in range(1,7):
+    for i in range(2,7):
         btn = btn_map[user_key[str(i)]]
         if btn != 'None':
             draw_text(btn, "/tmp/text.png")
