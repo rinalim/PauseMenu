@@ -349,10 +349,10 @@ def draw_text(text, outfile):
 def draw_picture(corename, buttons):
 
     LAYOUT = " " + PATH_PAUSEMENU + "images/control/" + romname + '_layout'
-    OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
+    OSD = PATH_PAUSEOPTION + romname + '_osd.png'
 
     # Layout
-    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + OSD
+    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png " + OSD
     os.system(cmd)
 
     get_btn_layout(corename, buttons)
@@ -377,9 +377,9 @@ def draw_picture(corename, buttons):
         btn = btn_map[user_key[str(i)]]
         if btn != 'None':
             draw_text(btn, "/tmp/text.png")
-            cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png" + OSD + OSD
+            cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png " + OSD + " " + OSD
             os.system(cmd)
-    cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
+    cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png " + OSD
     os.system(cmd)
     
     # Generate current layout image
