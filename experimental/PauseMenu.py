@@ -678,12 +678,18 @@ def save_snapshot(index):
     #draw.fontmode = "1"
     draw.fontmode = "L"
     draw.text(((260-w)/2,(20-h)/2-3), nowDatetime, font=font, fill="white")
+    
+    backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
+    backgroud.paste(image, (282, 304))
+    backgroud.save(PATH_PAUSEMENU + "images/save/" + romname + "." + pngname )
+    '''
     image.save("/tmp/date.png")
     cmd = "composite -geometry 260x20+282+304 " + \
           "/tmp/date.png " + \
           PATH_PAUSEMENU + "images/save/" + pngname + " " + \
           PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
     os.system(cmd)
+    '''
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
@@ -901,7 +907,7 @@ def main():
         if corename == "lr-fbneo" or corename == "lr-fbalpha":
             CONTROL_VIEW = True
 
-            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replaceAll('"', '')
+            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
             res_x = fbset.split("x")[0]
             res_y = fbset.split("x")[1]
             VIEWER_OSD = VIEWER_OSD + " --win " + \
