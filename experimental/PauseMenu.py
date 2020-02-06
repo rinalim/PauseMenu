@@ -911,7 +911,7 @@ def main():
             res_x = fbset.split("x")[0]
             res_y = fbset.split("x")[1]
             VIEWER_OSD = VIEWER_OSD + " --win " + \
-                str(int(res_x-300)) + "," + str(int(res_y-160)) + "," + res_x + "," + res_y
+                str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
             
             buttons, button_num, layout_num = get_info()
             if check_update(corename) == True:
