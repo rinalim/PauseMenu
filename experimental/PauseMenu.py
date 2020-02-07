@@ -523,8 +523,12 @@ def start_viewer_osd():
 def start_viewer_saving():
     if is_running("omxiv-pause") == False:
         if os.path.isfile(PATH_PAUSEMENU + "images/saving.gif") == True :
+            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
+            res_x = fbset.split("x")[0]
+            res_y = fbset.split("x")[1].replace('\n', '')
+            params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
             os.system("echo " + PATH_PAUSEMENU + "images/saving.gif > /tmp/pause.txt")
-            os.system(VIEWER + get_location() +" &")
+            os.system(VIEWER + params + " " + get_location() +" &")
 
 def stop_viewer():
     if is_running("omxiv-pause") == True:
@@ -900,7 +904,7 @@ def main():
 
             fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
             res_x = fbset.split("x")[0]
-            res_y = fbset.split("x")[1]
+            res_y = fbset.split("x")[1].replace('\n', '')
             VIEWER_OSD = VIEWER_OSD + " --win " + \
                 str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
             
