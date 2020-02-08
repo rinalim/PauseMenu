@@ -524,8 +524,6 @@ def save_snapshot(index):
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + ".png"
-        
-    print pngname
     
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
@@ -541,8 +539,6 @@ def save_snapshot(index):
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
     backgroud.paste(image, (282, 304))
     backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
-    
-    print PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
@@ -907,6 +903,8 @@ def main():
     sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
     if os.path.isdir(PATH_PAUSEMENU + "images/control/" + sysname) == False:
         os.mkdir(PATH_PAUSEMENU + "images/control/" + sysname)
+    if os.path.isdir(PATH_PAUSEMENU + "images/save/" + sysname) == False:
+        os.mkdir(PATH_PAUSEMENU + "images/save/" + sysname)
     #print "Check update.."
     if is_retroarch == True:
         VIEW_MODE = "full"
