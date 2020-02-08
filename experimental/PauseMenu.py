@@ -348,7 +348,7 @@ def draw_text(text, outfile):
 def draw_picture(buttons):
 
     LAYOUT = " " + PATH_PAUSEMENU + "images/control/fba/" + romname + '_layout'
-    OSD = " " + PATH_PAUSEMENU + "images/control/fba" + romname + '_osd.png'
+    OSD = " " + PATH_PAUSEMENU + "images/control/fba/" + romname + '_osd.png'
 
     get_btn_layout(buttons)
 
