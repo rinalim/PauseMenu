@@ -105,7 +105,7 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
-def check_update(system):
+def check_update():
     
     if system != 'lr-fbneo' and system != 'lr-fbalpha':
         return False
