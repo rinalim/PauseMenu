@@ -34,7 +34,7 @@ RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 20 -l 30002 -a center"
-VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "pause_bg.png -l 29999 -a fill"
+VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "images/pause_bg.png -l 29999 -a fill"
 VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 #VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center --win 724,608,1024,768"
 
@@ -59,7 +59,7 @@ button_num = 0
 layout_num = 0
 
 PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
-XML = PATH_PAUSEOPTION+'xml/'
+XML = PATH_PAUSEMENU+'images/control/xml/'
 
 retroarch_key = {}
 user_key = {}
@@ -508,7 +508,7 @@ def start_viewer():
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
     else:
-        os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
+        os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
 
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
@@ -541,21 +541,21 @@ def change_viewer(menu, index):
             if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
-            os.system("echo " + PATH_PAUSEMENU + "pause_resume.png > /tmp/pause.txt")
+            os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
     elif menu == "STOP":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_stop.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_stop.png > /tmp/pause.txt")
             if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
-            os.system("echo " + PATH_PAUSEMENU + "pause_stop.png > /tmp/pause.txt")
+            os.system("echo " + PATH_PAUSEMENU + "images/default_stop.png > /tmp/pause.txt")
     elif menu == "RESET":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_reset.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_reset.png > /tmp/pause.txt")
             if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
         else:
-            os.system("echo " + PATH_PAUSEMENU + "pause_reset.png > /tmp/pause.txt")
+            os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
     elif menu == "SAVE":
         if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_save.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_save.png > /tmp/pause.txt")
