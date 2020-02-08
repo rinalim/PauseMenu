@@ -501,10 +501,10 @@ def draw_picture(buttons):
             os.system(cmd)
 
 def start_viewer():
-    if VIEW_MODE == "full":
+    if system == "fba":
         submenu = "fba/"+romname
     else:
-        submenu = romname
+        submenu = "libretro"
     if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
@@ -537,10 +537,10 @@ def stop_viewer():
         os.system("killall omxiv-pause")
     
 def change_viewer(menu, index):
-    if VIEW_MODE == "full":
+    if system == "fba":
         submenu = "fba/"+romname
     else:
-        submenu = romname
+        submenu = "libretro"
     if menu == "RESUME":
         if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
