@@ -399,7 +399,7 @@ def draw_picture(corename, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2] 
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -434,7 +434,7 @@ def draw_picture(corename, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -490,7 +490,7 @@ def draw_picture(corename, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
