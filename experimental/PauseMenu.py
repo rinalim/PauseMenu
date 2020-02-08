@@ -540,6 +540,8 @@ def save_snapshot(index):
     backgroud.paste(image, (282, 304))
     backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
     
+    print PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname
+    
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
         while True:
