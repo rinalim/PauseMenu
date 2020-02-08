@@ -118,7 +118,7 @@ def check_update(system):
         return True
     else:
         _time = os.path.getmtime(RESUME)
-        if _time < os.path.getmtime(PATH_PAUSEOPTION+'layout.cfg'):
+        if _time < os.path.getmtime(PATH_PAUSEMENU + "images/control/"+'layout.cfg'):
             return True
         elif os.path.isfile(XML+romname+'.xml') == True:
             if _time < os.path.getmtime(XML+romname+'.xml'):
@@ -148,7 +148,7 @@ def load_layout():
     #' | A B R |  | B A R |  | R B A | '
     #' ---------  ---------  --------- '
 
-    f = open(PATH_PAUSEOPTION+"layout.cfg", 'r')
+    f = open(PATH_PAUSEMENU + "images/control/"+"layout.cfg", 'r')
     es_conf = int(f.readline())
 
     if es_conf == 1:
