@@ -32,6 +32,7 @@ JS_EVENT_INIT = 0x80
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
+XML = PATH_PAUSEMENU+'images/control/xml/'
 VIEWER = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 VIEWER_LAYOUT = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_layout.txt -f -t 5 -T blend --duration 20 -l 30002 -a center"
 VIEWER_BG = PATH_PAUSEMENU + "omxiv-pause " + PATH_PAUSEMENU + "images/pause_bg.png -l 29999 -a fill"
@@ -44,7 +45,7 @@ UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
 
-CONTROL_VIEW = False
+VIEW_MODE = "simple"
 MENU_INDEX = 0
 STATE_INDEX = 0
 LAYOUT_INDEX = 0
@@ -59,7 +60,6 @@ button_num = 0
 layout_num = 0
 
 PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
-XML = PATH_PAUSEMENU+'images/control/xml/'
 
 retroarch_key = {}
 user_key = {}
@@ -221,7 +221,7 @@ def get_info():
             
     return buttons, button_num, layout_num
 
-def get_btn_layout(corename, buttons):
+def get_btn_layout(buttons):
     
     # FBA button sequence   
     btn_map['b'] = '"0"'
@@ -345,19 +345,17 @@ def draw_text(text, outfile):
     draw.text((0,0), unicode(text), font=font, fill="black")
     image.save(outfile)
 
-def draw_picture(corename, buttons):
+def draw_picture(buttons):
 
-    LAYOUT = " " + PATH_PAUSEMENU + "images/control/" + romname + '_layout'
-    OSD = " " + PATH_PAUSEMENU + "images/control/" + romname + '_osd.png'
+    LAYOUT = " " + PATH_PAUSEMENU + "images/control/fba/" + romname + '_layout'
+    OSD = " " + PATH_PAUSEMENU + "images/control/fba" + romname + '_osd.png'
 
-    # Layout
-    cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_osd" + str(es_conf) + ".png" + OSD
-    os.system(cmd)
-
-    get_btn_layout(corename, buttons)
+    get_btn_layout(buttons)
 
     # Generate OSD image
     pos_osd = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
+    cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_osd" + str(es_conf) + ".png" + OSD
+    os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
         if btn != 'None':
@@ -503,10 +501,14 @@ def draw_picture(corename, buttons):
             os.system(cmd)
 
 def start_viewer():
-    if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
+    if VIEW_MODE == "full":
+        submenu = "fba/"+romname
+    else:
+        submenu = romname
+    if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
-        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
-            os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
     else:
         os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
 
@@ -516,7 +518,7 @@ def start_viewer():
 
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/control" + romname + "_osd.png") == True :
+        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/control" + romname + "_osd.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/control" + romname + "_osd.png > /tmp/pause_osd.txt")
             os.system(VIEWER_OSD + get_location() +" &")
 
@@ -535,58 +537,62 @@ def stop_viewer():
         os.system("killall omxiv-pause")
     
 def change_viewer(menu, index):
+    if VIEW_MODE == "full":
+        submenu = "fba/"+romname
+    else:
+        submenu = romname
     if menu == "RESUME":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
+        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
-            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
-                os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
+            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
     elif menu == "STOP":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_stop.png") == True :
+        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_stop.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_stop.png > /tmp/pause.txt")
-            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
-                os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
+            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "images/default_stop.png > /tmp/pause.txt")
     elif menu == "RESET":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_reset.png") == True :
+        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_reset.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_reset.png > /tmp/pause.txt")
-            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png") == True :
-                os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout0.png > /tmp/pause_layout.txt")
+            if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
     elif menu == "SAVE":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_save.png") == True :
+        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_save.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_save.png > /tmp/pause.txt")
             if index == "0":
                 state_index = "state"
             else:
                 state_index = "state" + index
-            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + romname + "." + state_index + ".png") == True :
-                os.system("echo " + PATH_PAUSEMENU + "images/save/" + romname + "." + state_index + ".png > /tmp/pause_layout.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + submenu + "." + state_index + ".png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/save/" + submenu + "." + state_index + ".png > /tmp/pause_layout.txt")
             elif os.path.isfile(PATH_PAUSEMENU + "images/save/" + state_index + ".png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/save/" + state_index + ".png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_save.png > /tmp/pause.txt")
     elif menu == "LOAD":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_load.png") == True :
+        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_load.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_load.png > /tmp/pause.txt")
             if index == "0":
                 state_index = "state"
             else:
                 state_index = "state" + index
-            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + romname + "." + state_index + ".png") == True :
-                os.system("echo " + PATH_PAUSEMENU + "images/save/" + romname + "." + state_index + ".png > /tmp/pause_layout.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + submenu + "." + state_index + ".png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/save/" + submenu + "." + state_index + ".png > /tmp/pause_layout.txt")
             elif os.path.isfile(PATH_PAUSEMENU + "images/save/" + state_index + ".png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/save/" + state_index + ".png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_load.png > /tmp/pause.txt")
     elif menu == "BUTTON":
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_button.png") == True :
+        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_button.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_button.png > /tmp/pause.txt")
-            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + romname + "_layout" + index + ".png") == True :
-                os.system("echo " + PATH_PAUSEMENU + "images/control/" + romname + "_layout" + index + ".png > /tmp/pause_layout.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png > /tmp/pause_layout.txt")
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_button.png > /tmp/pause.txt")
         
@@ -684,7 +690,7 @@ def save_snapshot(index):
     
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
     backgroud.paste(image, (282, 304))
-    backgroud.save(PATH_PAUSEMENU + "images/save/" + romname + "." + pngname )
+    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
@@ -694,8 +700,8 @@ def save_snapshot(index):
             time.sleep(0.1)    
         cmd = "composite -geometry 260x195!+282+109 " + \
               pngpath + " " + \
-              PATH_PAUSEMENU + "images/save/" + romname + "." + pngname + " " + \
-              PATH_PAUSEMENU + "images/save/" + romname + "." + pngname 
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname 
         os.system(cmd)
     
 def process_event(event):
@@ -880,7 +886,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, CONTROL_VIEW, VIEWER_OSD
+    global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
 
     # Draw control images
     is_retroarch = False
@@ -895,12 +901,14 @@ def main():
                 time.sleep(0.5)    # wait for launching game
     
     sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
+    if os.path.isdir(PATH_PAUSEMENU + "images/control/" + sysname) == False:
+        os.mkdir(PATH_PAUSEMENU + "images/control/" + sysname)
     #print "Check update.."
     if is_retroarch == True:
+        VIEW_MODE = "full"
         corename = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
         if corename == "lr-fbneo" or corename == "lr-fbalpha":
-            CONTROL_VIEW = True
 
             fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
             res_x = fbset.split("x")[0]
@@ -909,10 +917,10 @@ def main():
                 str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
             
             buttons, button_num, layout_num = get_info()
-            if check_update(corename) == True:
+            if check_update() == True:
                 start_viewer_saving()
                 load_layout()
-                draw_picture(corename, buttons)
+                draw_picture(buttons)
                 stop_viewer()
                 
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
