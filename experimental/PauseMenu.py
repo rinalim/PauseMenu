@@ -348,10 +348,10 @@ def draw_text(text, outfile):
 def draw_picture(corename, buttons):
 
     LAYOUT = " " + PATH_PAUSEMENU + "images/control/" + romname + '_layout'
-    OSD = " " + PATH_PAUSEOPTION + romname + '_osd.png'
+    OSD = " " + PATH_PAUSEMENU + "images/control/" + romname + '_osd.png'
 
     # Layout
-    cmd = "cp " + PATH_PAUSEOPTION + "images/layout" + str(es_conf) + ".png" + OSD
+    cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_osd" + str(es_conf) + ".png" + OSD
     os.system(cmd)
 
     get_btn_layout(corename, buttons)
@@ -364,12 +364,12 @@ def draw_picture(corename, buttons):
             draw_text(btn, "/tmp/text.png")
             cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png" + OSD + OSD
             os.system(cmd)
-    cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
-    os.system(cmd)
+    #cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
+    #os.system(cmd)
     
     # Generate current layout image
     pos = ["80x22+320+188", "80x22+400+162", "80x22+480+138", "80x22+320+253", "80x22+400+229", "80x22+480+203"]
-    cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+"0.png"
+    cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
@@ -399,7 +399,7 @@ def draw_picture(corename, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2] 
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -434,7 +434,7 @@ def draw_picture(corename, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -490,7 +490,7 @@ def draw_picture(corename, buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_empty.png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -516,8 +516,8 @@ def start_viewer():
 
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEOPTION + romname + "_osd.png") == True :
-            os.system("echo " + PATH_PAUSEOPTION + romname + "_osd.png > /tmp/pause_osd.txt")
+        if CONTROL_VIEW == True and os.path.isfile(PATH_PAUSEMENU + "images/control" + romname + "_osd.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/control" + romname + "_osd.png > /tmp/pause_osd.txt")
             os.system(VIEWER_OSD + get_location() +" &")
 
 def start_viewer_saving():
