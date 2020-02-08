@@ -110,7 +110,7 @@ def check_update(system):
     if system != 'lr-fbneo' and system != 'lr-fbalpha':
         return False
     
-    RESUME = PATH_PAUSEMENU + "images/control/" + romname + '_layout0.png'
+    RESUME = PATH_PAUSEMENU + "images/control/" + sysname + "/" + romname + '_layout0.png'
     CORECFG = CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp'
     GAMECFG = CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp'
    
@@ -499,6 +499,58 @@ def draw_picture(buttons):
             draw_text("[" + str(i) + "/6]", "/tmp/text.png")
             cmd = "composite -geometry " + "80x22+490+252" + " /tmp/text.png" + LAYOUT+str(i)+".png" + LAYOUT+str(i)+".png"
             os.system(cmd)
+            
+def send_hotkey(key, repeat):
+    # Press and release "1" once before actual input (bug?)
+    keyboard.press("1")
+    time.sleep(0.1)
+    keyboard.release("1")
+    time.sleep(0.1)
+
+    keyboard.press("1")
+    time.sleep(0.1)
+    
+    for i in range(repeat):
+        keyboard.press(key)
+        time.sleep(0.1)
+        keyboard.release(key)
+        time.sleep(0.1)
+    
+    keyboard.release("1")
+    time.sleep(0.1)
+    
+def save_snapshot(index):
+    if index == 0:
+        pngname = "state.png"
+    else:
+        pngname = "state" + str(index) + ".png"
+    
+    now = datetime.datetime.now()
+    nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
+    font_size = 14
+    font = ImageFont.truetype('FreeSans.ttf', font_size)
+    image = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
+    draw = ImageDraw.Draw(image)
+    w, h = draw.textsize(nowDatetime)
+    #draw.fontmode = "1"
+    draw.fontmode = "L"
+    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
+    
+    backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
+    backgroud.paste(image, (282, 304))
+    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
+    
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    if os.path.isfile(pngpath):
+        while True:
+            if os.path.getsize(pngpath) > 0:
+                break
+            time.sleep(0.1)    
+        cmd = "composite -geometry 260x195!+282+109 " + \
+              pngpath + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname 
+        os.system(cmd)
 
 def start_viewer():
     if sysname == "fba":
@@ -651,58 +703,6 @@ def read_event(fd):
 
         else:
             return event
-            
-def send_hotkey(key, repeat):
-    # Press and release "1" once before actual input (bug?)
-    keyboard.press("1")
-    time.sleep(0.1)
-    keyboard.release("1")
-    time.sleep(0.1)
-
-    keyboard.press("1")
-    time.sleep(0.1)
-    
-    for i in range(repeat):
-        keyboard.press(key)
-        time.sleep(0.1)
-        keyboard.release(key)
-        time.sleep(0.1)
-    
-    keyboard.release("1")
-    time.sleep(0.1)
-    
-def save_snapshot(index):
-    if index == 0:
-        pngname = "state.png"
-    else:
-        pngname = "state" + str(index) + ".png"
-    
-    now = datetime.datetime.now()
-    nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
-    font_size = 14
-    font = ImageFont.truetype('FreeSans.ttf', font_size)
-    image = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
-    draw = ImageDraw.Draw(image)
-    w, h = draw.textsize(nowDatetime)
-    #draw.fontmode = "1"
-    draw.fontmode = "L"
-    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
-    
-    backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
-    backgroud.paste(image, (282, 304))
-    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
-    
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
-    if os.path.isfile(pngpath):
-        while True:
-            if os.path.getsize(pngpath) > 0:
-                break
-            time.sleep(0.1)    
-        cmd = "composite -geometry 260x195!+282+109 " + \
-              pngpath + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname 
-        os.system(cmd)
     
 def process_event(event):
 
