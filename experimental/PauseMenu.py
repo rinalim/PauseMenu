@@ -351,7 +351,7 @@ def draw_picture(corename, buttons):
     OSD = " " + PATH_PAUSEMENU + "images/control/" + romname + '_osd.png'
 
     # Layout
-    cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_osd" + str(es_conf) + ".png" + OSD
+    cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_osd" + str(es_conf) + ".png" + OSD
     os.system(cmd)
 
     get_btn_layout(corename, buttons)
@@ -369,7 +369,7 @@ def draw_picture(corename, buttons):
     
     # Generate current layout image
     pos = ["80x22+320+188", "80x22+400+162", "80x22+480+138", "80x22+320+253", "80x22+400+229", "80x22+480+203"]
-    cmd = "cp " + PATH_PAUSEMENU + "images/control/bg_layout.png" + LAYOUT+"0.png"
+    cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]

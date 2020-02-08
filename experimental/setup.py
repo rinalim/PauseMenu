@@ -59,10 +59,6 @@ def set_layout():
     f.write(str(es_conf)+'\n')
     f.close()
     
-    os.system("cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + '.png ' 
-        + PATH_PAUSEMENU + "images/control/bg_layout.png")
-    os.system("cp " + PATH_PAUSEMENU + "images/control/background/bg_osd" + str(es_conf) + '.png ' 
-        + PATH_PAUSEMENU + "images/control/bg_osd.png")
 
 def load_retroarch_cfg(dev_name):
     print 'Device Name: ', dev_name, '\n'
