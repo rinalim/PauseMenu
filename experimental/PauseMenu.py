@@ -105,7 +105,7 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
-def check_update():
+def check_update(system):
     
     if system != 'lr-fbneo' and system != 'lr-fbalpha':
         return False
@@ -917,7 +917,7 @@ def main():
                 str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
             
             buttons, button_num, layout_num = get_info()
-            if check_update() == True:
+            if check_update(corename) == True:
                 start_viewer_saving()
                 load_layout()
                 draw_picture(buttons)
