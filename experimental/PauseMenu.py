@@ -524,6 +524,8 @@ def save_snapshot(index):
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + ".png"
+        
+    print pngname
     
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
