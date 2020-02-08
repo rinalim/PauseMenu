@@ -501,7 +501,7 @@ def draw_picture(buttons):
             os.system(cmd)
 
 def start_viewer():
-    if system == "fba":
+    if sysname == "fba":
         submenu = "fba/"+romname
     else:
         submenu = "libretro"
@@ -537,7 +537,7 @@ def stop_viewer():
         os.system("killall omxiv-pause")
     
 def change_viewer(menu, index):
-    if system == "fba":
+    if sysname == "fba":
         submenu = "fba/"+romname
     else:
         submenu = "libretro"
