@@ -194,8 +194,9 @@ os.system("sed -i '/input_state_slot_decrease_btn/d' " + joypad_cfg)
 retroarch_cfg = "/opt/retropie/configs/all/retroarch.cfg"
 if os.path.isfile(retroarch_cfg + ".org") == False :
     os.system("cp " + retroarch_cfg + " " + retroarch_cfg + ".org")
-os.system("sed -i " + '/input_enable_hotkey/a/input_enable_hotkey = "num2"' + " " + joypad_cfg)
-os.system("sed -i '/input_enable_hotkey/d' " + joypad_cfg)
+run_cmd("sed -i " + "'/input_enable_hotkey =/c input_enable_hotkey = \\\"num2\\\"' " + retroarch_cfg)
+print "sed -i " + "'/input_enable_hotkey =/c input_enable_hotkey = \\\"num2\\\"' " + retroarch_cfg
+#os.system("sed -i '/input_enable_hotkey/d' '" + retroarch_cfg + "'")
 
 '''        
 os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
