@@ -533,9 +533,6 @@ def save_snapshot(index):
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + ".png"
-    romname_fix = romname
-    #romname_fix = romname.replace("(","")
-    #romname_fix = romname_fix.replace(")","")
     
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
@@ -550,7 +547,7 @@ def save_snapshot(index):
     
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
     backgroud.paste(image_date, (282, 304))
-    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname)
+    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
@@ -561,7 +558,7 @@ def save_snapshot(index):
         image_thumb = Image.open(pngpath, "r")
         image_thumb_resize = image_thumb.resize((260, 195))
         backgroud.paste(image_thumb_resize, (282, 109))
-        backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname)
+        backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
         
     '''
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
@@ -620,9 +617,7 @@ def change_viewer(menu, index):
        state_index = "state"
     else:
        state_index = "state" + index
-    romname_fix = romname
-    #romname_fix = romname.replace("(","")
-    #romname_fix = romname_fix.replace(")","")
+
     if menu == "RESUME":
         echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "w")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
@@ -640,14 +635,14 @@ def change_viewer(menu, index):
                 echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
     elif menu == "SAVE":
         echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png", "/tmp/pause.txt", "w")
-        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
-            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
+            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
         else:
             echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
     elif menu == "LOAD":
         echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.txt", "w")
-        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
-            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
+            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
         else:
             echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
     elif menu == "BUTTON":
