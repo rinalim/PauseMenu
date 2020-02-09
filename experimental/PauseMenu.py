@@ -559,13 +559,12 @@ def start_viewer():
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png > /tmp/pause.txt")
+        os.system(VIEWER_BG + " &")
+        os.system(VIEWER + get_location() + " &")
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
-    
-    os.system(VIEWER_BG + " &")
-    os.system(VIEWER + get_location() + " &")
-    os.system(VIEWER_LAYOUT + get_location() + " &")
+        os.system(VIEWER_LAYOUT + get_location() + " &")
 
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
@@ -776,8 +775,9 @@ def process_event(event):
                         MENU_INDEX = 2
                         change_viewer("STOP", "-1")
                     elif MENU_INDEX == 2:
-                        MENU_INDEX = 3
-                        change_viewer("RESET", "-1")
+                        VIEW_MODE != "default":
+                            MENU_INDEX = 3
+                            change_viewer("RESET", "-1")
                     elif MENU_INDEX == 3:
                         MENU_INDEX = 4
                         STATE_INDEX = 0
@@ -787,9 +787,10 @@ def process_event(event):
                         STATE_INDEX = 0
                         change_viewer("LOAD", "0")
                     elif MENU_INDEX == 5:
-                        MENU_INDEX = 6
-                        LAYOUT_INDEX = 1
-                        change_viewer("BUTTON", "1")
+                        VIEW_MODE == "fba":
+                            MENU_INDEX = 6
+                            LAYOUT_INDEX = 1
+                            change_viewer("BUTTON", "1")
                 elif SELECT_BTN_ON == True:
                     #print "OSD mode off"
                     stop_viewer()
