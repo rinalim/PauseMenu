@@ -557,9 +557,9 @@ def start_viewer():
         submenu = "fba/"+romname
     else:
         submenu = "libretro"
-    if os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
-        os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
-    if VIEW_MODE != "default":
+    if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
+        os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png > /tmp/pause.txt")
+    if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
     
@@ -588,31 +588,28 @@ def stop_viewer():
         os.system("killall omxiv-pause")
     
 def change_viewer(menu, index):
-    if sysname == "fba":
+    if VIEW_MODE == "fba":
         submenu = "fba/"+romname
     else:
         submenu = "libretro"
     if menu == "RESUME":
-        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
-            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
+        if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png > /tmp/pause.txt")
+        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
-        else:
-            os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
     elif menu == "STOP":
-        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_stop.png") == True :
-            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_stop.png > /tmp/pause.txt")
+        if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png > /tmp/pause.txt")
+        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
-        else:
-            os.system("echo " + PATH_PAUSEMENU + "images/default_stop.png > /tmp/pause.txt")
     elif menu == "RESET":
-        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_reset.png") == True :
-            os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_reset.png > /tmp/pause.txt")
+        if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png") == True :
+            os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png > /tmp/pause.txt")
+        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0" and os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
-        else:
-            os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
     elif menu == "SAVE":
         if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_save.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_save.png > /tmp/pause.txt")
