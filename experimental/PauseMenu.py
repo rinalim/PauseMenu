@@ -591,6 +591,12 @@ def change_viewer(menu, index):
         submenu = "fba/"+romname
     else:
         submenu = "libretro"
+    if index == "0":
+       state_index = "state"
+    else:
+       state_index = "state" + index
+    romname_fix = romname.replace("(","\(")
+    romname_fix = romname.replace(")","\)")
     if menu == "RESUME":
         if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png > /tmp/pause.txt")
@@ -612,12 +618,8 @@ def change_viewer(menu, index):
     elif menu == "SAVE":
         if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png > /tmp/pause.txt")
-            if index == "0":
-                state_index = "state"
-            else:
-                state_index = "state" + index
-            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-                os.system("echo '" + PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png' > /tmp/pause_layout.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png > /tmp/pause_layout.txt")
             elif os.path.isfile(PATH_PAUSEMENU + "images/save/" + state_index + ".png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/save/" + state_index + ".png > /tmp/pause_layout.txt")
         else:
@@ -625,12 +627,8 @@ def change_viewer(menu, index):
     elif menu == "LOAD":
         if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png > /tmp/pause.txt")
-            if index == "0":
-                state_index = "state"
-            else:
-                state_index = "state" + index
-            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-                os.system("echo '" + PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png' > /tmp/pause_layout.txt")
+            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
+                os.system("echo " + PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png > /tmp/pause_layout.txt")
             elif os.path.isfile(PATH_PAUSEMENU + "images/save/" + state_index + ".png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/save/" + state_index + ".png > /tmp/pause_layout.txt")
         else:
