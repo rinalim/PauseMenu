@@ -532,7 +532,7 @@ def save_snapshot(index):
     font_size = 14
     font = ImageFont.truetype('FreeSans.ttf', font_size)
     image_date = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
-    draw = ImageDraw.Draw(image)
+    draw = ImageDraw.Draw(image_date)
     w, h = draw.textsize(nowDatetime)
     #draw.fontmode = "1"
     draw.fontmode = "L"
