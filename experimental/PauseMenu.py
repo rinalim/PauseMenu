@@ -524,6 +524,8 @@ def save_snapshot(index):
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + ".png"
+    romname_fix = romname.replace("(","\(")
+    romname_fix = romname_fix.replace(")","\)")
     
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
@@ -540,7 +542,7 @@ def save_snapshot(index):
     backgroud.paste(image, (282, 304))
     backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
     
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname_fix + "." + pngname
     if os.path.isfile(pngpath):
         while True:
             if os.path.getsize(pngpath) > 0:
@@ -548,8 +550,8 @@ def save_snapshot(index):
             time.sleep(0.1)    
         cmd = "composite -geometry 260x195!+282+109 " + \
               pngpath + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname 
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname 
         os.system(cmd)
 
 def start_viewer():
