@@ -112,7 +112,7 @@ def echo_file(string, file, mode):
     f.close()
     os.system("cp /tmp/echo " + file)
     '''
-    os.system("echo " + string + " > " + file)
+    os.system("echo '" + string + "' > " + file)
     
 def check_update(system):
     
@@ -533,8 +533,9 @@ def save_snapshot(index):
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + ".png"
-    romname_fix = romname.replace("(","")
-    romname_fix = romname_fix.replace(")","")
+    romname_fix = romname
+    #romname_fix = romname.replace("(","")
+    #romname_fix = romname_fix.replace(")","")
     
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
@@ -619,8 +620,9 @@ def change_viewer(menu, index):
        state_index = "state"
     else:
        state_index = "state" + index
-    romname_fix = romname.replace("(","")
-    romname_fix = romname_fix.replace(")","")
+    romname_fix = romname
+    #romname_fix = romname.replace("(","")
+    #romname_fix = romname_fix.replace(")","")
     if menu == "RESUME":
         echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "w")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
