@@ -647,7 +647,7 @@ def change_viewer(menu, index):
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
             echo_file(PATH_PAUSEMENU + "images/" + sysname + "_button.png", "/tmp/pause.txt", "w")
-            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png" "/tmp/pause_layout.txt", "w")
+            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.txt", "w")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
