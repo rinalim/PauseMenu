@@ -106,9 +106,10 @@ def run_cmd(cmd):
     return output
     
 def echo_file(string, file, mode):
-    f = open(file, mode)
+    f = open("/tmp/echo", mode)
     f.write(string)
     f.close()
+    os.system("cp /tmp/echo " + file)
 
 def check_update(system):
     
