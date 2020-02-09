@@ -142,8 +142,8 @@ def check_update(system):
     # print 'No need to update PNG'
     return False
 
-def control_arg():
-    if len(sys.argv) > 2 and sys.argv[2] == '-control':
+def full_arg():
+    if len(sys.argv) > 2 and sys.argv[2] == '-full':
         return True
     else:
         return False
@@ -894,7 +894,7 @@ def main():
 
     # Draw control images
     is_retroarch = False
-    if control_arg() == True:
+    if full_arg() == True:
         while True:
             if is_running("bin/retroarch") == True:
                 is_retroarch = True

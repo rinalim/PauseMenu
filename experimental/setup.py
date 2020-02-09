@@ -143,7 +143,7 @@ def process_event(event):
 
 dev_name = load_es_cfg()
 
-if len(sys.argv) > 2 and sys.argv[2] == '-control':
+if len(sys.argv) > 2 and sys.argv[2] == '-full':
     set_layout()
     load_retroarch_cfg(dev_name)
 
@@ -182,7 +182,24 @@ while btn_a == -1:
 f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
 
+joypad_cfg = "/opt/retropie/configs/all/retroarch-joypads/" + dev_name + ".cfg"
+if os.path.isfile(joypad_cfg + ".org") == False :
+    os.system("cp " + joypad_cfg + " " + joypad_cfg + ".org")
+
+os.system("sed -i '/input_exit_emulator_btn/d' " + joypad_cfg)
+os.system("sed -i '/input_reset_btn/d' " + joypad_cfg)
+os.system("sed -i '/input_state_slot_increase_btn/d' " + joypad_cfg)
+os.system("sed -i '/input_state_slot_decrease_btn/d' " + joypad_cfg)
+
+retroarch_cfg = "/opt/retropie/configs/all/retroarch.cfg"
+if os.path.isfile(retroarch_cfg + ".org") == False :
+    os.system("cp " + retroarch_cfg + " " + retroarch_cfg + ".org")
+os.system("sed -i " + '/input_enable_hotkey/a/input_enable_hotkey = "num2"' + " " + joypad_cfg)
+os.system("sed -i '/input_enable_hotkey/d' " + joypad_cfg)
+
+'''        
 os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
-          + "'/opt/retropie/configs/all/retroarch/autoconfig/"
+          + "'/opt/retropie/configs/all/retroarch-joypads/"
           + dev_name
           + ".cfg'")
+'''
