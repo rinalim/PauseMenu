@@ -45,7 +45,7 @@ UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
 
-VIEW_MODE = "simple"
+VIEW_MODE = "default"
 MENU_INDEX = 0
 STATE_INDEX = 0
 LAYOUT_INDEX = 0
@@ -553,17 +553,16 @@ def save_snapshot(index):
         os.system(cmd)
 
 def start_viewer():
-    if sysname == "fba":
+    if VIEW_MODE == "fba":
         submenu = "fba/"+romname
     else:
         submenu = "libretro"
-    if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
+    if os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_resume.png") == True :
         os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_resume.png > /tmp/pause.txt")
+    if VIEW_MODE != "default":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png > /tmp/pause_layout.txt")
-    else:
-        os.system("echo " + PATH_PAUSEMENU + "images/default_resume.png > /tmp/pause.txt")
-
+    
     os.system(VIEWER_BG + " &")
     os.system(VIEWER + get_location() + " &")
     os.system(VIEWER_LAYOUT + get_location() + " &")
@@ -907,11 +906,10 @@ def main():
         os.mkdir(PATH_PAUSEMENU + "images/save/" + sysname)
     #print "Check update.."
     if is_retroarch == True:
-        VIEW_MODE = "full"
         corename = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
         if corename == "lr-fbneo" or corename == "lr-fbalpha":
-
+            VIEW_MODE = "fba"
             fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
             res_x = fbset.split("x")[0]
             res_y = fbset.split("x")[1].replace('\n', '')
@@ -924,6 +922,10 @@ def main():
                 load_layout()
                 draw_picture(buttons)
                 stop_viewer()
+        else:
+            VIEW_MODE = "libretro"
+    #else: # advmame, ppsspp, drastic, ...
+    #    VIEW_MODE = "default"
                 
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
