@@ -6,8 +6,7 @@ import ast
 ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
-PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'	
-PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
+PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 
 retroarch_key = {}
 user_key = {}
@@ -36,7 +35,7 @@ def load_layout():
     #' | A B R |  | B A R |  | R B A | '
     #' ---------  ---------  --------- '
 
-    f = open(PATH_PAUSEOPTION+"layout.cfg", 'r')
+    f = open(PATH_PAUSEMENU+"images/control/layout.cfg", 'r')
     es_conf = int(f.readline())
 
     if es_conf == 1:
