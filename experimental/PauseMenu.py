@@ -649,7 +649,7 @@ def change_viewer(menu, index):
         else:
             os.system("echo " + PATH_PAUSEMENU + "pause_load.png > /tmp/pause.txt")
     elif menu == "BUTTON":
-        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_button.png") == True :
+        if VIEW_MODE == "fba" and os.path.isfile(PATH_PAUSEMENU + "images/" + sysname + "_button.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + sysname + "_button.png > /tmp/pause.txt")
             if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png") == True :
                 os.system("echo " + PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png > /tmp/pause_layout.txt")
