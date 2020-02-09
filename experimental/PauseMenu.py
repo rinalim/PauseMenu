@@ -905,7 +905,11 @@ def main():
         if os.path.isdir(PATH_PAUSEMENU + "images/save/" + sysname) == False:
             os.mkdir(PATH_PAUSEMENU + "images/save/" + sysname)
         corename = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
-        romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
+        #romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
+        pid = run_cmd("ps -aux | grep emulators | grep -v 'grep'").split()words[1]            
+        path = run_cmd("strings -n 1 /proc/"+pid+"/cmdline | grep roms")
+        romname = path.replace('"','').split("/")[-1].split(".")[0]
+        
         if corename == "lr-fbneo" or corename == "lr-fbalpha":
             VIEW_MODE = "fba"
             fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
