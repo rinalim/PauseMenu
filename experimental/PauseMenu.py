@@ -129,13 +129,13 @@ def check_update(system):
         _time = os.path.getmtime(RESUME)
         if _time < os.path.getmtime(PATH_PAUSEMENU + "images/control/"+'layout.cfg'):
             return True
-        elif os.path.isfile(XML+romname+'.xml') == True:
+        if os.path.isfile(XML+romname+'.xml') == True:
             if _time < os.path.getmtime(XML+romname+'.xml'):
                 return True
-        elif os.path.isfile(CORECFG) == True:
+        if os.path.isfile(CORECFG) == True:
             if _time < os.path.getmtime(CORECFG):
                 return True
-        elif os.path.isfile(GAMECFG) == True:
+        if os.path.isfile(GAMECFG) == True:
             if _time < os.path.getmtime(GAMECFG):
                 return True
         
