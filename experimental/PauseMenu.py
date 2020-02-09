@@ -896,13 +896,13 @@ def main():
             else:
                 time.sleep(0.5)    # wait for launching game
     
-    sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
-    if os.path.isdir(PATH_PAUSEMENU + "images/control/" + sysname) == False:
-        os.mkdir(PATH_PAUSEMENU + "images/control/" + sysname)
-    if os.path.isdir(PATH_PAUSEMENU + "images/save/" + sysname) == False:
-        os.mkdir(PATH_PAUSEMENU + "images/save/" + sysname)
     #print "Check update.."
     if is_retroarch == True:
+        sysname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[5]
+        if os.path.isdir(PATH_PAUSEMENU + "images/control/" + sysname) == False:
+            os.mkdir(PATH_PAUSEMENU + "images/control/" + sysname)
+        if os.path.isdir(PATH_PAUSEMENU + "images/save/" + sysname) == False:
+            os.mkdir(PATH_PAUSEMENU + "images/save/" + sysname)
         corename = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
         if corename == "lr-fbneo" or corename == "lr-fbalpha":
