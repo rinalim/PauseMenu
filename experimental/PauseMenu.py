@@ -775,7 +775,7 @@ def process_event(event):
                         MENU_INDEX = 2
                         change_viewer("STOP", "-1")
                     elif MENU_INDEX == 2:
-                        VIEW_MODE != "default":
+                        if VIEW_MODE != "default":
                             MENU_INDEX = 3
                             change_viewer("RESET", "-1")
                     elif MENU_INDEX == 3:
@@ -787,7 +787,7 @@ def process_event(event):
                         STATE_INDEX = 0
                         change_viewer("LOAD", "0")
                     elif MENU_INDEX == 5:
-                        VIEW_MODE == "fba":
+                        if VIEW_MODE == "fba":
                             MENU_INDEX = 6
                             LAYOUT_INDEX = 1
                             change_viewer("BUTTON", "1")
