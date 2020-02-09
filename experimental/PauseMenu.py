@@ -633,19 +633,17 @@ def change_viewer(menu, index):
             if index == "0":
                 echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
     elif menu == "SAVE":
-        if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png", "/tmp/pause.txt", "w")
-            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
-                echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
-            else:
-                echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
+        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png", "/tmp/pause.txt", "w")
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
+            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
+        else:
+            echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
     elif menu == "LOAD":
-        if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.txt", "w")
-            if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
-                echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
-            else:
-                echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
+        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.txt", "w")
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
+            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
+        else:
+            echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
             echo_file(PATH_PAUSEMENU + "images/" + sysname + "_button.png", "/tmp/pause.txt", "w")
