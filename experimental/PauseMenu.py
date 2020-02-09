@@ -524,8 +524,8 @@ def save_snapshot(index):
         pngname = "state.png"
     else:
         pngname = "state" + str(index) + ".png"
-    romname_fix = romname.replace("(","\(")
-    romname_fix = romname_fix.replace(")","\)")
+    romname_fix = romname.replace("(","")
+    romname_fix = romname_fix.replace(")","")
     
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
@@ -540,9 +540,9 @@ def save_snapshot(index):
     
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
     backgroud.paste(image, (282, 304))
-    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
+    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname)
     
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname_fix + "." + pngname
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
         while True:
             if os.path.getsize(pngpath) > 0:
@@ -597,8 +597,8 @@ def change_viewer(menu, index):
        state_index = "state"
     else:
        state_index = "state" + index
-    romname_fix = romname.replace("(","\(")
-    romname_fix = romname_fix.replace(")","\)")
+    romname_fix = romname.replace("(","")
+    romname_fix = romname_fix.replace(")","")
     if menu == "RESUME":
         if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png > /tmp/pause.txt")
