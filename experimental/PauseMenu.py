@@ -578,18 +578,18 @@ def start_viewer():
     else:
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "r")
+        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "w")
         os.system(VIEWER_BG + " &")
         os.system(VIEWER + get_location() + " &")
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "r")
+            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
         os.system(VIEWER_LAYOUT + get_location() + " &")
 
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
         if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/control" + romname + "_osd.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/control" + romname + "_osd.png", "/tmp/pause_osd.txt", "r")
+            echo_file(PATH_PAUSEMENU + "images/control" + romname + "_osd.png", "/tmp/pause_osd.txt", "w")
             os.system(VIEWER_OSD + get_location() +" &")
 
 def start_viewer_saving():
@@ -599,7 +599,7 @@ def start_viewer_saving():
             res_x = fbset.split("x")[0]
             res_y = fbset.split("x")[1].replace('\n', '')
             params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
-            echo_file(PATH_PAUSEMENU + "images/saving.gif", "/tmp/pause.txt", "r")
+            echo_file(PATH_PAUSEMENU + "images/saving.gif", "/tmp/pause.txt", "w")
             os.system(VIEWER + params + " " + get_location() +" &")
 
 def stop_viewer():
@@ -618,38 +618,38 @@ def change_viewer(menu, index):
     romname_fix = romname.replace("(","")
     romname_fix = romname_fix.replace(")","")
     if menu == "RESUME":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "r")
+        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "w")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
-                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "r")
+                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
     elif menu == "STOP":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png", "/tmp/pause.txt", "r")
+        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png", "/tmp/pause.txt", "w")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
-                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "r")
+                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
     elif menu == "RESET":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png", "/tmp/pause.txt", "r")
+        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png", "/tmp/pause.txt", "w")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
-                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "r")
+                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
     elif menu == "SAVE":
         if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png", "/tmp/pause.txt", "r")
+            echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png", "/tmp/pause.txt", "w")
             if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
-                echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "r")
+                echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
             else:
-                echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "r")
+                echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
     elif menu == "LOAD":
         if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.txt", "r")
+            echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.txt", "w")
             if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png") == True :
-                echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "r")
+                echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
             else:
-                echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "r")
+                echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
-            echo_file(PATH_PAUSEMENU + "images/" + sysname + "_button.png", "/tmp/pause.txt", "r")
-            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png" "/tmp/pause_layout.txt", "r")
+            echo_file(PATH_PAUSEMENU + "images/" + sysname + "_button.png", "/tmp/pause.txt", "w")
+            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png" "/tmp/pause_layout.txt", "w")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
