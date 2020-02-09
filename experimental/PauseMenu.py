@@ -510,13 +510,13 @@ def draw_picture(buttons):
             os.system(cmd)
             
 def send_hotkey(key, repeat):
-    # Press and release "1" once before actual input (bug?)
-    keyboard.press("1")
+    # Press and release "2" once before actual input (bug?)
+    keyboard.press("2")
     time.sleep(0.1)
-    keyboard.release("1")
+    keyboard.release("2")
     time.sleep(0.1)
 
-    keyboard.press("1")
+    keyboard.press("2")
     time.sleep(0.1)
     
     for i in range(repeat):
@@ -525,7 +525,7 @@ def send_hotkey(key, repeat):
         keyboard.release(key)
         time.sleep(0.1)
     
-    keyboard.release("1")
+    keyboard.release("2")
     time.sleep(0.1)
     
 def save_snapshot(index):
