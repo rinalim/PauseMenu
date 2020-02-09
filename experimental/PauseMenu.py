@@ -596,7 +596,7 @@ def change_viewer(menu, index):
     else:
        state_index = "state" + index
     romname_fix = romname.replace("(","\(")
-    romname_fix = romname.replace(")","\)")
+    romname_fix = romname_fix.replace(")","\)")
     if menu == "RESUME":
         if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
             os.system("echo " + PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png > /tmp/pause.txt")
