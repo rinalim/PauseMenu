@@ -531,7 +531,7 @@ def save_snapshot(index):
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
     font_size = 14
     font = ImageFont.truetype('FreeSans.ttf', font_size)
-    image = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
+    image_date = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
     draw = ImageDraw.Draw(image)
     w, h = draw.textsize(nowDatetime)
     #draw.fontmode = "1"
@@ -539,9 +539,21 @@ def save_snapshot(index):
     draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
     
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
-    backgroud.paste(image, (282, 304))
+    backgroud.paste(image_date, (282, 304))
     backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname)
     
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    if os.path.isfile(pngpath):
+        while True:
+            if os.path.getsize(pngpath) > 0:
+                break
+            time.sleep(0.1)    
+        image_thumb = Image.open(pngpath, "r")
+        image_thumb_resize = image_thumb.resize((260, 195))
+        backgroud.paste(image_thumb_resize, (282, 109))
+        backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname)
+        
+    '''
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath):
         while True:
@@ -553,6 +565,7 @@ def save_snapshot(index):
               PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname + " " + \
               PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname 
         os.system(cmd)
+    '''
 
 def start_viewer():
     if VIEW_MODE == "fba":
