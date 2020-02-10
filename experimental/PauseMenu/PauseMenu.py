@@ -590,8 +590,8 @@ def start_viewer():
 
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
-        if VIEW_MODE == "full" and os.path.isfile(PATH_PAUSEMENU + "images/control" + romname + "_osd.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/control" + romname + "_osd.png", "/tmp/pause_osd.txt", "w")
+        if VIEW_MODE == "fba" and os.path.isfile(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png") == True :
+            echo_file(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png", "/tmp/pause_osd.txt", "w")
             os.system(VIEWER_OSD + get_location() +" &")
 
 def start_viewer_saving():
