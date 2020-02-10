@@ -47,7 +47,7 @@ def load_es_cfg():
     return tags[dev_select-1].attrib['deviceName']
 
 def set_layout():
-
+    print '\n'
     print ' -(1)-----  -(2)-----  -(3)----- '
     print ' | X Y L |  | Y X L |  | L Y X | '
     print ' | A B R |  | B A R |  | R B A | '
