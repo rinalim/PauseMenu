@@ -14,7 +14,7 @@ cp -f -r ./PauseMenu /opt/retropie/configs/all/
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
 sudo sed -i '/PauseMenu.py/d' /opt/retropie/configs/all/runcommand-onstart.sh
-echo '/usr/bin/python /opt/retropie/configs/all/PauseMenu/PauseMenu.py /dev/input/js0 -full &' >> /opt/retropie/configs/all/runcommand-onstart.sh
+echo 'sudo /usr/bin/python /opt/retropie/configs/all/PauseMenu/PauseMenu.py /dev/input/js0 -full &' >> /opt/retropie/configs/all/runcommand-onstart.sh
 
 chgrp -R -v pi /opt/retropie/configs/all/PauseMenu/
 chown -R -v pi /opt/retropie/configs/all/PauseMenu/
