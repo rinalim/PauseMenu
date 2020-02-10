@@ -191,12 +191,35 @@ os.system("sed -i '/input_reset_btn/d' " + joypad_cfg)
 os.system("sed -i '/input_state_slot_increase_btn/d' " + joypad_cfg)
 os.system("sed -i '/input_state_slot_decrease_btn/d' " + joypad_cfg)
 
-retroarch_cfg = "/opt/retropie/configs/all/retroarch.cfg"
-if os.path.isfile(retroarch_cfg + ".org") == False :
-    os.system("cp " + retroarch_cfg + " " + retroarch_cfg + ".org")
-run_cmd("sed -i " + "'/input_enable_hotkey =/c input_enable_hotkey = \\\"num2\\\"' " + retroarch_cfg)
-print "sed -i " + "'/input_enable_hotkey =/c input_enable_hotkey = \\\"num2\\\"' " + retroarch_cfg
-#os.system("sed -i '/input_enable_hotkey/d' '" + retroarch_cfg + "'")
+retroarch_cfg = [
+    "/opt/retropie/configs/all/retroarch.cfg",
+    "/opt/retropie/configs/fba/retroarch.cfg",
+    "/opt/retropie/configs/snes/retroarch.cfg"
+]
+swap_line = {
+    'input_enable_hotkey = ':'"num2"',
+    'input_reset = ':'"z"',
+    'input_save_state = ':'"f2"',
+    'input_load_state = ':'"f4"',
+    'savestate_thumbnail_enable = ':'"true"'
+}
+
+for cfg in retroarch_cfg:
+    if os.path.isfile(cfg) == True:
+        if os.path.isfile(cfg + ".org") == False :
+            os.system("cp " + cfg + " " + cfg + ".org")
+        fr = open(cfg + ".org", "r")
+        fw = open(cfg, "w")
+        while True:
+            line = fr.readline()
+            if not line: break
+            for k in swap_line.keys():
+                if k in line:
+                    line = k + swap_line[k] + "\n"
+            fw.write(line)
+        fr.close()
+        fw.close()
+
 
 '''        
 os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
