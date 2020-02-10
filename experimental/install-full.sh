@@ -9,8 +9,7 @@ sudo apt-get install fonts-nanum-extra -y
 
 rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
-#cp -f -r ./PauseMenu /opt/retropie/configs/all/
-cp -f -r ./* /opt/retropie/configs/all/PauseMenu/
+cp -f -r ./PauseMenu /opt/retropie/configs/all/
 
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
@@ -20,5 +19,4 @@ echo '/usr/bin/python /opt/retropie/configs/all/PauseMenu/PauseMenu.py /dev/inpu
 chgrp -R -v pi /opt/retropie/configs/all/PauseMenu/
 chown -R -v pi /opt/retropie/configs/all/PauseMenu/
 
-#python ./PauseMenu/setup.py /dev/input/js0 -control
-python ./setup.py /dev/input/js0 -full
+python ./PauseMenu/setup.py /dev/input/js0 -full
