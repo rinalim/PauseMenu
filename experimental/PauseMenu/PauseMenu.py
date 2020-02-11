@@ -189,7 +189,7 @@ def get_info():
 
     #INPUT = './controls.xml'   
     if os.path.isfile(XML+romname+'.xml') == False:
-        print 'No xml found'
+        #print 'No xml found'
         name = romname
         buttons = ['A 버튼', 'B 버튼', 'C 버튼', 'D 버튼', 'None', 'None']
         button_num = 4
@@ -198,7 +198,7 @@ def get_info():
         game = doc.getroot()
     #game = root.find('./game[@romname=\"' + romname + '\"]')
     #if game == None:
-    #   print 'No Game Found'
+        #print 'No Game Found'
         name = str(unicode(game.get('gamename')))
         #print 'Generate pause images for ' + name
         player = game.find('player')
