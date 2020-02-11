@@ -553,6 +553,8 @@ def save_snapshot(index):
     if os.path.isfile(pngpath):
         while True:
             if os.path.getsize(pngpath) > 0:
+                if os.path.getsize(pngpath) < 1000:
+                    os.system("raspi2png -p " + pngpath)
                 break
             time.sleep(0.1)    
         image_thumb = Image.open(pngpath, "r")
@@ -835,8 +837,8 @@ def process_event(event):
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
-                        save_snapshot(STATE_INDEX)
                         stop_viewer()
+                        save_snapshot(STATE_INDEX)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
