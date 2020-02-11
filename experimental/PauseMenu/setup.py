@@ -202,8 +202,8 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
         'input_reset = ':'"z"',
         'input_save_state = ':'"f2"',
         'input_load_state = ':'"f4"',
-        'savestate_thumbnail_enable = ':'"true"',
-        'video_gpu_screenshot = ':'"false"'
+        'video_gpu_screenshot = ':'"false"',
+        'savestate_thumbnail_enable = ':'"true"'
     }
 
     for cfg in retroarch_cfg:
