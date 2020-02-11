@@ -6,8 +6,7 @@ import ast
 ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
-PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'	
-PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
+PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 
 retroarch_key = {}
 user_key = {}
@@ -36,7 +35,7 @@ def load_layout():
     #' | A B R |  | B A R |  | R B A | '
     #' ---------  ---------  --------- '
 
-    f = open(PATH_PAUSEOPTION+"layout.cfg", 'r')
+    f = open(PATH_PAUSEMENU+"images/control/layout.cfg", 'r')
     es_conf = int(f.readline())
 
     if es_conf == 1:
@@ -148,7 +147,8 @@ def update_fba_rmp(system, romname, index):
     f.write(buf)
     f.close()
     run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' /home/pi/RetroPie/roms/fba/" + romname + ".zip.cfg")
-    run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> /home/pi/RetroPie/roms/fba/" + romname + ".zip.cfg")
+    if turbo_key != '':
+        run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> /home/pi/RetroPie/roms/fba/" + romname + ".zip.cfg")
     
 if __name__ == "__main__":
 
