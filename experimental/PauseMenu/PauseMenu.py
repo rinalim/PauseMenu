@@ -560,10 +560,9 @@ def save_snapshot(index):
     if os.path.isfile(pngpath):
         while True:
             if os.path.getsize(pngpath) > 0:
-                if os.path.getsize(pngpath) < 1000:
-                    os.system("raspi2png -p " + pngpath)
                 break
-            time.sleep(0.1)    
+            time.sleep(0.1)
+        time.sleep(0.3)
         image_thumb = Image.open(pngpath, "r")
         image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
         backgroud.paste(image_thumb_resize, (282, 109))
