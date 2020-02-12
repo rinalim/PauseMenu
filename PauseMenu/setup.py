@@ -202,7 +202,7 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
         'input_reset = ':'"z"',
         'input_save_state = ':'"f2"',
         'input_load_state = ':'"f4"',
-        'video_gpu_screenshot = ':'"false"',
+        'video_gpu_screenshot = ':'"true"',
         'savestate_thumbnail_enable = ':'"true"'
     }
 
