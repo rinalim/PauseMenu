@@ -147,17 +147,25 @@ def full_arg():
         return True
     else:
         return False
+        
+def load_button():
+
+    global retroarch_key
+
+    f = open(PATH_PAUSEMENU + "button.cfg", 'r')
+    retroarch_key = ast.literal_eval(f.readline())
+    f.close()        
 
 def load_layout():
 
-    global es_conf, retroarch_key
+    global es_conf, user_key
 
     #' -(1)-----  -(2)-----  -(3)----- '
     #' | X Y L |  | Y X L |  | L Y X | '
     #' | A B R |  | B A R |  | R B A | '
     #' ---------  ---------  --------- '
 
-    f = open(PATH_PAUSEMENU + "images/control/"+"layout.cfg", 'r')
+    f = open(PATH_PAUSEMENU + "images/control/layout.cfg", 'r')
     es_conf = int(f.readline())
 
     if es_conf == 1:
@@ -182,7 +190,6 @@ def load_layout():
         user_key['5'] = 'b'
         user_key['6'] = 'a'
 
-    retroarch_key = ast.literal_eval(f.readline())
     f.close()
 
 def get_info():
@@ -894,7 +901,7 @@ def main():
     
     global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
 
-    load_layout()
+    load_button()
     
     is_retroarch = False
     if full_arg() == True:
@@ -931,6 +938,7 @@ def main():
             buttons, button_num, layout_num = get_info()
             if check_update(corename) == True:
                 start_viewer_saving()
+                load_layout()
                 draw_picture(buttons)
                 stop_viewer()
         else:

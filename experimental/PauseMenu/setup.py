@@ -78,7 +78,7 @@ def load_retroarch_cfg(dev_name):
         retroarch_key[words[0]] = words[2].replace('"','')
     f.close()
     
-    f = open(PATH_PAUSEMENU + "images/control/layout.cfg", 'a')
+    f = open(PATH_PAUSEMENU + "button.cfg", 'w')
     f.write(str(retroarch_key)+'\n')
     f.close()
 
@@ -142,6 +142,7 @@ def process_event(event):
 
 
 dev_name = load_es_cfg()
+load_retroarch_cfg(dev_name)
 
 btn_select = -1
 btn_start = -1
@@ -189,7 +190,6 @@ os.system("sed -i '/input_exit_emulator_btn/d' '" + joypad_cfg + "'")
 
 if len(sys.argv) > 2 and sys.argv[2] == '-full':
     set_layout()
-    load_retroarch_cfg(dev_name)
     
     os.system("sed -i '/input_reset_btn/d' '" + joypad_cfg + "'")
     os.system("sed -i '/input_state_slot_increase_btn/d' '" + joypad_cfg + "'")
