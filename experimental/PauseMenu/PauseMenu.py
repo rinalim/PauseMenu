@@ -894,7 +894,8 @@ def main():
     
     global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
 
-    # Draw control images
+    load_layout()
+    
     is_retroarch = False
     if full_arg() == True:
         while True:
@@ -930,7 +931,6 @@ def main():
             buttons, button_num, layout_num = get_info()
             if check_update(corename) == True:
                 start_viewer_saving()
-                load_layout()
                 draw_picture(buttons)
                 stop_viewer()
         else:
