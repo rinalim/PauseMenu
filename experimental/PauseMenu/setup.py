@@ -147,6 +147,8 @@ btn_select = -1
 btn_start = -1
 btn_a = -1
 event = -1
+
+'''
 f = open(PATH_PAUSEMENU + "button.cfg", 'w')
 js_devs, js_fds = open_devices()
 
@@ -177,6 +179,7 @@ while btn_a == -1:
 #f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
 f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
+'''
 
 joypad_cfg = "/opt/retropie/configs/all/retroarch-joypads/" + dev_name + ".cfg"
 if os.path.isfile(joypad_cfg + ".org") == False :

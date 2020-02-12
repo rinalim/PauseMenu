@@ -947,9 +947,9 @@ def main():
     btn_start = int(words[1])
     btn_a = int(words[2])
     '''
-    btn_select = int(retroarch_key('select'))
-    btn_start = int(retroarch_key('select'))
-    btn_a = int(retroarch_key('select'))
+    btn_select = int(retroarch_key['select'])
+    btn_start = int(retroarch_key['start'])
+    btn_a = int(retroarch_key['a'])
     
     #print "PauseMenu is ready.."
 
