@@ -833,10 +833,10 @@ def process_event(event):
                         #print "Save"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
+                        start_viewer_saving()
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
-                        start_viewer_saving()
                         save_snapshot(STATE_INDEX)
                         stop_viewer()
                         PAUSE_MODE_ON = False
