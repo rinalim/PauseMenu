@@ -559,7 +559,7 @@ def save_snapshot(index):
             time.sleep(0.1)    
         image_thumb = Image.open(pngpath, "r")
         image_thumb_resize = image_thumb.resize((260, 195))
-        backgroud.paste(image_thumb_resize, (282, 109))
+        backgroud.paste(image_thumb_resize, (282, 109), Image.ANTIALIAS)
         backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
         
     '''
