@@ -927,14 +927,15 @@ def main():
         path = run_cmd("strings -n 1 /proc/"+pid+"/cmdline | grep roms")
         romname = path.replace('"','').split("/")[-1].split(".")[0]
         
-        if corename == "lr-fbneo" or corename == "lr-fbalpha":
+        if romname == "":
+            VIEW_MODE = "default"
+        elif corename == "lr-fbneo" or corename == "lr-fbalpha":
             VIEW_MODE = "fba"
             fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
             res_x = fbset.split("x")[0]
             res_y = fbset.split("x")[1].replace('\n', '')
             VIEWER_OSD = VIEWER_OSD + " --win " + \
                 str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
-            
             buttons, button_num, layout_num = get_info()
             if check_update(corename) == True:
                 start_viewer_saving()
