@@ -937,7 +937,7 @@ def main():
             VIEW_MODE = "libretro"
     #else: # advmame, ppsspp, drastic, ...
     #    VIEW_MODE = "default"
-                
+    '''            
     if os.path.isfile(PATH_PAUSEMENU + "button.cfg") == False:
         return False
     f = open(PATH_PAUSEMENU + "button.cfg", 'r')
@@ -946,6 +946,10 @@ def main():
     btn_select = int(words[0])
     btn_start = int(words[1])
     btn_a = int(words[2])
+    '''
+    btn_select = int(retroarch_key('select'))
+    btn_start = int(retroarch_key('select'))
+    btn_a = int(retroarch_key('select'))
     
     #print "PauseMenu is ready.."
 
