@@ -866,7 +866,10 @@ def process_event(event):
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                     PAUSE_MODE_ON = False
-                    send_hotkey("s", 1)    
+                    send_hotkey("s", 1)
+                    keyboard.press("z")
+                    time.sleep(0.1)
+                    keyboard.release("z")
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
