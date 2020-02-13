@@ -60,8 +60,6 @@ btn_x = -1
 button_num = 0
 layout_num = 0
 
-PATH_PAUSEOPTION = PATH_PAUSEMENU+'control/'
-
 retroarch_key = {}
 user_key = {}
 btn_map = {}
@@ -106,14 +104,8 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
     
-def echo_file(string, file, mode):
-    '''
-    f = open("/tmp/echo", mode)
-    f.write(string)
-    f.close()
-    os.system("cp /tmp/echo " + file)
-    '''
-    os.system("echo '" + string + "' > " + file)
+def update_image(src, dst):
+    os.system("echo '" + src + "' > " + dst)
     
 def check_update(system):
     
@@ -155,7 +147,7 @@ def load_button():
 
     f = open(PATH_PAUSEMENU + "button.cfg", 'r')
     retroarch_key = ast.literal_eval(f.readline())
-    f.close()        
+    f.close()
 
 def load_layout():
 
@@ -379,8 +371,6 @@ def draw_picture(buttons):
             draw_text(btn, "/tmp/text.png")
             cmd = "composite -geometry " + pos_osd[i-1] + " /tmp/text.png" + OSD + OSD
             os.system(cmd)
-    #cmd = "composite " + OSD + " " + PATH_PAUSEOPTION + "images/bg_control.png" + OSD
-    #os.system(cmd)
     
     # Generate current layout image
     pos = ["80x22+320+188", "80x22+400+162", "80x22+480+138", "80x22+320+253", "80x22+400+229", "80x22+480+203"]
@@ -595,18 +585,18 @@ def start_viewer():
     else:
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "w")
+        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt")
         os.system(VIEWER_BG + " &")
         os.system(VIEWER + get_location() + " &")
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt")
         os.system(VIEWER_LAYOUT + get_location() + " &")
 
 def start_viewer_osd():
     if is_running("omxiv-pause") == False:
         if VIEW_MODE == "fba" and os.path.isfile(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png") == True :
-            echo_file(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png", "/tmp/pause_osd.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png", "/tmp/pause_osd.txt")
             os.system(VIEWER_OSD + get_location() +" &")
 
 def start_viewer_saving():
@@ -616,7 +606,7 @@ def start_viewer_saving():
             res_x = fbset.split("x")[0]
             res_y = fbset.split("x")[1].replace('\n', '')
             params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
-            echo_file(PATH_PAUSEMENU + "images/saving.gif", "/tmp/pause.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/saving.gif", "/tmp/pause.txt")
             os.system(VIEWER + params + " " + get_location() +" &")
 
 def stop_viewer():
@@ -634,36 +624,36 @@ def change_viewer(menu, index):
        state_index = "state" + index
 
     if menu == "RESUME":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt", "w")
+        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.txt")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
-                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
+                update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt")
     elif menu == "STOP":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png", "/tmp/pause.txt", "w")
+        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png", "/tmp/pause.txt")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
-                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
+                update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt")
     elif menu == "RESET":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png", "/tmp/pause.txt", "w")
+        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png", "/tmp/pause.txt")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
-                echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt", "w")
+                update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.txt")
     elif menu == "SAVE":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png", "/tmp/pause.txt", "w")
+        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png", "/tmp/pause.txt")
         if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.txt")
         else:
-            echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt")
     elif menu == "LOAD":
-        echo_file(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.txt", "w")
+        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.txt")
         if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-            echo_file(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.txt")
         else:
-            echo_file(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.txt")
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
-            echo_file(PATH_PAUSEMENU + "images/" + sysname + "_button.png", "/tmp/pause.txt", "w")
-            echo_file(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.txt", "w")
+            update_image(PATH_PAUSEMENU + "images/" + sysname + "_button.png", "/tmp/pause.txt")
+            update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.txt")
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
@@ -936,27 +926,25 @@ def main():
             os.mkdir(PATH_PAUSEMENU + "images/save/" + sysname)
         corename = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $10}'").split("/")[4]
         #romname = run_cmd("ps -ef | grep bin/retroarch | grep -v grep | awk '{print $13}'").split("/")[6][0:-5]
-        pid = run_cmd("ps -ef | grep bin/retroarch | grep -v grep").split()[1]            
-        path = run_cmd("strings -n 1 /proc/"+pid+"/cmdline | grep roms")
-        romname = path.replace('"','').split("/")[-1].split(".")[0]
-        
-        if romname == "":
-            VIEW_MODE = "default"
-        elif corename == "lr-fbneo" or corename == "lr-fbalpha":
-            VIEW_MODE = "fba"
-            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
-            res_x = fbset.split("x")[0]
-            res_y = fbset.split("x")[1].replace('\n', '')
-            VIEWER_OSD = VIEWER_OSD + " --win " + \
-                str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
-            buttons, button_num, layout_num = get_info()
-            if check_update(corename) == True:
-                start_viewer_saving()
-                load_layout()
-                draw_picture(buttons)
-                stop_viewer()
-        else:
-            VIEW_MODE = "libretro"
+        pid = run_cmd("ps -ef | grep bin/retroarch | grep -v grep").split()[1]  
+        if os.path.isfile("/proc/"+pid+"/cmdline") == True:
+            path = run_cmd("strings -n 1 /proc/"+pid+"/cmdline | grep roms")
+            romname = path.replace('"','').split("/")[-1].split(".")[0]
+            if corename == "lr-fbneo" or corename == "lr-fbalpha":
+                VIEW_MODE = "fba"
+                fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
+                res_x = fbset.split("x")[0]
+                res_y = fbset.split("x")[1].replace('\n', '')
+                VIEWER_OSD = VIEWER_OSD + " --win " + \
+                    str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
+                buttons, button_num, layout_num = get_info()
+                if check_update(corename) == True:
+                    start_viewer_saving()
+                    load_layout()
+                    draw_picture(buttons)
+                    stop_viewer()
+            else:
+                VIEW_MODE = "libretro"
     #else: # advmame, ppsspp, drastic, ...
     #    VIEW_MODE = "default"
     '''            
