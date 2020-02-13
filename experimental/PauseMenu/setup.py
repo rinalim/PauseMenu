@@ -184,7 +184,7 @@ f.close()
 
 joypad_cfg = "/opt/retropie/configs/all/retroarch-joypads/" + dev_name + ".cfg"
 if os.path.isfile(joypad_cfg + ".org") == False :
-    os.system("cp " + joypad_cfg + " " + joypad_cfg + ".org")
+    os.system("cp '" + joypad_cfg + "' '" + joypad_cfg + ".org'")
 
 #os.system("sed -i '/input_exit_emulator_btn/d' '" + joypad_cfg + "'")
 os.system("sed -i '/input_enable_hotkey_btn/d' '" + joypad_cfg + "'")
