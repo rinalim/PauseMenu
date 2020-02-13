@@ -56,6 +56,7 @@ js_fds = []
 btn_select = -1
 btn_start = -1
 btn_a = -1
+btn_x = -1
 button_num = 0
 layout_num = 0
 
@@ -538,8 +539,10 @@ def send_hotkey(key, repeat):
 def save_snapshot(index):
     if index == 0:
         pngname = "state.png"
+        state = "state"
     else:
         pngname = "state" + str(index) + ".png"
+        state = "state" + str(index)
     
     now = datetime.datetime.now()
     nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
@@ -548,24 +551,28 @@ def save_snapshot(index):
     image_date = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
     draw = ImageDraw.Draw(image_date)
     w, h = draw.textsize(nowDatetime)
-    #draw.fontmode = "1"
-    draw.fontmode = "L"
+    draw.fontmode = "L" # "1"=normal, "L"=antialiasing
     draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
     
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
     backgroud.paste(image_date, (282, 304))
-    backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
-    if os.path.isfile(pngpath):
+    if os.path.isfile(pngpath) == True:
         while True:
             if os.path.getsize(pngpath) > 0:
                 break
             time.sleep(0.1)
         time.sleep(0.3)
-        image_thumb = Image.open(pngpath, "r")
-        image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
-        backgroud.paste(image_thumb_resize, (282, 109))
+        try:
+            image_thumb = Image.open(pngpath, "r")
+        except:
+            print "Cannot find thumbnail"
+        else:
+            image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
+            backgroud.paste(image_thumb_resize, (282, 109))
+
+    if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
         backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
         
     '''
@@ -862,7 +869,13 @@ def process_event(event):
                         close_fds(js_fds)
                         cmd = "python " + PATH_PAUSEMENU + "KeyMapper.py " + corename + " " + romname + " " + str(LAYOUT_INDEX)+"/"+str(layout_num)
                         os.system(cmd)
-                        sys.exit(0)                
+                        sys.exit(0)
+            elif js_number == btn_x:
+                if PAUSE_MODE_ON == True:
+                    #print "RGUI"
+                    stop_viewer()
+                    PAUSE_MODE_ON = False
+                    send_hotkey("s", 1)    
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
@@ -898,7 +911,8 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
+    global btn_select, btn_start, btn_a, btn_x
+    global romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
 
     load_button()
     
@@ -958,6 +972,7 @@ def main():
     btn_select = int(retroarch_key['select'])
     btn_start = int(retroarch_key['start'])
     btn_a = int(retroarch_key['a'])
+    btn_x = int(retroarch_key['x'])
     
     #print "PauseMenu is ready.."
 
