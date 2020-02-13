@@ -47,7 +47,6 @@ def load_es_cfg():
     return tags[dev_select-1].attrib['deviceName']
 
 def set_layout():
-    print '\n'
     print ' -(1)-----  -(2)-----  -(3)----- '
     print ' | X Y L |  | Y X L |  | L Y X | '
     print ' | A B R |  | B A R |  | R B A | '
@@ -78,7 +77,7 @@ def load_retroarch_cfg(dev_name):
         retroarch_key[words[0]] = words[2].replace('"','')
     f.close()
     
-    f = open(PATH_PAUSEMENU + "images/control/layout.cfg", 'a')
+    f = open(PATH_PAUSEMENU + "button.cfg", 'w')
     f.write(str(retroarch_key)+'\n')
     f.close()
 
@@ -142,11 +141,14 @@ def process_event(event):
 
 
 dev_name = load_es_cfg()
+load_retroarch_cfg(dev_name)
 
 btn_select = -1
 btn_start = -1
 btn_a = -1
 event = -1
+
+'''
 f = open(PATH_PAUSEMENU + "button.cfg", 'w')
 js_devs, js_fds = open_devices()
 
@@ -177,21 +179,23 @@ while btn_a == -1:
 #f.write(str(axis_up) + "\n" + str(axis_down) + "\n" + str(btn_select) + "\n" + str(btn_start))
 f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
+'''
 
 joypad_cfg = "/opt/retropie/configs/all/retroarch-joypads/" + dev_name + ".cfg"
 if os.path.isfile(joypad_cfg + ".org") == False :
-    os.system("cp " + joypad_cfg + " " + joypad_cfg + ".org")
+    os.system("cp '" + joypad_cfg + "' '" + joypad_cfg + ".org'")
 
 os.system("sed -i '/input_exit_emulator_btn/d' '" + joypad_cfg + "'")
 
 if len(sys.argv) > 2 and sys.argv[2] == '-full':
     set_layout()
-    load_retroarch_cfg(dev_name)
     
+    os.system("sed -i '/input_enable_hotkey_btn/d' '" + joypad_cfg + "'")
     os.system("sed -i '/input_reset_btn/d' '" + joypad_cfg + "'")
+    os.system("sed -i '/input_menu_toggle_btn/d' '" + joypad_cfg + "'")
     os.system("sed -i '/input_state_slot_increase_btn/d' '" + joypad_cfg + "'")
     os.system("sed -i '/input_state_slot_decrease_btn/d' '" + joypad_cfg + "'")
-
+    
     retroarch_cfg = [
         "/opt/retropie/configs/all/retroarch.cfg",
         "/opt/retropie/configs/fba/retroarch.cfg",
@@ -200,6 +204,7 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
     swap_line = {
         'input_enable_hotkey = ':'"num2"',
         'input_reset = ':'"z"',
+        'input_menu_toggle = ':'"s"',
         'input_save_state = ':'"f2"',
         'input_load_state = ':'"f4"',
         'video_gpu_screenshot = ':'"true"',
@@ -221,7 +226,6 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
                 fw.write(line)
             fr.close()
             fw.close()
-
 
 '''        
 os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
