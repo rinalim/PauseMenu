@@ -18,6 +18,8 @@ cp ./PauseMenu/PauseMenu4X11.py /opt/retropie/configs/all/PauseMenu/PauseMenu.py
 
 sudo sed -i '/PauseMenu.py/d' /opt/retropie/configs/all/runcommand-onstart.sh
 echo 'sudo /usr/bin/python /opt/retropie/configs/all/PauseMenu/PauseMenu.py /dev/input/js0 -full &' >> /opt/retropie/configs/all/runcommand-onstart.sh
+sudo sed -i '/PauseMenu.py/d' /opt/retropie/configs/all/runcommand-onend.sh
+echo 'sudo pkill -ef PauseMenu.py' >> /opt/retropie/configs/all/runcommand-onend.sh
 
 chgrp -R -v pi /opt/retropie/configs/all/PauseMenu/
 chown -R -v pi /opt/retropie/configs/all/PauseMenu/
