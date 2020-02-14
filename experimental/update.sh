@@ -3,13 +3,13 @@
 # https://github.com/sana2dang/PauseMode
 
 mkdir ./backup
-cp -f -r /opt/retropie/configs/all/PauseMenu/image/save/* ./backup
+cp -f -r /opt/retropie/configs/all/PauseMenu/images/save/* ./backup
 
 rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
 cp -f -r ./PauseMenu /opt/retropie/configs/all/
 
-cp -f -r ./backup/* /opt/retropie/configs/all/PauseMenu/image/save
+cp -f -r ./backup/* /opt/retropie/configs/all/PauseMenu/images/save
 
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
