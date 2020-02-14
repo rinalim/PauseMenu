@@ -657,7 +657,7 @@ def change_viewer(menu, index):
             update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
-            update_image(PATH_PAUSEMENU + "images/" + sysname + "_button.png", "/tmp/pause.png")
+            update_image(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.png")
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png")
         
 def is_running(pname):
