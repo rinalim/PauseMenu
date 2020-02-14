@@ -841,7 +841,7 @@ def process_event(event):
                         #print "Save"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
-                        start_viewer_saving()
+                        #start_viewer_saving()
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
@@ -945,7 +945,7 @@ def main():
                 #    str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
                 buttons, button_num, layout_num = get_info()
                 if check_update(corename) == True:
-                    start_viewer_saving()
+                    #start_viewer_saving()
                     load_layout()
                     draw_picture(buttons)
                     stop_viewer()
