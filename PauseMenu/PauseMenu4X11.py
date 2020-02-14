@@ -948,7 +948,7 @@ def main():
                     #start_viewer_saving()
                     load_layout()
                     draw_picture(buttons)
-                    stop_viewer()
+                    #stop_viewer()
             else:
                 VIEW_MODE = "libretro"
     #else: # advmame, ppsspp, drastic, ...
