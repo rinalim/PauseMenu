@@ -552,19 +552,20 @@ def save_snapshot(index):
         prev_size = 0
         while True:
             cur_size = os.path.getsize(pngpath)
-            if cur_size > 0 and cur_suze == prev_size :
-                break
+            if cur_size > prev_size :
+                try:
+                    image_thumb = Image.open(pngpath, "r")
+                except:
+                    print "Cannot read thumbnail"
+                    prev_size = cur_size
+                    time.sleep(0.3)
+                else:
+                    image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
+                    backgroud.paste(image_thumb_resize, (282, 109))
+                    break
             else:
-                prev_size = cur_size
                 time.sleep(0.1)
         time.sleep(0.3)
-        try:
-            image_thumb = Image.open(pngpath, "r")
-        except:
-            print "Cannot find thumbnail"
-        else:
-            image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
-            backgroud.paste(image_thumb_resize, (282, 109))
 
     if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
         backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
