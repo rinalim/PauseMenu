@@ -6,15 +6,17 @@ mkdir -p ./backup/save
 
 cp /opt/retropie/configs/all/PauseMenu/button.cfg ./backup
 cp /opt/retropie/configs/all/PauseMenu/images/control/layout.cfg ./backup
-cp -f -r /opt/retropie/configs/all/PauseMenu/images/save/* ./backup/save
+cp -rf /opt/retropie/configs/all/PauseMenu/images/save/* ./backup/save
 
 rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
-cp -f -r ./PauseMenu /opt/retropie/configs/all/
+cp -rf ./PauseMenu /opt/retropie/configs/all/
 
 cp ./backup/button.cfg /opt/retropie/configs/all/PauseMenu
 cp ./backup/layout.cfg  /opt/retropie/configs/all/PauseMenu/images/control
-cp -f -r ./backup/save/* /opt/retropie/configs/all/PauseMenu/images/save
+cp -rf ./backup/save/* /opt/retropie/configs/all/PauseMenu/images/save
+
+rm -rf ./backup
 
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
