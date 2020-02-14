@@ -549,10 +549,14 @@ def save_snapshot(index):
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath) == True:
+        prev_size = 0
         while True:
-            if os.path.getsize(pngpath) > 0:
+            cur_size = os.path.getsize(pngpath)
+            if cur_size > 0 and cur_suze == prev_size :
                 break
-            time.sleep(0.1)
+            else:
+                prev_size = cur_size
+                time.sleep(0.1)
         time.sleep(0.3)
         try:
             image_thumb = Image.open(pngpath, "r")
