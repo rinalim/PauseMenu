@@ -833,25 +833,25 @@ def process_event(event):
                         sys.exit(0)
                     elif MENU_INDEX == 3:
                         #print "Reset"
+                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         send_hotkey("z", 1)
-                        stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
-                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         #start_viewer_saving()
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
                         save_snapshot(STATE_INDEX)
-                        stop_viewer()
+                        #stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
-                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         stop_viewer()
+                        os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f4", 1)
