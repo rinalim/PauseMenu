@@ -592,7 +592,9 @@ def start_viewer():
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
         update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         os.system(VIEWER_BG + " &")
+        time.sleep(0.1)
         os.system(VIEWER + " &")
+        time.sleep(0.1)
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
@@ -602,8 +604,6 @@ def start_viewer_osd():
     if is_running("omxiv-pause") == False:
         if VIEW_MODE == "fba" and os.path.isfile(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png") == True :
             update_image(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png", "/tmp/pause_osd.txt")
-            os.system(VIEWER_OSD + get_location() +" &")
-
 def start_viewer_saving():
     if is_running("omxiv-pause") == False:
         if os.path.isfile(PATH_PAUSEMENU + "images/saving.gif") == True :
