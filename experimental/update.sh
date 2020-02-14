@@ -2,14 +2,19 @@
 # https://github.com/RetroPie/RetroPie-Setup/blob/master/scriptmodules/supplementary/runcommand/joy2key.py
 # https://github.com/sana2dang/PauseMode
 
-mkdir ./backup
-cp -f -r /opt/retropie/configs/all/PauseMenu/images/save/* ./backup
+mkdir -p ./backup/save
+
+cp /opt/retropie/configs/all/PauseMenu/button.cfg ./backup
+cp /opt/retropie/configs/all/PauseMenu/images/control/layout.cfg ./backup
+cp -f -r /opt/retropie/configs/all/PauseMenu/images/save/* ./backup/save
 
 rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
 cp -f -r ./PauseMenu /opt/retropie/configs/all/
 
-cp -f -r ./backup/* /opt/retropie/configs/all/PauseMenu/images/save
+cp ./backup/button.cfg /opt/retropie/configs/all/PauseMenu
+cp ./backup/layout.cfg  /opt/retropie/configs/all/PauseMenu/images/control
+cp -f -r ./backup/save/* /opt/retropie/configs/all/PauseMenu/images/save
 
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
