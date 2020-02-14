@@ -851,10 +851,10 @@ def process_event(event):
                     elif MENU_INDEX == 5:
                         #print "Load"
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        stop_viewer()
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f4", 1)
-                        stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 6:
                         #print "Button"
