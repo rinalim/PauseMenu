@@ -13,5 +13,5 @@ cp -f -r ./backup/* /opt/retropie/configs/all/PauseMenu/image/save
 
 sudo chmod 755 /opt/retropie/configs/all/PauseMenu/omxiv-pause
 
-chgrp -R -v pi /opt/retropie/configs/all/PauseMenu/
-chown -R -v pi /opt/retropie/configs/all/PauseMenu/
+chgrp -R -v pi /opt/retropie/configs/all/PauseMenu/ > /dev/null 2>&1
+chown -R -v pi /opt/retropie/configs/all/PauseMenu/ > /dev/null 2>&1
