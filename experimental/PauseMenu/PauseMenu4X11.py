@@ -1,7 +1,7 @@
 #-*-coding: utf-8 -*-
 #!/usr/bin/python
 
-import os, sys, struct, time, fcntl, termios, signal
+import os, sys, struct, time, fcntl, termios, signal, keyboard, datetime
 import curses, errno
 from pyudev import Context
 from subprocess import *
@@ -230,7 +230,7 @@ def get_info():
             
     return buttons, button_num, layout_num
 
-def get_btn_layout(system, buttons):
+def get_btn_layout(buttons):
 
     # FBA button sequence   
     btn_map['b'] = '"0"'
@@ -241,10 +241,10 @@ def get_btn_layout(system, buttons):
     btn_map['r'] = '"11"'
 
     #if os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp') == True:
-    if os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp') == True:
-        print 'Use game specific setting'
+    if os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + romname + '.rmp') == True:
+        #print 'Use game specific setting'
         #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/' + romname + '.rmp', 'r')
-        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + romname + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + romname + '.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -261,10 +261,10 @@ def get_btn_layout(system, buttons):
         f.close()
 
     #elif os.path.isfile(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp') == True:
-    elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp') == True:
-        print 'Use FinalBurn setting'
+    elif os.path.isfile(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + sys_map[corename] + '.rmp') == True:
+        #print 'Use FinalBurn remap setting'
         #f = open(CONFIG_DIR + 'fba/FinalBurn Neo/FinalBurn Neo.rmp', 'r')
-        f = open(CONFIG_DIR + 'fba/' + sys_map[system] + '/' + sys_map[system] + '.rmp', 'r')
+        f = open(CONFIG_DIR + 'fba/' + sys_map[corename] + '/' + sys_map[corename] + '.rmp', 'r')
         while True:
             line = f.readline()
             if not line: 
@@ -354,12 +354,12 @@ def draw_text(text, outfile):
     draw.text((0,0), unicode(text), font=font, fill="black")
     image.save(outfile)
 
-def draw_picture(system, buttons):
+def draw_picture(buttons):
 
     LAYOUT = " " + PATH_PAUSEMENU + "images/control/fba/" + romname + '_layout'
     #OSD = " " + PATH_PAUSEMENU + "images/control/fba/" + romname + '_osd.png'
 
-    get_btn_layout(system, buttons)
+    get_btn_layout(buttons)
 
     # Generate OSD image
     #pos_osd = ["80x22+62+67", "80x22+142+41", "80x22+222+17", "80x22+62+132", "80x22+142+108", "80x22+222+82"]
@@ -549,18 +549,23 @@ def save_snapshot(index):
     
     pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath) == True:
+        prev_size = 0
         while True:
-            if os.path.getsize(pngpath) > 0:
-                break
-            time.sleep(0.1)
+            cur_size = os.path.getsize(pngpath)
+            if cur_size > prev_size :
+                try:
+                    image_thumb = Image.open(pngpath, "r")
+                except:
+                    print "Cannot read thumbnail"
+                    prev_size = cur_size
+                    time.sleep(0.3)
+                else:
+                    image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
+                    backgroud.paste(image_thumb_resize, (282, 109))
+                    break
+            else:
+                time.sleep(0.1)
         time.sleep(0.3)
-        try:
-            image_thumb = Image.open(pngpath, "r")
-        except:
-            print "Cannot find thumbnail"
-        else:
-            image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
-            backgroud.paste(image_thumb_resize, (282, 109))
 
     if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
         backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
