@@ -35,7 +35,7 @@ PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 XML = PATH_PAUSEMENU+'images/control/xml/'
 VIEWER = "pqiv -c -i -f --display=:0 /tmp/pause.png"
 VIEWER_LAYOUT = "pqiv -c -i -f --display=:0 /tmp/pause_layout.png"
-VIEWER_BG = "pqiv -c -i -f -t --display=:0 " + PATH_PAUSEMENU + "images/pause_bg.png"
+VIEWER_BG = "pqiv -c -i -f -z 3 --display=:0 " + PATH_PAUSEMENU + "images/pause_bg.png"
 #VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
 #VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause.txt -f -t 5 -T blend --duration 20 -l 30001 -a center --win 724,608,1024,768"
 
