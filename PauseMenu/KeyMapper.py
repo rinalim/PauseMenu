@@ -140,7 +140,7 @@ def update_fba_rmp(system, romname, index):
         run_cmd('mkdir /opt/retropie/configs/fba/'+sys_map[system].replace(" ","\ "))
     buf = ''
     run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + romname + ".rmp")
-    f = open('/opt/retropie/configs/fba/'+sys_map[system] + '/'  + romname + '.rmp', 'a')
+    f = open('/opt/retropie/configs/fba/'+ sys_map[system] + '/'  + romname + '.rmp', 'a')
     for key in key_map:
         res = 'input_player' + str(index) + '_btn_' + key_map[key][0] + ' = ' + '\"' + key + '\"'
         buf += res + '\n'
@@ -153,7 +153,9 @@ def update_fba_rmp(system, romname, index):
         run_cmd("sed -i \'/input_player" + str(index) + "_turbo_btn/d\' " + FBA_ROMPATH + romname + ".zip.cfg")
     if turbo_key != '':
         run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> " + FBA_ROMPATH + romname + ".zip.cfg")
-    
+    if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
+        run_cmd('cp -r /opt/retropie/configs/fba/' + sys_map[system] + ' /home/pi/.config/retroarch/config/remaps')
+
 if __name__ == "__main__":
 
     system = sys.argv[1]
