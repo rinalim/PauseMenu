@@ -226,7 +226,8 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
         if os.path.isfile(cfg) == True:
             if os.path.isfile(cfg + ".org") == False :
                 os.system("cp " + cfg + " " + cfg + ".org")
-            fr = open(cfg + ".org", "r")
+            os.system("cp " + cfg + " " + cfg + ".tmp")
+            fr = open(cfg + ".tmp", "r")
             fw = open(cfg, "w")
             while True:
                 line = fr.readline()
