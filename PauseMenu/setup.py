@@ -226,6 +226,7 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
                 fw.write(line)
             fr.close()
             fw.close()
+            os.system("sed -i '/input_player1_turbo_btn/d' '" + cfg + "'")
 
 '''        
 os.system("sudo sed -i 's/input_exit_emulator_btn/#input_exit_emulator_btn/g' " 
