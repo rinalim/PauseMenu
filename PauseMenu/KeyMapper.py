@@ -154,7 +154,7 @@ def update_fba_rmp(system, romname, index):
     if turbo_key != '':
         run_cmd("echo 'input_player" + str(index) + "_turbo_btn = " + turbo_key + "' >> " + FBA_ROMPATH + romname + ".zip.cfg")
     if os.path.isdir('/home/pi/.config/retroarch/config/remaps') == True:
-        run_cmd('cp -r /opt/retropie/configs/fba/' + sys_map[system] + ' /home/pi/.config/retroarch/config/remaps')
+        run_cmd("cp -r '/opt/retropie/configs/fba/" + sys_map[system] + "' /home/pi/.config/retroarch/config/remaps")
 
 if __name__ == "__main__":
 
