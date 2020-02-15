@@ -38,6 +38,7 @@ def load_layout():
 
     f = open(PATH_PAUSEMENU+"images/control/layout.cfg", 'r')
     es_conf = int(f.readline())
+    f.close()
 
     if es_conf == 1:
         user_key['1'] = 'x'
@@ -61,6 +62,7 @@ def load_layout():
         user_key['5'] = 'b'
         user_key['6'] = 'a'
 
+    f = open(PATH_PAUSEMENU+"button.cfg", 'r')
     retroarch_key = ast.literal_eval(f.readline())
     f.close()
 
