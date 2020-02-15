@@ -105,7 +105,7 @@ def run_cmd(cmd):
     return output
     
 def update_image(src, dst):
-    os.system("echo '" + src + "' > " + dst)
+    os.system('echo "' + src + '" > ' + dst)
     
 def check_update(system):
     

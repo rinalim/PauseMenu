@@ -28,7 +28,18 @@ if os.path.isfile(joypad_cfg + ".org") == True :
 
 retroarch_cfg = [
     "/opt/retropie/configs/all/retroarch.cfg",
+    "/opt/retropie/configs/arcade/retroarch.cfg",
+    "/opt/retropie/configs/dreamcast/retroarch.cfg",
     "/opt/retropie/configs/fba/retroarch.cfg",
+    "/opt/retropie/configs/gba/retroarch.cfg",
+    "/opt/retropie/configs/gbc/retroarch.cfg",
+    "/opt/retropie/configs/mame-libretro/retroarch.cfg",
+    "/opt/retropie/configs/megadrive/retroarch.cfg",
+    "/opt/retropie/configs/msx/retroarch.cfg",
+    "/opt/retropie/configs/n64/retroarch.cfg",
+    "/opt/retropie/configs/nes/retroarch.cfg",
+    "/opt/retropie/configs/psp/retroarch.cfg",
+    "/opt/retropie/configs/psx/retroarch.cfg",
     "/opt/retropie/configs/snes/retroarch.cfg"
 ]
 
