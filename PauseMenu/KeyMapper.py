@@ -121,17 +121,17 @@ def set_keymap(romname, layout_index):
             key_map['0'] = user_key['4'] + user_key['5']
             key_map['8'] = user_key['1']
             key_map['1'] = user_key['2']
-            turbo_key = '"' + retroarch_key[user_key['5']] + '"'
+            turbo_key = retroarch_key[user_key['5']]
         elif layout_index[0] == '5':
             key_map['0'] = user_key['1'] + user_key['2'] 
             key_map['8'] = user_key['4']
             key_map['1'] = user_key['5']
-            turbo_key = '"' + retroarch_key[user_key['2']] + '"'
+            turbo_key = retroarch_key[user_key['2']]
         elif layout_index[0] == '6':
             key_map['0'] = user_key['4'] + user_key['1'] 
             key_map['8'] = user_key['5'] + user_key['2'] 
             key_map['1'] = user_key['6'] + user_key['3']
-            turbo_key = '"' + retroarch_key[user_key['1']] + '"'
+            turbo_key = retroarch_key[user_key['1']]
 
 
 def update_fba_rmp(system, romname, index):
