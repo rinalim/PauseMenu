@@ -181,7 +181,7 @@ f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
 '''
 
-joypad_cfg = "/opt/retropie/configs/all/retroarch-joypads/" + dev_name + ".cfg"
+joypad_cfg = RETROARCH_CFG + dev_name + ".cfg"
 if os.path.isfile(joypad_cfg + ".org") == False :
     os.system("cp '" + joypad_cfg + "' '" + joypad_cfg + ".org'")
 
