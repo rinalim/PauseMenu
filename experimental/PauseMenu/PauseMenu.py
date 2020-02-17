@@ -55,6 +55,7 @@ event_size = struct.calcsize(event_format)
 js_fds = []
 btn_select = -1
 btn_start = -1
+btn_pausemenu = -1
 btn_a = -1
 btn_x = -1
 button_num = 0
@@ -876,6 +877,9 @@ def process_event(event):
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
                 START_BTN_ON = True
+            elif js_number == btn_pausemenu:
+                SELECT_BTN_ON = True
+                START_BTN_ON = True
             else:
                 return False
         elif js_value == 0:
@@ -967,6 +971,8 @@ def main():
     btn_start = int(retroarch_key['start'])
     btn_a = int(retroarch_key['a'])
     btn_x = int(retroarch_key['x'])
+    if 'pausemenu' in retroarch_key == True:
+        btn_pausemenu = int(retroarch_key['pausemenu'])
     
     #print "PauseMenu is ready.."
 

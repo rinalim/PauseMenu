@@ -78,7 +78,6 @@ def load_retroarch_cfg(dev_name):
     f.close()
 
     use_pause = input('Use an extra Pause button? (1=No, 2=Yes): ')
-    print '\n'
     if use_pause == 2:
         btn_pause = -1
         print "\nPush a button for PauseMenu"
@@ -89,6 +88,8 @@ def load_retroarch_cfg(dev_name):
                     btn_pause = process_event(event)
             time.sleep(0.1)
         retroarch_key['pausemenu'] = str(btn_pause)
+    else:
+        print "\n"
     
     f = open(PATH_PAUSEMENU + "button.cfg", 'w')
     f.write(str(retroarch_key)+'\n')
