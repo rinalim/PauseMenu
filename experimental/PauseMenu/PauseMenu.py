@@ -879,7 +879,9 @@ def process_event(event):
             else:
                 return False
         elif js_value == 0:
-            if js_number == btn_select:
+            if js_number == btn_x:
+                X_BTN_ON = False
+            elif js_number == btn_select:
                 SELECT_BTN_ON = False
             elif js_number == btn_start:
                 START_BTN_ON = False
