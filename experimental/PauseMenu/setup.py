@@ -76,6 +76,18 @@ def load_retroarch_cfg(dev_name):
         words = line.split()
         retroarch_key[words[0]] = words[2].replace('"','')
     f.close()
+
+    use_pause = input('\nUse an extra Pause button? (1=No, 2=Yes): ')
+    if use_pause == 1:
+        btn_pause = -1
+        print "\nPush a button for Pause"
+        while btn_pause == -1:
+            for fd in js_fds:
+                event = read_event(fd)
+                if event:
+                    btn_pause = process_event(event)
+            time.sleep(0.1)
+        retroarch_key['pause'] = str(btn_pause)
     
     f = open(PATH_PAUSEMENU + "button.cfg", 'w')
     f.write(str(retroarch_key)+'\n')
@@ -143,12 +155,12 @@ def process_event(event):
 dev_name = load_es_cfg()
 load_retroarch_cfg(dev_name)
 
+'''
 btn_select = -1
 btn_start = -1
 btn_a = -1
 event = -1
 
-'''
 f = open(PATH_PAUSEMENU + "button.cfg", 'w')
 js_devs, js_fds = open_devices()
 
@@ -181,7 +193,7 @@ f.write(str(btn_select) + " " + str(btn_start) + " " + str(btn_a))
 f.close()
 '''
 
-joypad_cfg = "/opt/retropie/configs/all/retroarch-joypads/" + dev_name + ".cfg"
+joypad_cfg = RETROARCH_CFG + dev_name + ".cfg"
 if os.path.isfile(joypad_cfg + ".org") == False :
     os.system("cp '" + joypad_cfg + "' '" + joypad_cfg + ".org'")
 
@@ -226,7 +238,8 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
         if os.path.isfile(cfg) == True:
             if os.path.isfile(cfg + ".org") == False :
                 os.system("cp " + cfg + " " + cfg + ".org")
-            fr = open(cfg + ".org", "r")
+            os.system("cp " + cfg + " " + cfg + ".tmp")
+            fr = open(cfg + ".tmp", "r")
             fw = open(cfg, "w")
             while True:
                 line = fr.readline()
