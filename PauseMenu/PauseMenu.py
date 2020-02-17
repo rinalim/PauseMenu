@@ -41,6 +41,7 @@ VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend -
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
+X_BTN_ON = False
 UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
@@ -55,6 +56,7 @@ event_size = struct.calcsize(event_format)
 js_fds = []
 btn_select = -1
 btn_start = -1
+btn_pausemenu = -1
 btn_a = -1
 btn_x = -1
 button_num = 0
@@ -718,8 +720,8 @@ def read_event(fd):
     
 def process_event(event):
 
-    global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
-    global UP_ON, DOWN_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
+    global SELECT_BTN_ON, START_BTN_ON, X_BTN_ON, UP_ON, DOWN_ON
+    global PAUSE_MODE_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
@@ -866,7 +868,7 @@ def process_event(event):
                         os.system(cmd)
                         sys.exit(0)
             elif js_number == btn_x:
-                if PAUSE_MODE_ON == True:
+                if PAUSE_MODE_ON == False:
                     #print "RGUI"
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
@@ -876,12 +878,18 @@ def process_event(event):
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
                 START_BTN_ON = True
+            elif js_number == btn_pausemenu:
+                SELECT_BTN_ON = True
+                START_BTN_ON = True
             else:
                 return False
         elif js_value == 0:
             if js_number == btn_select:
                 SELECT_BTN_ON = False
             elif js_number == btn_start:
+                START_BTN_ON = False
+            elif js_number == btn_pausemenu:
+                SELECT_BTN_ON = False
                 START_BTN_ON = False
             else:
                 return False
@@ -907,7 +915,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, btn_x
+    global btn_select, btn_start, btn_a, btn_x, btn_pausemenu
     global romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
 
     load_button()
@@ -967,6 +975,8 @@ def main():
     btn_start = int(retroarch_key['start'])
     btn_a = int(retroarch_key['a'])
     btn_x = int(retroarch_key['x'])
+    if 'pausemenu' in retroarch_key:
+        btn_pausemenu = int(retroarch_key['pausemenu'])
     
     #print "PauseMenu is ready.."
 

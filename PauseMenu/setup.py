@@ -47,7 +47,7 @@ def load_es_cfg():
     return tags[dev_select-1].attrib['deviceName']
 
 def set_layout():
-    print ' -(1)-----  -(2)-----  -(3)----- '
+    print '\n -(1)-----  -(2)-----  -(3)----- '
     print ' | X Y L |  | Y X L |  | L Y X | '
     print ' | A B R |  | B A R |  | R B A | '
     print ' ---------  ---------  --------- '
@@ -68,14 +68,29 @@ def load_retroarch_cfg(dev_name):
         line = f.readline()
         if not line: 
             break
-        #line = line.replace('\"','')
-        line = line.replace('\n','')
-        line = line.replace('input_','')
-        line = line.replace('_btn','')
-        line = line.replace('_axis','')
-        words = line.split()
-        retroarch_key[words[0]] = words[2].replace('"','')
+        if '_btn' in line or '_axis' in line:
+            line = line.replace('\n','')
+            line = line.replace('input_','')
+            line = line.replace('_btn','')
+            line = line.replace('_axis','')
+            words = line.split()
+            retroarch_key[words[0]] = words[2].replace('"','')
     f.close()
+
+    use_pause = input('Use an extra Pause button? (1=No, 2=Yes): ')
+    if use_pause == 2:
+        btn_pause = -1
+        js_devs, js_fds = open_devices()
+        print "\nPush a button for PauseMenu"
+        while btn_pause == -1:
+            for fd in js_fds:
+                event = read_event(fd)
+                if event:
+                    btn_pause = process_event(event)
+            time.sleep(0.1)
+        retroarch_key['pausemenu'] = str(btn_pause)
+    else:
+        print "\n"
     
     f = open(PATH_PAUSEMENU + "button.cfg", 'w')
     f.write(str(retroarch_key)+'\n')
@@ -143,12 +158,12 @@ def process_event(event):
 dev_name = load_es_cfg()
 load_retroarch_cfg(dev_name)
 
+'''
 btn_select = -1
 btn_start = -1
 btn_a = -1
 event = -1
 
-'''
 f = open(PATH_PAUSEMENU + "button.cfg", 'w')
 js_devs, js_fds = open_devices()
 
