@@ -868,7 +868,7 @@ def process_event(event):
                         os.system(cmd)
                         sys.exit(0)
             elif js_number == btn_x:
-                if PAUSE_MODE_ON == False:
+                if PAUSE_MODE_ON == True:
                     #print "RGUI"
                     stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
