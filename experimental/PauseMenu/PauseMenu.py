@@ -868,7 +868,12 @@ def process_event(event):
                         os.system(cmd)
                         sys.exit(0)
             elif js_number == btn_x:
-                X_BTN_ON = True
+                if PAUSE_MODE_ON == False:
+                    #print "RGUI"
+                    stop_viewer()
+                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                    PAUSE_MODE_ON = False
+                    send_hotkey("s", 1)
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
@@ -879,9 +884,7 @@ def process_event(event):
             else:
                 return False
         elif js_value == 0:
-            if js_number == btn_x:
-                X_BTN_ON = False
-            elif js_number == btn_select:
+            if js_number == btn_select:
                 SELECT_BTN_ON = False
             elif js_number == btn_start:
                 START_BTN_ON = False
@@ -899,10 +902,6 @@ def process_event(event):
                 stop_viewer()
                 start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &")
-        elif SELECT_BTN_ON == True and X_BTN_ON == True:
-            #print "RGUI"
-            if PAUSE_MODE_ON == False:            
-                send_hotkey("s", 1)
         elif SELECT_BTN_ON == True and UP_ON == True:
             #print "OSD mode on"
             if PAUSE_MODE_ON == False:
