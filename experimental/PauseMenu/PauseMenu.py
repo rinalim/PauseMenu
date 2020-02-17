@@ -883,6 +883,9 @@ def process_event(event):
                 SELECT_BTN_ON = False
             elif js_number == btn_start:
                 START_BTN_ON = False
+            elif js_number == btn_pausemenu:
+                SELECT_BTN_ON = False
+                START_BTN_ON = False
             else:
                 return False
         
