@@ -41,6 +41,7 @@ VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend -
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
+X_BTN_ON = False
 UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
@@ -719,8 +720,8 @@ def read_event(fd):
     
 def process_event(event):
 
-    global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
-    global UP_ON, DOWN_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
+    global SELECT_BTN_ON, START_BTN_ON, X_BTN_ON, UP_ON, DOWN_ON
+    global PAUSE_MODE_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
@@ -867,12 +868,7 @@ def process_event(event):
                         os.system(cmd)
                         sys.exit(0)
             elif js_number == btn_x:
-                if PAUSE_MODE_ON == True:
-                    #print "RGUI"
-                    stop_viewer()
-                    os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                    PAUSE_MODE_ON = False
-                    send_hotkey("s", 1)
+                X_BTN_ON = True
             elif js_number == btn_select:
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
@@ -898,6 +894,10 @@ def process_event(event):
                 stop_viewer()
                 start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &")
+        elif SELECT_BTN_ON == True and X_BTN_ON == True:
+            #print "RGUI"
+            if PAUSE_MODE_ON == False:            
+                send_hotkey("s", 1)
         elif SELECT_BTN_ON == True and UP_ON == True:
             #print "OSD mode on"
             if PAUSE_MODE_ON == False:
@@ -911,7 +911,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, btn_x
+    global btn_select, btn_start, btn_a, btn_x, btn_pausemenu
     global romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
 
     load_button()
