@@ -80,6 +80,7 @@ def load_retroarch_cfg(dev_name):
     use_pause = input('Use an extra Pause button? (1=No, 2=Yes): ')
     if use_pause == 2:
         btn_pause = -1
+        js_devs, js_fds = open_devices()
         print "\nPush a button for PauseMenu"
         while btn_pause == -1:
             for fd in js_fds:
