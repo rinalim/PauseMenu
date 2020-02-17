@@ -971,7 +971,7 @@ def main():
     btn_start = int(retroarch_key['start'])
     btn_a = int(retroarch_key['a'])
     btn_x = int(retroarch_key['x'])
-    if 'pausemenu' in retroarch_key == True:
+    if 'pausemenu' in retroarch_key:
         btn_pausemenu = int(retroarch_key['pausemenu'])
     
     #print "PauseMenu is ready.."
