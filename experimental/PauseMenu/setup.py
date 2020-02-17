@@ -68,26 +68,27 @@ def load_retroarch_cfg(dev_name):
         line = f.readline()
         if not line: 
             break
-        #line = line.replace('\"','')
-        line = line.replace('\n','')
-        line = line.replace('input_','')
-        line = line.replace('_btn','')
-        line = line.replace('_axis','')
-        words = line.split()
-        retroarch_key[words[0]] = words[2].replace('"','')
+        if '_btn' in line or '_axis' in line:
+            line = line.replace('\n','')
+            line = line.replace('input_','')
+            line = line.replace('_btn','')
+            line = line.replace('_axis','')
+            words = line.split()
+            retroarch_key[words[0]] = words[2].replace('"','')
     f.close()
 
-    use_pause = input('\nUse an extra Pause button? (1=No, 2=Yes): ')
-    if use_pause == 1:
+    use_pause = input('Use an extra Pause button? (1=No, 2=Yes): ')
+    print '\n'
+    if use_pause == 2:
         btn_pause = -1
-        print "\nPush a button for Pause"
+        print "\nPush a button for PauseMenu"
         while btn_pause == -1:
             for fd in js_fds:
                 event = read_event(fd)
                 if event:
                     btn_pause = process_event(event)
             time.sleep(0.1)
-        retroarch_key['pause'] = str(btn_pause)
+        retroarch_key['pausemenu'] = str(btn_pause)
     
     f = open(PATH_PAUSEMENU + "button.cfg", 'w')
     f.write(str(retroarch_key)+'\n')
