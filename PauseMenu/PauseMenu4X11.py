@@ -538,7 +538,7 @@ def start_viewer():
         os.system(VIEWER_BG + " &")
         time.sleep(0.1)
         os.system(VIEWER + " &")
-        time.sleep(0.1)
+        time.sleep(0.2)
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
