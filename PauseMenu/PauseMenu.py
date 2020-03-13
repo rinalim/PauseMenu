@@ -41,7 +41,6 @@ VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend -
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
-X_BTN_ON = False
 UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
@@ -682,7 +681,7 @@ def save_snapshot(index):
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
-    if len(ps_grep) > 1:
+    if len(ps_grep) > 1 and "bash" not in ps_grep:
         return True
     else:
         return False
@@ -738,7 +737,7 @@ def read_event(fd):
     
 def process_event(event):
 
-    global SELECT_BTN_ON, START_BTN_ON, X_BTN_ON, UP_ON, DOWN_ON
+    global SELECT_BTN_ON, START_BTN_ON, UP_ON, DOWN_ON
     global PAUSE_MODE_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
@@ -995,6 +994,7 @@ def main():
     btn_x = int(retroarch_key['x'])
     if 'pausemenu' in retroarch_key:
         btn_pausemenu = int(retroarch_key['pausemenu'])
+        btn_start = -1
     
     #print "PauseMenu is ready.."
 
