@@ -101,6 +101,7 @@ def set_keymap(romname, layout_index):
             key_map['8'] = user_key['5']
             key_map['1'] = user_key['1']
             key_map['9'] = user_key['6']
+            key_map['10'] = user_key['2']
     else:
         if layout_index[0] == '1':
             key_map['0'] = user_key['4']    # A
@@ -117,6 +118,7 @@ def set_keymap(romname, layout_index):
             key_map['8'] = user_key['5']
             key_map['1'] = user_key['6']
             key_map['9'] = user_key['1']
+            key_map['10'] = user_key['2']
         elif layout_index[0] == '4':
             key_map['0'] = user_key['4'] + user_key['5']
             key_map['8'] = user_key['1']
