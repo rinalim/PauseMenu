@@ -527,64 +527,6 @@ def send_hotkey(key, repeat):
     
     keyboard.release("2")
     time.sleep(0.1)
-    
-def save_snapshot(index):
-    if index == 0:
-        pngname = "state.png"
-        state = "state"
-    else:
-        pngname = "state" + str(index) + ".png"
-        state = "state" + str(index)
-    
-    now = datetime.datetime.now()
-    nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
-    font_size = 14
-    font = ImageFont.truetype('FreeSans.ttf', font_size)
-    image_date = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
-    draw = ImageDraw.Draw(image_date)
-    w, h = draw.textsize(nowDatetime)
-    draw.fontmode = "L" # "1"=normal, "L"=antialiasing
-    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
-    
-    backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
-    backgroud.paste(image_date, (282, 304))
-    
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
-    if os.path.isfile(pngpath) == True:
-        prev_size = 0
-        while True:
-            cur_size = os.path.getsize(pngpath)
-            if cur_size > prev_size :
-                try:
-                    image_thumb = Image.open(pngpath, "r")
-                except:
-                    print "Cannot read thumbnail"
-                    prev_size = cur_size
-                    time.sleep(0.3)
-                else:
-                    image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
-                    backgroud.paste(image_thumb_resize, (282, 109))
-                    break
-            else:
-                time.sleep(0.1)
-        time.sleep(0.3)
-
-    if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
-        backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
-        
-    '''
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
-    if os.path.isfile(pngpath):
-        while True:
-            if os.path.getsize(pngpath) > 0:
-                break
-            time.sleep(0.1)    
-        cmd = "composite -geometry 260x195!+282+109 " + \
-              pngpath + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname 
-        os.system(cmd)
-    '''
 
 def start_viewer():
     if VIEW_MODE == "fba":
@@ -614,6 +556,16 @@ def start_viewer_saving():
             res_y = fbset.split("x")[1].replace('\n', '')
             params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
             update_image(PATH_PAUSEMENU + "images/saving.gif", "/tmp/pause.txt")
+            os.system(VIEWER + params + " " + get_location() +" &")
+
+def start_viewer_failed():
+    if is_running("omxiv-pause") == False:
+        if os.path.isfile(PATH_PAUSEMENU + "images/failed.png") == True :
+            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
+            res_x = fbset.split("x")[0]
+            res_y = fbset.split("x")[1].replace('\n', '')
+            params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
+            update_image(PATH_PAUSEMENU + "images/failed.png", "/tmp/pause.txt")
             os.system(VIEWER + params + " " + get_location() +" &")
 
 def stop_viewer():
@@ -661,6 +613,72 @@ def change_viewer(menu, index):
         if VIEW_MODE == "fba":
             update_image(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.txt")
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.txt")
+
+def save_snapshot(index):
+    if index == 0:
+        pngname = "state.png"
+        state = "state"
+    else:
+        pngname = "state" + str(index) + ".png"
+        state = "state" + str(index)
+    
+    now = datetime.datetime.now()
+    nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
+    font_size = 14
+    font = ImageFont.truetype('FreeSans.ttf', font_size)
+    image_date = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
+    draw = ImageDraw.Draw(image_date)
+    w, h = draw.textsize(nowDatetime)
+    draw.fontmode = "L" # "1"=normal, "L"=antialiasing
+    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
+    
+    backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
+    backgroud.paste(image_date, (282, 304))
+    
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    if os.path.isfile(pngpath) == True:
+        prev_size = 0
+        counts = 0
+        while True:
+            cur_size = os.path.getsize(pngpath)
+            if cur_size > prev_size:
+                try:
+                    image_thumb = Image.open(pngpath, "r")
+                except:
+                    print "Cannot read thumbnail"
+                    prev_size = cur_size
+                    time.sleep(0.3)
+                else:
+                    image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
+                    backgroud.paste(image_thumb_resize, (282, 109))
+                    break
+            else:
+                counts = counts+1
+                if counts >= 5:
+                    break
+                else:
+                    time.sleep(1)
+        time.sleep(0.5)
+
+    if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
+        backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
+    else:
+        start_viewer_failed()
+        time.sleep(2)
+        
+    '''
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    if os.path.isfile(pngpath):
+        while True:
+            if os.path.getsize(pngpath) > 0:
+                break
+            time.sleep(0.1)    
+        cmd = "composite -geometry 260x195!+282+109 " + \
+              pngpath + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname 
+        os.system(cmd)
+    '''
         
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")

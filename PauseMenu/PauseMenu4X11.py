@@ -41,6 +41,7 @@ VIEWER_BG = "pqiv -c -i -f -z 3 --display=:0 " + PATH_PAUSEMENU + "images/pause_
 
 SELECT_BTN_ON = False
 START_BTN_ON = False
+X_BTN_ON = False
 UP_ON = False
 DOWN_ON = False
 PAUSE_MODE_ON = False
@@ -55,6 +56,7 @@ event_size = struct.calcsize(event_format)
 js_fds = []
 btn_select = -1
 btn_start = -1
+btn_pausemenu = -1
 btn_a = -1
 btn_x = -1
 button_num = 0
@@ -105,7 +107,7 @@ def run_cmd(cmd):
     return output
 
 def update_image(src, dst):
-    os.system("cp '" + src + "' " + dst)
+    os.system('cp "' + src + '" ' + dst)
 
 def check_update(system):
     
@@ -526,64 +528,6 @@ def send_hotkey(key, repeat):
     keyboard.release("2")
     time.sleep(0.1)
     
-def save_snapshot(index):
-    if index == 0:
-        pngname = "state.png"
-        state = "state"
-    else:
-        pngname = "state" + str(index) + ".png"
-        state = "state" + str(index)
-    
-    now = datetime.datetime.now()
-    nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
-    font_size = 14
-    font = ImageFont.truetype('FreeSans.ttf', font_size)
-    image_date = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
-    draw = ImageDraw.Draw(image_date)
-    w, h = draw.textsize(nowDatetime)
-    draw.fontmode = "L" # "1"=normal, "L"=antialiasing
-    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
-    
-    backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
-    backgroud.paste(image_date, (282, 304))
-    
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
-    if os.path.isfile(pngpath) == True:
-        prev_size = 0
-        while True:
-            cur_size = os.path.getsize(pngpath)
-            if cur_size > prev_size :
-                try:
-                    image_thumb = Image.open(pngpath, "r")
-                except:
-                    print "Cannot read thumbnail"
-                    prev_size = cur_size
-                    time.sleep(0.3)
-                else:
-                    image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
-                    backgroud.paste(image_thumb_resize, (282, 109))
-                    break
-            else:
-                time.sleep(0.1)
-        time.sleep(0.3)
-
-    if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
-        backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
-        
-    '''
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
-    if os.path.isfile(pngpath):
-        while True:
-            if os.path.getsize(pngpath) > 0:
-                break
-            time.sleep(0.1)    
-        cmd = "composite -geometry 260x195!+282+109 " + \
-              pngpath + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname + " " + \
-              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname 
-        os.system(cmd)
-    '''
-
 def start_viewer():
     if VIEW_MODE == "fba":
         submenu = "fba/"+romname
@@ -594,7 +538,7 @@ def start_viewer():
         os.system(VIEWER_BG + " &")
         time.sleep(0.1)
         os.system(VIEWER + " &")
-        time.sleep(0.1)
+        time.sleep(0.2)
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
@@ -612,6 +556,16 @@ def start_viewer_saving():
             res_y = fbset.split("x")[1].replace('\n', '')
             params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
             update_image(PATH_PAUSEMENU + "images/saving.gif", "/tmp/pause.txt")
+            os.system(VIEWER + params + " " + get_location() +" &")
+
+def start_viewer_failed():
+    if is_running("omxiv-pause") == False:
+        if os.path.isfile(PATH_PAUSEMENU + "images/failed.png") == True :
+            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
+            res_x = fbset.split("x")[0]
+            res_y = fbset.split("x")[1].replace('\n', '')
+            params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
+            update_image(PATH_PAUSEMENU + "images/failed.png", "/tmp/pause.txt")
             os.system(VIEWER + params + " " + get_location() +" &")
 '''
 def stop_viewer():
@@ -659,7 +613,73 @@ def change_viewer(menu, index):
         if VIEW_MODE == "fba":
             update_image(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.png")
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png")
+
+def save_snapshot(index):
+    if index == 0:
+        pngname = "state.png"
+        state = "state"
+    else:
+        pngname = "state" + str(index) + ".png"
+        state = "state" + str(index)
+    
+    now = datetime.datetime.now()
+    nowDatetime = now.strftime('%Y/%m/%d %H:%M:%S')
+    font_size = 14
+    font = ImageFont.truetype('FreeSans.ttf', font_size)
+    image_date = Image.new('RGBA', (260, 20), (0, 0, 0, 256))
+    draw = ImageDraw.Draw(image_date)
+    w, h = draw.textsize(nowDatetime)
+    draw.fontmode = "L" # "1"=normal, "L"=antialiasing
+    draw.text(((260-w)/2,(20-h)/2-2), nowDatetime, font=font, fill="white")
+    
+    backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
+    backgroud.paste(image_date, (282, 304))
+    
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    if os.path.isfile(pngpath) == True:
+        prev_size = 0
+        counts = 0
+        while True:
+            cur_size = os.path.getsize(pngpath)
+            if cur_size > prev_size:
+                try:
+                    image_thumb = Image.open(pngpath, "r")
+                except:
+                    print "Cannot read thumbnail"
+                    prev_size = cur_size
+                    time.sleep(0.3)
+                else:
+                    image_thumb_resize = image_thumb.resize((260, 195), Image.BICUBIC) # NEAREST, BILINEAR, BICUBIC, ANTIALIAS
+                    backgroud.paste(image_thumb_resize, (282, 109))
+                    break
+            else:
+                counts = counts+1
+                if counts >= 5:
+                    break
+                else:
+                    time.sleep(1)
+        time.sleep(0.5)
+
+    if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
+        backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
+    else:
+        #start_viewer_failed()
+        pass #time.sleep(2)
         
+    '''
+    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    if os.path.isfile(pngpath):
+        while True:
+            if os.path.getsize(pngpath) > 0:
+                break
+            time.sleep(0.1)    
+        cmd = "composite -geometry 260x195!+282+109 " + \
+              pngpath + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname + " " + \
+              PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname_fix + "." + pngname 
+        os.system(cmd)
+    '''
+
 def is_running(pname):
     ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
     if len(ps_grep) > 1 and "bash" not in ps_grep:
@@ -718,8 +738,8 @@ def read_event(fd):
 
 def process_event(event):
 
-    global SELECT_BTN_ON, START_BTN_ON, PAUSE_MODE_ON
-    global UP_ON, DOWN_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
+    global SELECT_BTN_ON, START_BTN_ON, X_BTN_ON, UP_ON, DOWN_ON
+    global PAUSE_MODE_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
     
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
@@ -876,12 +896,18 @@ def process_event(event):
                 SELECT_BTN_ON = True
             elif js_number == btn_start:
                 START_BTN_ON = True
+            elif js_number == btn_pausemenu:
+                SELECT_BTN_ON = True
+                START_BTN_ON = True
             else:
                 return False
         elif js_value == 0:
             if js_number == btn_select:
                 SELECT_BTN_ON = False
             elif js_number == btn_start:
+                START_BTN_ON = False
+            elif js_number == btn_pausemenu:
+                SELECT_BTN_ON = False
                 START_BTN_ON = False
             else:
                 return False
@@ -907,7 +933,7 @@ def process_event(event):
 
 def main():
     
-    global btn_select, btn_start, btn_a, btn_x
+    global btn_select, btn_start, btn_a, btn_x, btn_pausemenu
     global romname, sysname, corename, button_num, layout_num, VIEW_MODE
 
     load_button()
@@ -967,6 +993,8 @@ def main():
     btn_start = int(retroarch_key['start'])
     btn_a = int(retroarch_key['a'])
     btn_x = int(retroarch_key['x'])
+    if 'pausemenu' in retroarch_key:
+        btn_pausemenu = int(retroarch_key['pausemenu'])
     
     #print "PauseMenu is ready.."
     
