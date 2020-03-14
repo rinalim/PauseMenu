@@ -919,8 +919,8 @@ def process_event(event):
                 PAUSE_MODE_ON = True
                 MENU_INDEX = 1    # Resume
                 stop_viewer()
-                start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &")
+                start_viewer()
         #elif SELECT_BTN_ON == True and UP_ON == True:
             #print "OSD mode on"
             #if PAUSE_MODE_ON == False:
