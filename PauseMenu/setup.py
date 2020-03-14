@@ -1,4 +1,4 @@
-#!/usr/bin/python
+i#!/usr/bin/python
 
 import os, sys, struct, time, fcntl, termios, signal
 import curses, errno, re
@@ -24,9 +24,13 @@ JS_EVENT_BUTTON = 0x01
 JS_EVENT_AXIS = 0x02
 JS_EVENT_INIT = 0x80
 
-PATH_PAUSEMENU = '/opt/retropie/configs/all/PauseMenu/'
-ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
-RETROARCH_CFG = '/opt/retropie/configs/all/retroarch-joypads/'
+if os.path.isdir('/opt/retropie') == True:
+    OPT = '/opt/retropie'
+elif os.path.isdir('/opt/retroarena') == True:
+    OPT = '/opt/retroarena'
+PATH_PAUSEMENU = OPT+'/configs/all/PauseMenu/'
+ES_INPUT = OPT+'/configs/all/emulationstation/es_input.cfg'
+RETROARCH_CFG = OPT+'/configs/all/retroarch-joypads/'
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
@@ -212,20 +216,20 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
     os.system("sed -i '/input_state_slot_decrease_btn/d' '" + joypad_cfg + "'")
     
     retroarch_cfg = [
-        "/opt/retropie/configs/all/retroarch.cfg",
-        "/opt/retropie/configs/arcade/retroarch.cfg",
-        "/opt/retropie/configs/dreamcast/retroarch.cfg",
-        "/opt/retropie/configs/fba/retroarch.cfg",
-        "/opt/retropie/configs/gba/retroarch.cfg",
-        "/opt/retropie/configs/gbc/retroarch.cfg",
-        "/opt/retropie/configs/mame-libretro/retroarch.cfg",
-        "/opt/retropie/configs/megadrive/retroarch.cfg",
-        "/opt/retropie/configs/msx/retroarch.cfg",
-        "/opt/retropie/configs/n64/retroarch.cfg",
-        "/opt/retropie/configs/nes/retroarch.cfg",
-        "/opt/retropie/configs/psp/retroarch.cfg",
-        "/opt/retropie/configs/psx/retroarch.cfg",
-        "/opt/retropie/configs/snes/retroarch.cfg"
+        OPT+"/configs/all/retroarch.cfg",
+        OPT+"/configs/arcade/retroarch.cfg",
+        OPT+"/configs/dreamcast/retroarch.cfg",
+        OPT+"/configs/fba/retroarch.cfg",
+        OPT+"/configs/gba/retroarch.cfg",
+        OPT+"/configs/gbc/retroarch.cfg",
+        OPT+"/configs/mame-libretro/retroarch.cfg",
+        OPT+"/configs/megadrive/retroarch.cfg",
+        OPT+"/configs/msx/retroarch.cfg",
+        OPT+"/configs/n64/retroarch.cfg",
+        OPT+"/configs/nes/retroarch.cfg",
+        OPT+"/configs/psp/retroarch.cfg",
+        OPT+"/configs/psx/retroarch.cfg",
+        OPT+"/configs/snes/retroarch.cfg"
     ]
     swap_line = {
         'input_enable_hotkey = ':'"num2"',

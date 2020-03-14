@@ -21,7 +21,7 @@ echo 'sudo /usr/bin/python /opt/retroarena/configs/all/PauseMenu/PauseMenu.py /d
 sudo sed -i '/PauseMenu.py/d' /opt/retroarena/configs/all/runcommand-onend.sh
 echo 'sudo pkill -ef PauseMenu.py' >> /opt/retroarena/configs/all/runcommand-onend.sh
 
-chgrp -R -v pi /opt/retroarena/configs/all/PauseMenu/ > /dev/null 2>&1
-chown -R -v pi /opt/retroarena/configs/all/PauseMenu/ > /dev/null 2>&1
+chgrp -R -v pigaming /opt/retroarena/configs/all/PauseMenu/ > /dev/null 2>&1
+chown -R -v pigaming /opt/retroarena/configs/all/PauseMenu/ > /dev/null 2>&1
 
 python ./PauseMenu/setup.py /dev/input/js0 -full
