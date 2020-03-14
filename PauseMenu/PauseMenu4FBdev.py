@@ -617,6 +617,9 @@ def change_viewer(menu, index):
         if VIEW_MODE == "fba":
             update_image(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.png")
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png")
+    keyboard.press("n")
+    time.sleep(0.1)
+    keyboard.release("n")    
 
 def save_snapshot(index):
     if index == 0:
@@ -847,7 +850,6 @@ def process_event(event):
                         #print "Resume"
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        send_hotkey("f12", 2)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 2:
                         #print "Kill"
@@ -944,15 +946,16 @@ def main():
     load_button()
     
     is_retroarch = False
-    if full_arg() == True:
-        while True:
-            if is_running("bin/retroarch") == True:
+    while True:
+        if is_running("bin/retroarch") == True:
+            if full_arg() == True:
                 is_retroarch = True
-                break
-            elif is_running("emulators") == True and is_running("bin/retroarch") == False:
-                break
-            else:
-                time.sleep(0.5)    # wait for launching game
+            send_hotkey("f", 1)
+            break
+        elif is_running("emulators") == True and is_running("bin/retroarch") == False:
+            break
+        else:
+            time.sleep(0.5)    # wait for launching game
 
     #print "Check update.."
     if is_retroarch == True:
