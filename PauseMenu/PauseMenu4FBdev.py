@@ -29,11 +29,11 @@ JS_EVENT_BUTTON = 0x01
 JS_EVENT_AXIS = 0x02
 JS_EVENT_INIT = 0x80
 
-CONFIG_DIR = '/opt/retropie/configs/'
+CONFIG_DIR = '/opt/retroarena/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 XML = PATH_PAUSEMENU+'images/control/xml/'
-VIEWER = "pqiv -c -i -f --display=:0 /tmp/pause.png"
+VIEWER = "sudo fbi -T 2 -d /dev/fb0 -noverbose -cachemem 0 /tmp/pause.png /tmp/pause_1.png /tmp/pause_2.png"
 VIEWER_LAYOUT = "pqiv -c -i -f --display=:0 /tmp/pause_layout.png"
 VIEWER_BG = "pqiv -c -i -f -z 3 --display=:0 " + PATH_PAUSEMENU + "images/pause_bg.png"
 #VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
@@ -534,10 +534,12 @@ def start_viewer():
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
         update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
-        os.system(VIEWER_BG + " &")
-        time.sleep(0.1)
-        os.system(VIEWER + " &")
-        time.sleep(0.2)
+        os.system("ln -s /tmp/pause.png /tmp/pause_1.png")
+        os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
+        #os.system(VIEWER_BG + " &")
+        #time.sleep(0.1)
+        os.system(VIEWER)
+        #time.sleep(0.2)
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
             update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
@@ -568,8 +570,8 @@ def start_viewer_failed():
             os.system(VIEWER + params + " " + get_location() +" &")
 '''
 def stop_viewer():
-    if is_running("pqiv") == True:
-        os.system("killall pqiv")
+    if is_running("fbi") == True:
+        os.system("sudo pkill fbi")
     
 def change_viewer(menu, index):
     if VIEW_MODE == "fba":
@@ -634,7 +636,7 @@ def save_snapshot(index):
     backgroud = Image.open(PATH_PAUSEMENU + "images/save/" + pngname, "r")
     backgroud.paste(image_date, (282, 304))
     
-    pngpath = "/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + pngname
+    pngpath = "/home/pigaming/RetroArena/roms/" + sysname + "/" + romname + "." + pngname
     if os.path.isfile(pngpath) == True:
         prev_size = 0
         counts = 0
@@ -659,7 +661,7 @@ def save_snapshot(index):
                     time.sleep(1)
         time.sleep(0.5)
 
-    if os.path.isfile("/home/pi/RetroPie/roms/" + sysname + "/" + romname + "." + state) == True:
+    if os.path.isfile("/home/pigaming/RetroArena/roms/" + sysname + "/" + romname + "." + state) == True:
         backgroud.save(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + pngname)
     else:
         #start_viewer_failed()
