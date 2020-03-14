@@ -847,7 +847,7 @@ def process_event(event):
                         #print "Resume"
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
-                        send_hotkey("f12", 1)
+                        send_hotkey("f12", 2)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 2:
                         #print "Kill"
