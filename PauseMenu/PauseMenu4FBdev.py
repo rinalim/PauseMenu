@@ -571,8 +571,11 @@ def start_viewer_failed():
 '''
 def stop_viewer():
     if is_running("fbi") == True:
-        os.system("sudo pkill fbi")
-    
+        #os.system("sudo pkill fbi")
+        keyboard.press("esc")
+        time.sleep(0.1)
+        keyboard.release("esc")
+
 def change_viewer(menu, index):
     if VIEW_MODE == "fba":
         submenu = "fba/"+romname
@@ -844,6 +847,7 @@ def process_event(event):
                         #print "Resume"
                         stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
+                        send_hotkey("f12", 1)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 2:
                         #print "Kill"
