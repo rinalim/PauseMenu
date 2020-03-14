@@ -1,4 +1,4 @@
-i#!/usr/bin/python
+#!/usr/bin/python
 
 import os, sys, struct, time, fcntl, termios, signal
 import curses, errno, re
