@@ -950,6 +950,7 @@ def main():
         if is_running("bin/retroarch") == True:
             if full_arg() == True:
                 is_retroarch = True
+            time.sleep(3)
             send_hotkey("f", 1)
             break
         elif is_running("emulators") == True and is_running("bin/retroarch") == False:
