@@ -11,6 +11,7 @@ cp -rf /opt/retroarena/configs/all/PauseMenu/images/save/* ./backup/save
 rm -rf /opt/retroarena/configs/all/PauseMenu/
 mkdir /opt/retroarena/configs/all/PauseMenu/
 cp -rf ./PauseMenu /opt/retroarena/configs/all/
+mkdir /opt/retroarena/configs/all/PauseMenu/images/fbdev/
 
 cp ./PauseMenu/PauseMenu4FBdev.py /opt/retroarena/configs/all/PauseMenu/PauseMenu.py
 
