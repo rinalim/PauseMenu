@@ -33,7 +33,7 @@ CONFIG_DIR = '/opt/retroarena/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
 PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
 XML = PATH_PAUSEMENU+'images/control/xml/'
-VIEWER = "sudo fbi -T 2 -d /dev/fb0 -noverbose -cachemem 0 /tmp/pause.png /tmp/pause_1.png /tmp/pause_2.png"
+VIEWER = "sudo fbi -T 2 -d /dev/fb0 -noverbose -cachemem 0 /tmp/pause.png /tmp/pause_1.png /tmp/pause_2.png > /dev/null 2>&1"
 VIEWER_LAYOUT = "pqiv -c -i -f --display=:0 /tmp/pause_layout.png"
 VIEWER_BG = "pqiv -c -i -f -z 3 --display=:0 " + PATH_PAUSEMENU + "images/pause_bg.png"
 #VIEWER_OSD = PATH_PAUSEMENU + "omxiv-pause /tmp/pause_osd.txt -f -t 5 -T blend --duration 20 -l 30001 -a center"
@@ -533,48 +533,29 @@ def start_viewer():
     else:
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
-        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
+        os.system("fbgrab -d /dev/fb0 /tmp/snapshot.png")
+        cmd = "composite " + \
+            PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png " + \
+            "/tmp/snapshot.png " + \
+            "/tmp/" + VIEW_MODE + "_resume.png"
+        os.system(cmd)
+        update_image("/tmp/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         os.system("ln -s /tmp/pause.png /tmp/pause_1.png")
         os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
         #os.system(VIEWER_BG + " &")
-        #time.sleep(0.1)
         os.system(VIEWER)
         #time.sleep(0.2)
-    if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
-            update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
-        os.system(VIEWER_LAYOUT + " &")
-'''
-def start_viewer_osd():
-    if is_running("omxiv-pause") == False:
-        if VIEW_MODE == "fba" and os.path.isfile(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png") == True :
-            update_image(PATH_PAUSEMENU + "images/control/fba/" + romname + "_osd.png", "/tmp/pause_osd.txt")
-def start_viewer_saving():
-    if is_running("omxiv-pause") == False:
-        if os.path.isfile(PATH_PAUSEMENU + "images/saving.gif") == True :
-            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
-            res_x = fbset.split("x")[0]
-            res_y = fbset.split("x")[1].replace('\n', '')
-            params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
-            update_image(PATH_PAUSEMENU + "images/saving.gif", "/tmp/pause.txt")
-            os.system(VIEWER + params + " " + get_location() +" &")
+    #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+    #    if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
+    #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
+    #    os.system(VIEWER_LAYOUT + " &")
 
-def start_viewer_failed():
-    if is_running("omxiv-pause") == False:
-        if os.path.isfile(PATH_PAUSEMENU + "images/failed.png") == True :
-            fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
-            res_x = fbset.split("x")[0]
-            res_y = fbset.split("x")[1].replace('\n', '')
-            params = " --win " + str(int(res_x)-200) + "," + str(int(res_y)-100) + "," + res_x + "," + res_y
-            update_image(PATH_PAUSEMENU + "images/failed.png", "/tmp/pause.txt")
-            os.system(VIEWER + params + " " + get_location() +" &")
-'''
 def stop_viewer():
     if is_running("fbi") == True:
-        #os.system("sudo pkill fbi")
-        keyboard.press("esc")
-        time.sleep(0.1)
-        keyboard.release("esc")
+        os.system("sudo pkill fbi")
+        #keyboard.press("esc")
+        #time.sleep(0.1)
+        #keyboard.release("esc")
 
 def change_viewer(menu, index):
     if VIEW_MODE == "fba":

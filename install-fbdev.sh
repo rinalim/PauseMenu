@@ -7,7 +7,7 @@ sudo apt-get install imagemagick -y
 sudo apt-get install fonts-nanum -y
 sudo apt-get install fonts-nanum-extra -y
 sudo apt-get install python-pip python-pil -y
-sudo apt-get install fbi -y
+sudo apt-get install fbi fbcat -y
 sudo pip install keyboard
 
 rm -rf /opt/retroarena/configs/all/PauseMenu/
