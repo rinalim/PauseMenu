@@ -535,13 +535,16 @@ def start_viewer():
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
         os.system("fbgrab -d /dev/fb0 /tmp/snapshot.png")
         cmd = "composite " + \
+            PATH_PAUSEMENU + "images/pause_bg_fhd.png " + \
+            "/tmp/snapshot.png " + \
+            "/tmp/snapshot.png"
+        os.system(cmd)
+        cmd = "composite -gravity center " + \
             PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png " + \
             "/tmp/snapshot.png " + \
             "/tmp/" + VIEW_MODE + "_resume.png"
         os.system(cmd)
         update_image("/tmp/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
-        os.system("ln -s /tmp/pause.png /tmp/pause_1.png")
-        os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER)
         #time.sleep(0.2)
@@ -987,6 +990,13 @@ def main():
         btn_pausemenu = int(retroarch_key['pausemenu'])
         btn_start = -1
     
+    if os.path.isfile("/tmp/pause.png") == False :
+        os.system("touch /tmp/pause.png")
+    if os.path.isfile("/tmp/pause_1.png") == False :
+        os.system("ln -s /tmp/pause.png /tmp/pause_1.png")
+    if os.path.isfile("/tmp/pause_2.png") == False :
+        os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
+
     #print "PauseMenu is ready.."
     
     js_fds=[]
