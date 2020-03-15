@@ -13,6 +13,7 @@ sudo pip install keyboard
 rm -rf /opt/retroarena/configs/all/PauseMenu/
 mkdir /opt/retroarena/configs/all/PauseMenu/
 cp -f -r ./PauseMenu /opt/retroarena/configs/all/
+mkdir /opt/retroarena/configs/all/PauseMenu/images/fbdev/
 
 cp ./PauseMenu/PauseMenu4FBdev.py /opt/retroarena/configs/all/PauseMenu/PauseMenu.py
 

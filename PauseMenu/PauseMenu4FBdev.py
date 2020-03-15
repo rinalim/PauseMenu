@@ -533,18 +533,18 @@ def start_viewer():
     else:
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
-        os.system("fbgrab -d /dev/fb0 /tmp/snapshot.png")
+        os.system("fbgrab -d /dev/fb0 " + PATH_PAUSEMENU + "images/fbdev/snapshot.png")
         cmd = "composite " + \
             PATH_PAUSEMENU + "images/pause_bg_fhd.png " + \
-            "/tmp/snapshot.png " + \
-            "/tmp/snapshot.png"
+            PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
+            PATH_PAUSEMENU + "images/fbdev/snapshot.png"
         os.system(cmd)
         cmd = "composite -gravity center " + \
             PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png " + \
-            "/tmp/snapshot.png " + \
-            "/tmp/" + VIEW_MODE + "_resume.png"
+            PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
+            PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png"
         os.system(cmd)
-        update_image("/tmp/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER)
         #time.sleep(0.2)
@@ -556,6 +556,7 @@ def start_viewer():
 def stop_viewer():
     if is_running("fbi") == True:
         os.system("sudo pkill fbi")
+        time.sleep(0.5)
         #keyboard.press("esc")
         #time.sleep(0.1)
         #keyboard.release("esc")
@@ -571,7 +572,7 @@ def change_viewer(menu, index):
        state_index = "state" + index
 
     if menu == "RESUME":
-        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
