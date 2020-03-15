@@ -546,7 +546,12 @@ def start_viewer():
         os.system(cmd)
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         #os.system(VIEWER_BG + " &")
-        os.system(VIEWER)
+        os.system(VIEWER + " &")
+        cmd = "composite -gravity center " + \
+            PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png " + \
+            PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
+            PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png"
+        os.system(cmd)
         #time.sleep(0.2)
     #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
     #    if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
@@ -555,11 +560,12 @@ def start_viewer():
 
 def stop_viewer():
     if is_running("fbi") == True:
-        os.system("sudo pkill fbi")
-        time.sleep(0.5)
-        #keyboard.press("esc")
-        #time.sleep(0.1)
-        #keyboard.release("esc")
+        #os.system("sudo pkill fbi")
+        #time.sleep(0.5)
+        keyboard.press("esc")
+        time.sleep(0.1)
+        keyboard.release("esc")
+        time.sleep(0.3)
 
 def change_viewer(menu, index):
     if VIEW_MODE == "fba":
@@ -577,7 +583,7 @@ def change_viewer(menu, index):
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "STOP":
-        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
