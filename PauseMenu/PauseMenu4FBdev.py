@@ -954,10 +954,11 @@ def process_event(event):
     return True
 
 def img_paste(bg, fg):
+    bg_ret = bg
     box = ((bg.size[0] - fg.size[0]) // 2,
        (bg.size[1] - fg.size[1]) // 2)
     bg.paste(fg, box, fg)
-    return bg
+    return bg_ret
 
 def fbdev_setup(res_x, res_y):
 
