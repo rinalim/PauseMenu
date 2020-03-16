@@ -110,7 +110,7 @@ def update_image(src, dst):
     #os.system('cp "' + src + '" ' + dst)
     target = images_snap
     target.paste(src, (0,0), src)
-    target.save(dest)
+    target.save(dst)
 
 def check_update(system):
     
@@ -957,7 +957,7 @@ def img_paste(bg, fg):
     bg_ret = bg.copy()
     box = ((bg.size[0] - fg.size[0]) // 2,
        (bg.size[1] - fg.size[1]) // 2)
-    bg_ret.paste(fg, box, fg)
+    bg_ret.paste(fg, box)
     return bg_ret
 
 def fbdev_setup(res_x, res_y):
