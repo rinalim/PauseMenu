@@ -107,7 +107,10 @@ def run_cmd(cmd):
     return output
 
 def update_image(src, dst):
-    os.system('cp "' + src + '" ' + dst)
+    #os.system('cp "' + src + '" ' + dst)
+    target = images_snap
+    target.paste(src, (0,0), src)
+    target.save(dest)
 
 def check_update(system):
     
@@ -529,6 +532,9 @@ def send_hotkey(key, repeat):
     time.sleep(0.1)
     
 def start_viewer():
+
+    global images_snap 
+
     if VIEW_MODE == "fba":
         submenu = "fba/"+romname
     else:
@@ -552,24 +558,13 @@ def start_viewer():
         os.system(cmd)
         print str(datetime.now())
         '''
-        target = Image.open("/tmp/snapshot.ppm")
-        target.paste(images_resume, box, image_resume)
-        target.save(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png")
+        images_snap = Image.open("/tmp/snapshot.ppm")
+        target = images_snap
+        target.paste(images_resume, (0,0), images_resume)
+        target.save("/tmp/pause.png")
         print str(datetime.now())
-        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER + " &")
-        cmd = "composite " + \
-            PATH_PAUSEMENU + "images/pause_bg_fhd.png " + \
-            "/tmp/snapshot.ppm " + \
-            PATH_PAUSEMENU + "images/fbdev/snapshot.png"
-        os.system(cmd)
-
-        cmd = "composite -gravity center " + \
-            PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png " + \
-            PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
-            PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png"
-        os.system(cmd)
         #time.sleep(0.2)
     #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
     #    if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
@@ -606,12 +601,13 @@ def change_viewer(menu, index):
        state_index = "state" + index
 
     if menu == "RESUME":
-        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
+        update_image(images_resume, "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "STOP":
-        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
+        #update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
+        update_image(images_stop, "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
@@ -963,7 +959,9 @@ def img_paste(bg, fg):
     bg.paste(fg, box, fg)
     return bg
 
-def fbdev_Setup(res_x, res_y):
+def fbdev_setup(res_x, res_y):
+
+    global images_resume, images_stop
 
     if os.path.isfile("/tmp/pause.png") == False :
         os.system("touch /tmp/pause.png")
@@ -972,10 +970,10 @@ def fbdev_Setup(res_x, res_y):
     if os.path.isfile("/tmp/pause_2.png") == False :
         os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
 
-    images_bg = Image.open(PATH_PAUSEMENU + "images/pause_bg.png")
-    images_bg.resize((int(res_x),int(res_y)))
+    images_bg = Image.open(PATH_PAUSEMENU + "images/pause_bg.png").resize((int(res_x),int(res_y)))
 
-    imgaes_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
+    images_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
+    images_stop = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
 
 
 def main():
