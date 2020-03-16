@@ -954,7 +954,7 @@ def process_event(event):
     return True
 
 def img_paste(bg, fg):
-    bg_ret = bg
+    bg_ret = bg.copy()
     box = ((bg.size[0] - fg.size[0]) // 2,
        (bg.size[1] - fg.size[1]) // 2)
     bg_ret.paste(fg, box, fg)
