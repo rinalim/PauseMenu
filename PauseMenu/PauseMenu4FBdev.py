@@ -108,7 +108,7 @@ def run_cmd(cmd):
 
 def update_image(src, dst):
     #os.system('cp "' + src + '" ' + dst)
-    target = images_snap
+    target = images_snap.copy()
     target.paste(src, (0,0), src)
     target.save(dst)
 
@@ -559,7 +559,7 @@ def start_viewer():
         print str(datetime.now())
         '''
         images_snap = Image.open("/tmp/snapshot.ppm")
-        target = images_snap
+        target = images_snap.copy()
         target.paste(images_resume, (0,0), images_resume)
         target.save("/tmp/pause.png")
         print str(datetime.now())
@@ -576,9 +576,9 @@ def stop_viewer(quit):
         #os.system("sudo pkill fbi")
         #time.sleep(0.5)
         if quit == False:
-            target = Image.open("/tmp/snapshot.ppm")
-            target.save("/tmp/snapshot.png")
-            update_image("/tmp/snapshot.png", "/tmp/pause.png")
+            #target = Image.open("/tmp/snapshot.ppm")
+            #target.save("/tmp/snapshot.png")
+            update_image(images_snap, "/tmp/pause.png")
             keyboard.press("n")
             time.sleep(0.05)
             keyboard.release("n")
@@ -957,7 +957,7 @@ def img_paste(bg, fg):
     bg_ret = bg.copy()
     box = ((bg.size[0] - fg.size[0]) // 2,
        (bg.size[1] - fg.size[1]) // 2)
-    bg_ret.paste(fg, box)
+    bg_ret.paste(fg, box, fg)
     return bg_ret
 
 def fbdev_setup(res_x, res_y):
