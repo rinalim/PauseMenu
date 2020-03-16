@@ -3,6 +3,7 @@
 
 import os, sys, struct, time, fcntl, termios, signal, keyboard, datetime
 import curses, errno
+from datetime import datetime
 from pyudev import Context
 from subprocess import *
 import xml.etree.ElementTree as ET
@@ -533,20 +534,37 @@ def start_viewer():
     else:
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
-        os.system("fbgrab -d /dev/fb0 " + PATH_PAUSEMENU + "images/fbdev/snapshot.png")
+        #os.system("fbgrab -d /dev/fb0 " + PATH_PAUSEMENU + "images/fbdev/snapshot.png")
+        print str(datetime.now())
+        os.system("fbcat /dev/fb0 > /tmp/snapshot.ppm")
+        print str(datetime.now())
+        '''
         cmd = "composite " + \
             PATH_PAUSEMENU + "images/pause_bg_fhd.png " + \
-            PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
+            "/tmp/snapshot.ppm " + \
             PATH_PAUSEMENU + "images/fbdev/snapshot.png"
         os.system(cmd)
+        print str(datetime.now())
         cmd = "composite -gravity center " + \
             PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png " + \
             PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
             PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png"
         os.system(cmd)
+        print str(datetime.now())
+        '''
+        target = Image.open("/tmp/snapshot.ppm")
+        target.paste(images_resume, box, image_resume)
+        target.save(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png")
+        print str(datetime.now())
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER + " &")
+        cmd = "composite " + \
+            PATH_PAUSEMENU + "images/pause_bg_fhd.png " + \
+            "/tmp/snapshot.ppm " + \
+            PATH_PAUSEMENU + "images/fbdev/snapshot.png"
+        os.system(cmd)
+
         cmd = "composite -gravity center " + \
             PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png " + \
             PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
@@ -558,14 +576,24 @@ def start_viewer():
     #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     #    os.system(VIEWER_LAYOUT + " &")
 
-def stop_viewer():
+def stop_viewer(quit):
     if is_running("fbi") == True:
         #os.system("sudo pkill fbi")
         #time.sleep(0.5)
-        keyboard.press("esc")
-        time.sleep(0.1)
-        keyboard.release("esc")
-        time.sleep(0.3)
+        if quit == False:
+            target = Image.open("/tmp/snapshot.ppm")
+            target.save("/tmp/snapshot.png")
+            update_image("/tmp/snapshot.png", "/tmp/pause.png")
+            keyboard.press("n")
+            time.sleep(0.05)
+            keyboard.release("n")
+            time.sleep(0.05)
+        os.system("sudo pkill -9 fbi")
+        #keyboard.press("esc")
+        #time.sleep(0.1)
+        #keyboard.release("esc")
+        
+ 
 
 def change_viewer(menu, index):
     if VIEW_MODE == "fba":
@@ -839,25 +867,25 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1:
                         #print "Resume"
-                        stop_viewer()
+                        stop_viewer(False)
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 2:
                         #print "Kill"
-                        stop_viewer()
+                        stop_viewer(True)
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT")
                         close_fds(js_fds)
                         sys.exit(0)
                     elif MENU_INDEX == 3:
                         #print "Reset"
-                        stop_viewer()
+                        stop_viewer(False)
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         send_hotkey("z", 1)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
-                        stop_viewer()
+                        stop_viewer(False)
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         #start_viewer_saving()
                         send_hotkey("left", 3)
@@ -868,7 +896,7 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
-                        stop_viewer()
+                        stop_viewer(False)
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
@@ -876,7 +904,7 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 6:
                         #print "Button"
-                        stop_viewer()
+                        stop_viewer(True)
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT")
                         close_fds(js_fds)
@@ -886,7 +914,7 @@ def process_event(event):
             elif js_number == btn_x:
                 if PAUSE_MODE_ON == True:
                     #print "RGUI"
-                    stop_viewer()
+                    stop_viewer(False)
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                     PAUSE_MODE_ON = False
                     send_hotkey("s", 1)
@@ -915,7 +943,7 @@ def process_event(event):
             if PAUSE_MODE_ON == False:
                 PAUSE_MODE_ON = True
                 MENU_INDEX = 1    # Resume
-                stop_viewer()
+                #stop_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &")
                 start_viewer()
         #elif SELECT_BTN_ON == True and UP_ON == True:
@@ -929,20 +957,45 @@ def process_event(event):
 
     return True
 
+def img_paste(bg, fg):
+    box = ((bg.size[0] - fg.size[0]) // 2,
+       (bg.size[1] - fg.size[1]) // 2)
+    bg.paste(fg, box, fg)
+    return bg
+
+def fbdev_Setup(res_x, res_y):
+
+    if os.path.isfile("/tmp/pause.png") == False :
+        os.system("touch /tmp/pause.png")
+    if os.path.isfile("/tmp/pause_1.png") == False :
+        os.system("ln -s /tmp/pause.png /tmp/pause_1.png")
+    if os.path.isfile("/tmp/pause_2.png") == False :
+        os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
+
+    images_bg = Image.open(PATH_PAUSEMENU + "images/pause_bg.png")
+    images_bg.resize((int(res_x),int(res_y)))
+
+    imgaes_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
+
+
 def main():
     
     global btn_select, btn_start, btn_a, btn_x, btn_pausemenu
     global romname, sysname, corename, button_num, layout_num, VIEW_MODE
 
     load_button()
-    
+
+    fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
+    res_x = fbset.split("x")[0]
+    res_y = fbset.split("x")[1].replace('\n', '')
+
     is_retroarch = False
     while True:
         if is_running("bin/retroarch") == True:
             if full_arg() == True:
                 is_retroarch = True
-            time.sleep(3)
-            send_hotkey("f", 1)
+            #time.sleep(3)
+            #send_hotkey("f", 1)
             break
         elif is_running("emulators") == True and is_running("bin/retroarch") == False:
             break
@@ -964,9 +1017,6 @@ def main():
             romname = path.replace('"','').split("/")[-1].split(".")[0]
             if corename == "lr-fbneo" or corename == "lr-fbalpha":
                 VIEW_MODE = "fba"
-                #fbset = run_cmd("fbset -s | grep mode | grep -v endmode | awk '{print $2}'").replace('"', '')
-                #res_x = fbset.split("x")[0]
-                #res_y = fbset.split("x")[1].replace('\n', '')
                 #VIEWER_OSD = VIEWER_OSD + " --win " + \
                 #    str(int(res_x)-300) + "," + str(int(res_y)-160) + "," + res_x + "," + res_y
                 buttons, button_num, layout_num = get_info()
@@ -996,13 +1046,8 @@ def main():
     if 'pausemenu' in retroarch_key:
         btn_pausemenu = int(retroarch_key['pausemenu'])
         btn_start = -1
-    
-    if os.path.isfile("/tmp/pause.png") == False :
-        os.system("touch /tmp/pause.png")
-    if os.path.isfile("/tmp/pause_1.png") == False :
-        os.system("ln -s /tmp/pause.png /tmp/pause_1.png")
-    if os.path.isfile("/tmp/pause_2.png") == False :
-        os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
+
+    fbdev_setup(res_x, res_y)
 
     #print "PauseMenu is ready.."
     
