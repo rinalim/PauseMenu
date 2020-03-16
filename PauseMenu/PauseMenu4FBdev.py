@@ -578,7 +578,7 @@ def stop_viewer(quit):
         if quit == False:
             #target = Image.open("/tmp/snapshot.ppm")
             #target.save("/tmp/snapshot.png")
-            update_image(images_snap, "/tmp/pause.png")
+            images_snap.save("/tmp/pause.png")
             keyboard.press("n")
             time.sleep(0.05)
             keyboard.release("n")
