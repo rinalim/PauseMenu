@@ -1008,14 +1008,9 @@ def fbdev_setup():
         images_save = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
             images_save0)
-        
-        if os.path.isfile(PATH_PAUSEMENU + "images/load/" + sysname + "/" + romname + ".state.png") == True :
-            images_load0 = Image.open(PATH_PAUSEMENU + "images/load/" + sysname + "/" + romname + ".state.png")
-        else:
-            images_load0 = Image.open(PATH_PAUSEMENU + "images/load/state.png")
         images_load = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
-            images_load0)
+            images_save0)
         
         images_layout1 = Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout1.png")
         images_control = img_paste(images_bg,
