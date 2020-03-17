@@ -982,6 +982,7 @@ def main():
     
     global btn_select, btn_start, btn_a, btn_x, btn_pausemenu
     global romname, sysname, corename, button_num, layout_num, VIEW_MODE
+    global res_x, res_y
 
     load_button()
 
@@ -1047,7 +1048,7 @@ def main():
         btn_pausemenu = int(retroarch_key['pausemenu'])
         btn_start = -1
 
-    fbdev_setup(res_x, res_y)
+    fbdev_setup()
 
     #print "PauseMenu is ready.."
     
