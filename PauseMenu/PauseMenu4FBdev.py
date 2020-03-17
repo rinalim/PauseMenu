@@ -970,7 +970,7 @@ def fbdev_setup():
         os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
 
     #images_bg = Image.open(PATH_PAUSEMENU + "images/pause_bg.png").resize((int(res_x),int(res_y)))
-    images_bg = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,50))
+    images_bg = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,20))
 
     images_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
     images_stop = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
