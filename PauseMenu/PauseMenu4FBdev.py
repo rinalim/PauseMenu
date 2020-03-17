@@ -538,6 +538,8 @@ def start_viewer():
 
     global images_snap 
 
+    os.system("rm " + PATH_PAUSEMENU + "images/fbdev/*")
+
     if VIEW_MODE == "fba":
         submenu = "fba/"+romname
     else:
@@ -610,7 +612,6 @@ def change_viewer(menu, index):
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "STOP":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
-        update_image(images_stop, "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
@@ -985,9 +986,6 @@ def fbdev_setup():
 
     images_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
     images_stop = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
-
-    os.system("rm " + PATH_PAUSEMENU + "images/fbdev/*")
-
 
 def main():
     
