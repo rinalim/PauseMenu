@@ -951,11 +951,17 @@ def process_event(event):
 
     return True
 
+def trans_paste(fg_img,bg_img,alpha=1.0,box=(0,0)):
+    fg_img_trans = Image.new("RGBA",fg_img.size)
+    fg_img_trans = Image.blend(fg_img_trans,fg_img,alpha)
+    bg_img.paste(fg_img_trans,box,fg_img_trans)
+    return bg_img
+
 def img_paste(bg, fg):
-    bg_ret = bg.copy()
-    box = ((bg.size[0] - fg.size[0]) // 2,
-       (bg.size[1] - fg.size[1]) // 2)
-    bg_ret.paste(fg, box, fg)
+    fg_trans = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,0))
+    box = ((bg.size[0] - fg.size[0]) // 2, (bg.size[1] - fg.size[1]) // 2)
+    fg_trans.paste(fg, box, fg)
+    bg_ret = Image.blend(bg,fg_trans,1.0)
     return bg_ret
 
 def fbdev_setup():
@@ -970,7 +976,7 @@ def fbdev_setup():
         os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
 
     #images_bg = Image.open(PATH_PAUSEMENU + "images/pause_bg.png").resize((int(res_x),int(res_y)))
-    images_bg = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,20))
+    images_bg = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,150))
 
     images_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
     images_stop = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
