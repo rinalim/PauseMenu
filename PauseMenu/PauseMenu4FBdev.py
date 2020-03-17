@@ -565,24 +565,22 @@ def start_viewer():
         print str(datetime.now())
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER + " &")
+        images_snap.save("/tmp/snapshot.png")
         #time.sleep(0.2)
     #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
     #    if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
     #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     #    os.system(VIEWER_LAYOUT + " &")
 
-def stop_viewer(quit):
+def stop_viewer():
     if is_running("fbi") == True:
         #os.system("sudo pkill fbi")
         #time.sleep(0.5)
-        if quit == False:
-            #target = Image.open("/tmp/snapshot.ppm")
-            #target.save("/tmp/snapshot.png")
-            Image.new("RGB", (int(res_x),int(res_y)), (0,0,0)).save("/tmp/pause.png")
-            keyboard.press("n")
-            time.sleep(0.05)
-            keyboard.release("n")
-            time.sleep(0.05)
+        os.system("cp /tmp/snapshot.png /tmp/pause.png")
+        keyboard.press("n")
+        time.sleep(0.05)
+        keyboard.release("n")
+        time.sleep(0.05)
         os.system("sudo pkill -9 fbi")
         #keyboard.press("esc")
         #time.sleep(0.1)
@@ -863,25 +861,25 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     if MENU_INDEX == 1:
                         #print "Resume"
-                        stop_viewer(False)
+                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 2:
                         #print "Kill"
-                        stop_viewer(True)
+                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT")
                         close_fds(js_fds)
                         sys.exit(0)
                     elif MENU_INDEX == 3:
                         #print "Reset"
-                        stop_viewer(False)
+                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         send_hotkey("z", 1)
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 4:
                         #print "Save"
-                        stop_viewer(False)
+                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         #start_viewer_saving()
                         send_hotkey("left", 3)
@@ -892,7 +890,7 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
                         #print "Load"
-                        stop_viewer(False)
+                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         send_hotkey("left", 3)
                         send_hotkey("right", STATE_INDEX)
@@ -900,7 +898,7 @@ def process_event(event):
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 6:
                         #print "Button"
-                        stop_viewer(True)
+                        stop_viewer()
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                         os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGINT")
                         close_fds(js_fds)
@@ -910,7 +908,7 @@ def process_event(event):
             elif js_number == btn_x:
                 if PAUSE_MODE_ON == True:
                     #print "RGUI"
-                    stop_viewer(False)
+                    stop_viewer()
                     os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGCONT &")
                     PAUSE_MODE_ON = False
                     send_hotkey("s", 1)
@@ -972,7 +970,7 @@ def fbdev_setup():
         os.system("ln -s /tmp/pause.png /tmp/pause_2.png")
 
     #images_bg = Image.open(PATH_PAUSEMENU + "images/pause_bg.png").resize((int(res_x),int(res_y)))
-    images_bg = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,100))
+    images_bg = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,50))
 
     images_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
     images_stop = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
