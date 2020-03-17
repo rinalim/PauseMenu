@@ -107,10 +107,13 @@ def run_cmd(cmd):
     return output
 
 def update_image(src, dst):
-    #os.system('cp "' + src + '" ' + dst)
-    target = images_snap.copy()
-    target.paste(src, (0,0), src)
-    target.save(dst)
+    os.system('cp "' + src + '" ' + dst)
+
+def generate_image(src, dst):
+    if os.path.isfile(dst) == False:
+        target = images_snap.copy()
+        target.paste(src, (0,0), src)
+        target.save(dst)
 
 def check_update(system):
     
@@ -566,6 +569,8 @@ def start_viewer():
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER + " &")
         images_snap.save("/tmp/snapshot.png")
+        os.system("cp /tmp/pause.png " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png")
+        update_image(images_stop, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png")
         #time.sleep(0.2)
     #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
     #    if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
@@ -599,12 +604,12 @@ def change_viewer(menu, index):
        state_index = "state" + index
 
     if menu == "RESUME":
-        update_image(images_resume, "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "STOP":
-        #update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
         update_image(images_stop, "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
@@ -958,10 +963,10 @@ def trans_paste(fg_img,bg_img,alpha=1.0,box=(0,0)):
     return bg_img
 
 def img_paste(bg, fg):
-    fg_trans = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,0))
+    fg_trans = Image.new("RGBA", (int(res_x),int(res_y)))
     box = ((bg.size[0] - fg.size[0]) // 2, (bg.size[1] - fg.size[1]) // 2)
     fg_trans.paste(fg, box, fg)
-    bg_ret = Image.blend(bg,fg_trans,1.0)
+    bg_ret = Image.alpha_composite(bg,fg_trans)
     return bg_ret
 
 def fbdev_setup():
@@ -980,6 +985,8 @@ def fbdev_setup():
 
     images_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
     images_stop = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
+
+    os.system("rm " + PATH_PAUSEMENU + "images/fbdev/*")
 
 
 def main():
