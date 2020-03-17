@@ -615,14 +615,14 @@ def change_viewer(menu, index):
         #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "STOP":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
-        generate_image(images_reset, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png")
-        #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+            generate_image(images_reset, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png")
         #    if index == "0":
         #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "RESET":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png", "/tmp/pause.png")
-        generate_image(images_save, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png")
-        #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+            generate_image(images_save, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png")
         #    if index == "0":
         #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "SAVE":
@@ -634,7 +634,8 @@ def change_viewer(menu, index):
         #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "LOAD":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png", "/tmp/pause.png")
-        generate_image(images_control, PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png")
+        if VIEW_MODE == "fba":
+            generate_image(images_control, PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
         #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         #else:
