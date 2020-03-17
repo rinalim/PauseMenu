@@ -627,12 +627,14 @@ def change_viewer(menu, index):
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "SAVE":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png", "/tmp/pause.png")
+        generate_image(images_load, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png")
         if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
             update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         else:
             update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "LOAD":
         update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.png")
+        generate_image(images_control, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_control.png")
         if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
             update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         else:
@@ -970,7 +972,7 @@ def img_paste(bg, fg, fg1=None):
 
 def fbdev_setup():
 
-    global images_resume, images_stop, images_reset, images_save
+    global images_resume, images_stop, images_reset, images_save, images_load, images_control
 
     if os.path.isfile("/tmp/pause.png") == False :
         os.system("touch /tmp/pause.png")
@@ -998,13 +1000,28 @@ def fbdev_setup():
         images_reset = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png"),
             images_layout0)
-        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-            images_save0 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png")
+        
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state.png") == True :
+            images_save0 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state.png")
         else:
-            images_save0 = Image.open(PATH_PAUSEMENU + "images/save/" + state_index + ".png")
+            images_save0 = Image.open(PATH_PAUSEMENU + "images/save/state.png")
         images_save = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
             images_save0)
+        
+        if os.path.isfile(PATH_PAUSEMENU + "images/load/" + sysname + "/" + romname + ".state.png") == True :
+            images_load0 = Image.open(PATH_PAUSEMENU + "images/load/" + sysname + "/" + romname + ".state.png")
+        else:
+            images_load0 = Image.open(PATH_PAUSEMENU + "images/load/state.png")
+        images_load = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+            images_load0)
+        
+        images_layout1 = Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout1.png")
+        images_control = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_control.png"),
+            images_layout1)
+
     else:
         images_resume = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
