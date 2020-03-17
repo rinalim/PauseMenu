@@ -960,7 +960,7 @@ def img_paste(bg, fg):
     bg_ret.paste(fg, box, fg)
     return bg_ret
 
-def fbdev_setup(res_x, res_y):
+def fbdev_setup():
 
     global images_resume, images_stop
 
