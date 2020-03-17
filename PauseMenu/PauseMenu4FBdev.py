@@ -986,11 +986,9 @@ def fbdev_setup():
     
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         images_resume = img_paste(images_bg,
-            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png")
-            .paste(Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png")))
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png").paste(Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png")))
         images_stop = img_paste(images_bg,
-            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png")
-            .paste(Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png")))
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png").paste(Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png")))
     else:
         images_resume = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
