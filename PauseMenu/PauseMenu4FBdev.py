@@ -957,12 +957,6 @@ def process_event(event):
 
     return True
 
-def trans_paste(fg_img,bg_img,alpha=1.0,box=(0,0)):
-    fg_img_trans = Image.new("RGBA",fg_img.size)
-    fg_img_trans = Image.blend(fg_img_trans,fg_img,alpha)
-    bg_img.paste(fg_img_trans,box,fg_img_trans)
-    return bg_img
-
 def img_paste(bg, fg):
     fg_trans = Image.new("RGBA", (int(res_x),int(res_y)))
     box = ((bg.size[0] - fg.size[0]) // 2, (bg.size[1] - fg.size[1]) // 2)
@@ -984,8 +978,24 @@ def fbdev_setup():
     #images_bg = Image.open(PATH_PAUSEMENU + "images/pause_bg.png").resize((int(res_x),int(res_y)))
     images_bg = Image.new("RGBA", (int(res_x),int(res_y)), (0,0,0,180))
 
-    images_resume = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
-    images_stop = img_paste(images_bg, Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
+    if VIEW_MODE == "fba":
+        submenu = "fba/"+romname
+    else:
+        submenu = "libretro"
+
+    
+    if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+        images_resume = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png")
+            .paste(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png"), (0,0))
+        images_stop = = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png")
+            .paste(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png"), (0,0))
+    else:
+        images_resume = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
+        images_stop = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"))
 
 def main():
     
