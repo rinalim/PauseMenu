@@ -610,39 +610,39 @@ def change_viewer(menu, index):
 
     if menu == "RESUME":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
-        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-            if index == "0":
-                update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
+        #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+        #    if index == "0":
+        #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "STOP":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
         generate_image(images_reset, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png")
-        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-            if index == "0":
-                update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
+        #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+        #    if index == "0":
+        #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "RESET":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png", "/tmp/pause.png")
         generate_image(images_save, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png")
-        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-            if index == "0":
-                update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
+        #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+        #    if index == "0":
+        #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "SAVE":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png", "/tmp/pause.png")
         generate_image(images_load, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png")
-        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-            update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
-        else:
-            update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
+        #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
+        #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
+        #else:
+        #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "LOAD":
-        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png", "/tmp/pause.png")
-        generate_image(images_control, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_control.png")
-        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-            update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
-        else:
-            update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png", "/tmp/pause.png")
+        generate_image(images_control, PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png")
+        #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
+        #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
+        #else:
+        #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
-            update_image(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.png")
-            update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png") 
+            update_image(PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.png")
+        #    update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png") 
 
 def save_snapshot(index):
     if index == 0:
