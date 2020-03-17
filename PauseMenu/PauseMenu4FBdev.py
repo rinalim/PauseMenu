@@ -570,9 +570,9 @@ def start_viewer():
         print str(datetime.now())
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER + " &")
-        images_snap.save("/tmp/snapshot.png")
-        os.system("cp /tmp/pause.png " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png")
         generate_image(images_stop, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png")
+        os.system("convert /tmp/snapshot.ppm /tmp/snapshot.png &")
+        os.system("cp /tmp/pause.png " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png")
         #time.sleep(0.2)
     #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
     #    if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
