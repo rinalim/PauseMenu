@@ -957,10 +957,12 @@ def process_event(event):
 
     return True
 
-def img_paste(bg, fg):
+def img_paste(bg, fg, fg1=None):
     fg_trans = Image.new("RGBA", (int(res_x),int(res_y)))
     box = ((bg.size[0] - fg.size[0]) // 2, (bg.size[1] - fg.size[1]) // 2)
     fg_trans.paste(fg, box, fg)
+    if fg1 != None:
+        fg_trans.paste(fg1, box, fg1)
     bg_ret = Image.alpha_composite(bg,fg_trans)
     return bg_ret
 
@@ -987,9 +989,11 @@ def fbdev_setup():
     if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
         images_layout0 = Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png")
         images_resume = img_paste(images_bg,
-            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png").paste(images_layout0))
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"),
+            images_layout0)
         images_stop = img_paste(images_bg,
-            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png").paste(images_layout0))
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"),
+            images_layout0)
     else:
         images_resume = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png"))
