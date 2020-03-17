@@ -108,6 +108,9 @@ def run_cmd(cmd):
 
 def update_image(src, dst):
     os.system('cp "' + src + '" ' + dst)
+    keyboard.press("n")
+    time.sleep(0.1)
+    keyboard.release("n")   
 
 def generate_image(src, dst):
     if os.path.isfile(dst) == False:
@@ -612,11 +615,12 @@ def change_viewer(menu, index):
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "STOP":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
+        generate_image(images_reset, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "RESET":
-        update_image(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             if index == "0":
                 update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
@@ -635,10 +639,7 @@ def change_viewer(menu, index):
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
             update_image(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.png")
-            update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png")
-    keyboard.press("n")
-    time.sleep(0.1)
-    keyboard.release("n")    
+            update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png") 
 
 def save_snapshot(index):
     if index == 0:
@@ -993,6 +994,9 @@ def fbdev_setup():
             images_layout0)
         images_stop = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_stop.png"),
+            images_layout0)
+        images_reset = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_reset.png"),
             images_layout0)
     else:
         images_resume = img_paste(images_bg,
