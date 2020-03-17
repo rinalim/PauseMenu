@@ -1014,7 +1014,7 @@ def fbdev_setup():
         
         images_layout1 = Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout1.png")
         images_control = img_paste(images_bg,
-            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_control.png"),
+            Image.open(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png"),
             images_layout1)
 
     else:
