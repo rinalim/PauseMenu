@@ -622,12 +622,12 @@ def change_viewer(menu, index):
     elif menu == "RESET":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-            generate_image(images_save, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png")
+            generate_image(images_save0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png")
         #    if index == "0":
         #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "SAVE":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png", "/tmp/pause.png")
-        generate_image(images_load, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png")
+        generate_image(images_load0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
         #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         #else:
@@ -635,7 +635,7 @@ def change_viewer(menu, index):
     elif menu == "LOAD":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png", "/tmp/pause.png")
         if VIEW_MODE == "fba":
-            generate_image(images_control, PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png")
+            generate_image(images_control1, PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
         #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         #else:
@@ -973,7 +973,10 @@ def img_paste(bg, fg, fg1=None):
 
 def fbdev_setup():
 
-    global images_resume, images_stop, images_reset, images_save, images_load, images_control
+    global images_resume, images_stop, images_reset
+    global images_save0, images_save1, images_save2, images_save3
+    global images_load0, images_load1, images_load2, images_load3
+    global images_control1, images_control2, images_control3, images_control4, images_control5, images_control6
 
     if os.path.isfile("/tmp/pause.png") == False :
         os.system("touch /tmp/pause.png")
@@ -1003,20 +1006,71 @@ def fbdev_setup():
             images_layout0)
         
         if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state.png") == True :
-            images_save0 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state.png")
+            images_slot0 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state.png")
         else:
-            images_save0 = Image.open(PATH_PAUSEMENU + "images/save/state.png")
-        images_save = img_paste(images_bg,
+            images_slot0 = Image.open(PATH_PAUSEMENU + "images/save/state.png")
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state1.png") == True :
+            images_slot1 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state1.png")
+        else:
+            images_slot1 = Image.open(PATH_PAUSEMENU + "images/save/state1.png")
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state2.png") == True :
+            images_slot2 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state2.png")
+        else:
+            images_slot2 = Image.open(PATH_PAUSEMENU + "images/save/state2.png")
+        if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state3.png") == True :
+            images_slot3 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state3.png")
+        else:
+            images_slot3 = Image.open(PATH_PAUSEMENU + "images/save/state3.png")
+        images_save0 = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
-            images_save0)
-        images_load = img_paste(images_bg,
+            images_slot0)
+        images_save1 = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+            images_slot1)
+        images_save1 = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+            images_slot1)
+        images_save2 = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+            images_slot2)
+        images_load0 = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
-            images_save0)
+            images_slot0)
+        images_load1 = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+            images_slot1)
+        images_load2 = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+            images_slot2)
+        images_load3 = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+            images_slot3)
         
-        images_layout1 = Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout1.png")
-        images_control = img_paste(images_bg,
-            Image.open(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png"),
-            images_layout1)
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout1.png") == True :
+            images_button = Image.open(PATH_PAUSEMENU + "images/" + sysname + "_button" + str(es_conf) + ".png")
+            images_control1 = img_paste(images_bg,
+                images_button,
+                Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout1.png"))
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout2.png") == True :
+            images_control2 = img_paste(images_bg,
+                images_button,
+                Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout2.png"))
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout3.png") == True :
+            images_control3 = img_paste(images_bg,
+                images_button,
+                Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout3.png"))
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout4.png") == True :
+            images_control4 = img_paste(images_bg,
+                images_button,
+                Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout4.png"))
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout5.png") == True :
+            images_control5 = img_paste(images_bg,
+                images_button,
+                Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout5.png"))
+        if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout6.png") == True :
+            images_control6 = img_paste(images_bg,
+                images_button,
+                Image.open(PATH_PAUSEMENU + "images/control/" + submenu + "_layout6.png"))
 
     else:
         images_resume = img_paste(images_bg,
