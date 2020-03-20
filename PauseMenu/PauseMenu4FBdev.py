@@ -635,14 +635,24 @@ def change_viewer(menu, index):
     elif menu == "LOAD":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png", "/tmp/pause.png")
         if VIEW_MODE == "fba":
-            generate_image(images_control1, PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png")
+            generate_image(images_control1, PATH_PAUSEMENU + "images/fbdev/" + "_button1.png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
         #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         #else:
         #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
-            update_image(PATH_PAUSEMENU + "images/fbdev/" + sysname + "_button" + str(es_conf) + ".png", "/tmp/pause.png")
+            update_image(PATH_PAUSEMENU + "images/fbdev/" + "_button" + index + ".png", "/tmp/pause.png")
+            if layout_num >= 2:
+                generate_image(images_control2, PATH_PAUSEMENU + "images/fbdev/" + "_button2.png")
+            if layout_num >= 3:
+                generate_image(images_control3, PATH_PAUSEMENU + "images/fbdev/" + "_button3.png")
+            if layout_num >= 4:
+                generate_image(images_control4, PATH_PAUSEMENU + "images/fbdev/" + "_button4.png")
+            if layout_num >= 5:
+                generate_image(images_control5, PATH_PAUSEMENU + "images/fbdev/" + "_button5.png")
+            if layout_num >= 6:
+                generate_image(images_control6, PATH_PAUSEMENU + "images/fbdev/" + "_button6.png")
         #    update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png") 
 
 def save_snapshot(index):
