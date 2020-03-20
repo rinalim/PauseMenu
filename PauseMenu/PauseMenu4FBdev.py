@@ -3,7 +3,6 @@
 
 import os, sys, struct, time, fcntl, termios, signal, keyboard, datetime
 import curses, errno
-from datetime import datetime
 from pyudev import Context
 from subprocess import *
 import xml.etree.ElementTree as ET
@@ -549,9 +548,7 @@ def start_viewer():
         submenu = "libretro"
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
         #os.system("fbgrab -d /dev/fb0 " + PATH_PAUSEMENU + "images/fbdev/snapshot.png")
-        print str(datetime.now())
         os.system("fbcat /dev/fb0 > /tmp/snapshot.ppm")
-        print str(datetime.now())
         '''
         cmd = "composite " + \
             PATH_PAUSEMENU + "images/pause_bg_fhd.png " + \
@@ -570,7 +567,6 @@ def start_viewer():
         target = images_snap.copy()
         target.paste(images_resume, (0,0), images_resume)
         target.save("/tmp/pause.png")
-        print str(datetime.now())
         #os.system(VIEWER_BG + " &")
         os.system(VIEWER + " &")
         generate_image(images_stop, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png")
