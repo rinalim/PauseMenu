@@ -3,11 +3,15 @@ import xml.etree.ElementTree as ET
 from subprocess import *
 import ast
 
-ES_INPUT = '/opt/retropie/configs/all/emulationstation/es_input.cfg'
-CONFIG_DIR = '/opt/retropie/configs/'
-RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
-PATH_PAUSEMENU = CONFIG_DIR + 'all/PauseMenu/'
-FBA_ROMPATH = '/home/pi/RetroPie/roms/fba/'
+if os.path.isdir('/opt/retropie') == True:
+    OPT = '/opt/retropie'
+elif os.path.isdir('/opt/retroarena') == True:
+    OPT = '/opt/retroarena'
+PATH_PAUSEMENU = OPT+'/configs/all/PauseMenu/'
+if os.path.isdir('/home/pi/RetroPie') == True:
+    FBA_ROMPATH = '/home/pi/RetroPie/roms/fba/'
+elif os.path.isdir('/home/pigaming/RetroArena') == True:
+    FBA_ROMPATH = '/home/pigaming/RetroArena/roms/fba/'
 
 retroarch_key = {}
 user_key = {}
