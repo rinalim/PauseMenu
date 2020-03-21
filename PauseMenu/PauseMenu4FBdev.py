@@ -595,6 +595,10 @@ def stop_viewer():
  
 
 def change_viewer(menu, index):
+
+    global images_save0, images_save1, images_save2, images_save3
+    global images_load0, images_load1, images_load2, images_load3
+
     if VIEW_MODE == "fba":
         submenu = "fba/"+romname
     else:
@@ -618,18 +622,30 @@ def change_viewer(menu, index):
     elif menu == "RESET":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-            generate_image(images_save0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png")
+            generate_image(images_save0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save0" + ".png")
         #    if index == "0":
         #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
     elif menu == "SAVE":
-        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save.png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save" + index + ".png", "/tmp/pause.png")
+        if index == "0":
+            generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save1.png")
+        if index == "1":
+            generate_image(images_save2, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save2.png")
+        if index == "2":
+            generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save3.png")
         generate_image(images_load0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
         #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         #else:
         #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "LOAD":
-        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE +  "_save" + index + ".png", "/tmp/pause.png")
+        if index == "0":
+            generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load1.png")
+        if index == "1":
+            generate_image(images_save2, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load2.png")
+        if index == "2":
+            generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load3.png")
         if VIEW_MODE == "fba":
             generate_image(images_control1, PATH_PAUSEMENU + "images/fbdev/" + "_button1.png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
@@ -639,15 +655,15 @@ def change_viewer(menu, index):
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
             update_image(PATH_PAUSEMENU + "images/fbdev/" + "_button" + index + ".png", "/tmp/pause.png")
-            if layout_num >= 2:
+            if index == "1" and layout_num >= 2:
                 generate_image(images_control2, PATH_PAUSEMENU + "images/fbdev/" + "_button2.png")
-            if layout_num >= 3:
+            if index == "2" and layout_num >= 3:
                 generate_image(images_control3, PATH_PAUSEMENU + "images/fbdev/" + "_button3.png")
-            if layout_num >= 4:
+            if index == "3" and layout_num >= 4:
                 generate_image(images_control4, PATH_PAUSEMENU + "images/fbdev/" + "_button4.png")
-            if layout_num >= 5:
+            if index == "4" and layout_num >= 5:
                 generate_image(images_control5, PATH_PAUSEMENU + "images/fbdev/" + "_button5.png")
-            if layout_num >= 6:
+            if index == "5" and layout_num >= 6:
                 generate_image(images_control6, PATH_PAUSEMENU + "images/fbdev/" + "_button6.png")
         #    update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png") 
 
@@ -903,6 +919,38 @@ def process_event(event):
                         send_hotkey("right", STATE_INDEX)
                         send_hotkey("f2", 1)
                         save_snapshot(STATE_INDEX)
+                        if STATE_INDEX == 0 :
+                            images_slot0 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state.png")
+                            images_save0 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+                                images_slot0)
+                            images_load0 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+                                images_slot0)
+                        elif STATE_INDEX == 1 :
+                            images_slot1 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state1.png")
+                            images_save1 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+                                images_slot1)
+                            images_load1 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+                                images_slot1)
+                        elif STATE_INDEX == 2 :
+                            images_slot2 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state2.png")
+                            images_save2 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+                                images_slot2)
+                            images_load0 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+                                images_slot2)
+                        elif STATE_INDEX == 3 :
+                            images_slot3 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state3.png")
+                            images_save3 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+                                images_slot3)
+                            images_load0 = img_paste(images_bg,
+                                Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
+                                images_slot3)
                         #stop_viewer()
                         PAUSE_MODE_ON = False
                     elif MENU_INDEX == 5:
@@ -1033,12 +1081,12 @@ def fbdev_setup():
         images_save1 = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
             images_slot1)
-        images_save1 = img_paste(images_bg,
-            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
-            images_slot1)
         images_save2 = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
             images_slot2)
+        images_save3 = img_paste(images_bg,
+            Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
+            images_slot3)
         images_load0 = img_paste(images_bg,
             Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
             images_slot0)
