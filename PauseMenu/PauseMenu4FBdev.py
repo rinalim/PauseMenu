@@ -1028,7 +1028,7 @@ def img_paste(bg, fg, fg1=None):
 
 def fbdev_setup():
 
-    global images_resume, images_stop, images_reset
+    global images_resume, images_stop, images_reset, images_bg
     global images_save0, images_save1, images_save2, images_save3
     global images_load0, images_load1, images_load2, images_load3
     global images_control1, images_control2, images_control3, images_control4, images_control5, images_control6
