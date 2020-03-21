@@ -794,7 +794,9 @@ def process_event(event):
 
     global SELECT_BTN_ON, START_BTN_ON, UP_ON, DOWN_ON
     global PAUSE_MODE_ON, MENU_INDEX, STATE_INDEX, LAYOUT_INDEX
-    
+    global images_save0, images_save1, images_save2, images_save3
+    global images_load0, images_load1, images_load2, images_load3
+        
     (js_time, js_value, js_type, js_number) = struct.unpack(event_format, event)
 
     # ignore init events
