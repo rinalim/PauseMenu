@@ -921,6 +921,7 @@ def process_event(event):
                         send_hotkey("f2", 1)
                         save_snapshot(STATE_INDEX)
                         if STATE_INDEX == 0 :
+                            os.system("rm " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save0" + ".png")
                             images_slot0 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state.png")
                             images_save0 = img_paste(images_bg,
                                 Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
@@ -929,6 +930,7 @@ def process_event(event):
                                 Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
                                 images_slot0)
                         elif STATE_INDEX == 1 :
+                            os.system("rm " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save1" + ".png")
                             images_slot1 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state1.png")
                             images_save1 = img_paste(images_bg,
                                 Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
@@ -937,6 +939,7 @@ def process_event(event):
                                 Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
                                 images_slot1)
                         elif STATE_INDEX == 2 :
+                            os.system("rm " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save2" + ".png")
                             images_slot2 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state2.png")
                             images_save2 = img_paste(images_bg,
                                 Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
@@ -945,6 +948,7 @@ def process_event(event):
                                 Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_load.png"),
                                 images_slot2)
                         elif STATE_INDEX == 3 :
+                            os.system("rm " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save3" + ".png")
                             images_slot3 = Image.open(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + ".state3.png")
                             images_save3 = img_paste(images_bg,
                                 Image.open(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_save.png"),
