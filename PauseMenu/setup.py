@@ -214,6 +214,8 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
     os.system("sed -i '/input_menu_toggle_btn/d' '" + joypad_cfg + "'")
     os.system("sed -i '/input_state_slot_increase_btn/d' '" + joypad_cfg + "'")
     os.system("sed -i '/input_state_slot_decrease_btn/d' '" + joypad_cfg + "'")
+    os.system("sed -i '/input_state_slot_increase_axis/d' '" + joypad_cfg + "'")
+    os.system("sed -i '/input_state_slot_decrease_axis/d' '" + joypad_cfg + "'")
     
     retroarch_cfg = [
         OPT+"/configs/all/retroarch.cfg",
