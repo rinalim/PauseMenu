@@ -237,6 +237,8 @@ if len(sys.argv) > 2 and sys.argv[2] == '-full':
         'input_menu_toggle = ':'"s"',
         'input_save_state = ':'"f2"',
         'input_load_state = ':'"f4"',
+        'input_state_slot_decrease = ':'"left"',
+        'input_state_slot_increase = ':'"right"',
         'video_gpu_screenshot = ':'"true"',
         'savestate_thumbnail_enable = ':'"true"'
     }
