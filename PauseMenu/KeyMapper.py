@@ -142,11 +142,11 @@ def set_keymap(romname, layout_index):
 
 def update_fba_rmp(system, romname, index):
 
-    if os.path.isdir('/opt/retropie/configs/fba/'+sys_map[system]) == False:
-        run_cmd('mkdir /opt/retropie/configs/fba/'+sys_map[system].replace(" ","\ "))
+    if os.path.isdir(OPT + '/configs/fba/'+sys_map[system]) == False:
+        run_cmd('mkdir ' + OPT + '/configs/fba/' + sys_map[system].replace(" ","\ "))
     buf = ''
-    run_cmd("sed -i \'/input_player" + str(index) + "/d\' /opt/retropie/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + romname + ".rmp")
-    f = open('/opt/retropie/configs/fba/'+ sys_map[system] + '/'  + romname + '.rmp', 'a')
+    run_cmd("sed -i \'/input_player" + str(index) + "/d\' " + OPT + "/configs/fba/"+sys_map[system].replace(" ","\ ") + '/'  + romname + ".rmp")
+    f = open(OPT + '/configs/fba/'+ sys_map[system] + '/'  + romname + '.rmp', 'a')
     for key in key_map:
         res = 'input_player' + str(index) + '_btn_' + key_map[key][0] + ' = ' + '\"' + key + '\"'
         buf += res + '\n'
