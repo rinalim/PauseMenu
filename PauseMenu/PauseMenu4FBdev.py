@@ -632,7 +632,7 @@ def change_viewer(menu, index):
         if index == "1":
             generate_image(images_save2, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save2.png")
         if index == "2":
-            generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save3.png")
+            generate_image(images_save3, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save3.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             generate_image(images_load0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load0.png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
@@ -642,11 +642,11 @@ def change_viewer(menu, index):
     elif menu == "LOAD":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE +  "_load" + index + ".png", "/tmp/pause.png")
         if index == "0":
-            generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load1.png")
+            generate_image(images_load1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load1.png")
         if index == "1":
-            generate_image(images_save2, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load2.png")
+            generate_image(images_load2, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load2.png")
         if index == "2":
-            generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load3.png")
+            generate_image(images_load3, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load3.png")
         if VIEW_MODE == "fba":
             generate_image(images_control1, PATH_PAUSEMENU + "images/fbdev/" + "_button1.png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
