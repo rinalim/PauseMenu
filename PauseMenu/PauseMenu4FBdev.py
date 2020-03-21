@@ -633,7 +633,8 @@ def change_viewer(menu, index):
             generate_image(images_save2, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save2.png")
         if index == "2":
             generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save3.png")
-        generate_image(images_load0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load.png")
+        if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
+            generate_image(images_load0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load0.png")
         #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
         #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
         #else:
