@@ -639,7 +639,7 @@ def change_viewer(menu, index):
         #else:
         #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
     elif menu == "LOAD":
-        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE +  "_save" + index + ".png", "/tmp/pause.png")
+        update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE +  "_load" + index + ".png", "/tmp/pause.png")
         if index == "0":
             generate_image(images_save1, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load1.png")
         if index == "1":
