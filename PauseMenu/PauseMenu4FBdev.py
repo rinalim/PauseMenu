@@ -107,6 +107,25 @@ def run_cmd(cmd):
 
 def update_image(src, dst):
     if os.path.isfile(src) == True:
+        prev_size = 0
+        counts = 0
+        while True:
+            cur_size = os.path.getsize(src)
+            if cur_size > prev_size:
+                try:
+                    image = Image.open(src, "r")
+                except:
+                    print "Cannot read thumbnail"
+                    prev_size = cur_size
+                    time.sleep(0.3)
+                else:
+                    break
+            else:
+                counts = counts+1
+                if counts >= 5:
+                    break
+                else:
+                    time.sleep(1)
         os.system('cp "' + src + '" ' + dst)
         keyboard.press("n")
         time.sleep(0.01)
