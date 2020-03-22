@@ -106,10 +106,11 @@ def run_cmd(cmd):
     return output
 
 def update_image(src, dst):
-    os.system('cp "' + src + '" ' + dst)
-    keyboard.press("n")
-    time.sleep(0.01)
-    keyboard.release("n")   
+    if os.path.isfile(src) == True:
+        os.system('cp "' + src + '" ' + dst)
+        keyboard.press("n")
+        time.sleep(0.01)
+        keyboard.release("n")   
 
 def generate_image(src, dst):
     if os.path.isfile(dst) == False:
