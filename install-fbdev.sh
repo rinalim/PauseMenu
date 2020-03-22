@@ -20,7 +20,7 @@ cp ./PauseMenu/PauseMenu4FBdev.py /opt/retroarena/configs/all/PauseMenu/PauseMen
 sudo sed -i '/PauseMenu.py/d' /opt/retroarena/configs/all/runcommand-onstart.sh
 echo 'sudo /usr/bin/python /opt/retroarena/configs/all/PauseMenu/PauseMenu.py /dev/input/js0 -full &' >> /opt/retroarena/configs/all/runcommand-onstart.sh
 sudo sed -i '/PauseMenu.py/d' /opt/retroarena/configs/all/runcommand-onend.sh
-echo 'sudo pkill -ef PauseMenu.py' >> /opt/retroarena/configs/all/runcommand-onend.sh
+echo 'sudo pkill -ef PauseMenu.py > /dev/null 2>&1' >> /opt/retroarena/configs/all/runcommand-onend.sh
 
 chgrp -R -v pigaming /opt/retroarena/configs/all/PauseMenu/ > /dev/null 2>&1
 chown -R -v pigaming /opt/retroarena/configs/all/PauseMenu/ > /dev/null 2>&1
