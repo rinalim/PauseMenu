@@ -114,23 +114,16 @@ def update_image(src, dst):
         while True:
             cur_size = os.path.getsize(dst)
             if cur_size > prev_size:
-                try:
-                    image = Image.open(dst, "r")
-                except:
-                    print "Cannot read thumbnail"
-                    prev_size = cur_size
-                    time.sleep(0.3)
-                else:
-                    break
+                keyboard.press("n")
+                time.sleep(0.01)
+                keyboard.release("n")
+                break
             else:
                 counts = counts+1
                 if counts >= 5:
                     break
                 else:
-                    time.sleep(0.3)
-        keyboard.press("n")
-        time.sleep(0.01)
-        keyboard.release("n")   
+                    time.sleep(0.3) 
 
 def generate_image(src, dst):
     if os.path.isfile(dst) == False:
