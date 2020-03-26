@@ -590,8 +590,8 @@ def start_viewer():
         target.save("/tmp/pause.png")
         #os.system(VIEWER_BG + " &")
         generate_image(images_stop, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png")
+        os.system("cp /tmp/pause.png " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png")
         os.system("convert /tmp/snapshot.ppm /tmp/snapshot.png &")
-        os.system("cp /tmp/pause.png " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png &")
         os.system(VIEWER + " &")
         #time.sleep(0.2)
     #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
