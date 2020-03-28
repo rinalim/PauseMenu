@@ -563,34 +563,14 @@ def start_viewer():
     if os.path.isfile(PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png") == True :
         #os.system("fbgrab -d /dev/fb0 " + PATH_PAUSEMENU + "images/fbdev/snapshot.png")
         os.system("fbcat /dev/fb0 > /tmp/snapshot.ppm")
-        '''
-        cmd = "composite " + \
-            PATH_PAUSEMENU + "images/pause_bg_fhd.png " + \
-            "/tmp/snapshot.ppm " + \
-            PATH_PAUSEMENU + "images/fbdev/snapshot.png"
-        os.system(cmd)
-        print str(datetime.now())
-        cmd = "composite -gravity center " + \
-            PATH_PAUSEMENU + "images/" + VIEW_MODE + "_resume.png " + \
-            PATH_PAUSEMENU + "images/fbdev/snapshot.png " + \
-            PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png"
-        os.system(cmd)
-        print str(datetime.now())
-        '''
         images_snap = Image.open("/tmp/snapshot.ppm")
         target = images_snap.copy()
         target.paste(images_resume, (0,0), images_resume)
         target.save("/tmp/pause.png")
-        #os.system(VIEWER_BG + " &")
         generate_image(images_stop, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png")
         os.system("cp /tmp/pause.png " + PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png")
         os.system("convert /tmp/snapshot.ppm /tmp/snapshot.png &")
         os.system(VIEWER + " &")
-        #time.sleep(0.2)
-    #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-    #    if os.path.isfile(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png") == True :
-    #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
-    #    os.system(VIEWER_LAYOUT + " &")
 
 def stop_viewer():
     if is_running("fbi") == True:
@@ -606,8 +586,6 @@ def stop_viewer():
         #time.sleep(0.1)
         #keyboard.release("esc")
         
- 
-
 def change_viewer(menu, index):
 
     global images_save0, images_save1, images_save2, images_save3
@@ -624,21 +602,17 @@ def change_viewer(menu, index):
 
     if menu == "RESUME":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_resume.png", "/tmp/pause.png")
-        #if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
-        #    if index == "0":
-        #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
+
     elif menu == "STOP":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_stop.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             generate_image(images_reset, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png")
-        #    if index == "0":
-        #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
+
     elif menu == "RESET":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_reset.png", "/tmp/pause.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             generate_image(images_save0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save0" + ".png")
-        #    if index == "0":
-        #        update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout0.png", "/tmp/pause_layout.png")
+
     elif menu == "SAVE":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save" + index + ".png", "/tmp/pause.png")
         if index == "0":
@@ -649,10 +623,7 @@ def change_viewer(menu, index):
             generate_image(images_save3, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_save3.png")
         if VIEW_MODE == "fba" or VIEW_MODE == "libretro":
             generate_image(images_load0, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load0.png")
-        #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-        #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
-        #else:
-        #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
+
     elif menu == "LOAD":
         update_image(PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE +  "_load" + index + ".png", "/tmp/pause.png")
         if index == "0":
@@ -663,10 +634,7 @@ def change_viewer(menu, index):
             generate_image(images_load3, PATH_PAUSEMENU + "images/fbdev/" + VIEW_MODE + "_load3.png")
         if VIEW_MODE == "fba":
             generate_image(images_control1, PATH_PAUSEMENU + "images/fbdev/" + "_button1.png")
-        #if os.path.isfile(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png") == True :
-        #    update_image(PATH_PAUSEMENU + "images/save/" + sysname + "/" + romname + "." + state_index + ".png", "/tmp/pause_layout.png")
-        #else:
-        #    update_image(PATH_PAUSEMENU + "images/save/" + state_index + ".png", "/tmp/pause_layout.png")
+
     elif menu == "BUTTON":
         if VIEW_MODE == "fba":
             update_image(PATH_PAUSEMENU + "images/fbdev/" + "_button" + index + ".png", "/tmp/pause.png")
@@ -680,7 +648,6 @@ def change_viewer(menu, index):
                 generate_image(images_control5, PATH_PAUSEMENU + "images/fbdev/" + "_button5.png")
             if index == "5" and layout_num >= 6:
                 generate_image(images_control6, PATH_PAUSEMENU + "images/fbdev/" + "_button6.png")
-        #    update_image(PATH_PAUSEMENU + "images/control/" + submenu + "_layout" + index + ".png", "/tmp/pause_layout.png") 
 
 def save_snapshot(index):
     if index == 0:
