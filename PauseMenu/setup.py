@@ -88,7 +88,7 @@ def set_layout():
             PATH_PAUSEMENU + "images/fba_load.png " + \
             PATH_PAUSEMENU + "images/fba_load.png"
         os.system(cmd)
-
+        os.system("cp " + PATH_PAUSEMENU + "configs/fba/emulators.cfg " + OPT + "/configs/fba/")
     
 def load_retroarch_cfg(dev_name):
     print 'Device Name: ', dev_name, '\n'
