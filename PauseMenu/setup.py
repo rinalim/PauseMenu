@@ -61,8 +61,35 @@ def set_layout():
     f = open(PATH_PAUSEMENU + "images/control/layout.cfg", 'w')
     f.write(str(es_conf)+'\n')
     f.close()
-    
 
+    if OPT == '/opt/retroarena':
+        cmd = "composite " + \
+            PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png " + \
+            PATH_PAUSEMENU + "images/fba_resume.png " + \
+            PATH_PAUSEMENU + "images/fba_resume.png"
+        os.system(cmd)
+        cmd = "composite " + \
+            PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png " + \
+            PATH_PAUSEMENU + "images/fba_stop.png " + \
+            PATH_PAUSEMENU + "images/fba_stop.png"
+        os.system(cmd)
+        cmd = "composite " + \
+            PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png " + \
+            PATH_PAUSEMENU + "images/fba_reset.png " + \
+            PATH_PAUSEMENU + "images/fba_reset.png"
+        os.system(cmd)
+        cmd = "composite " + \
+            PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png " + \
+            PATH_PAUSEMENU + "images/fba_save.png " + \
+            PATH_PAUSEMENU + "images/fba_save.png"
+        os.system(cmd)
+        cmd = "composite " + \
+            PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png " + \
+            PATH_PAUSEMENU + "images/fba_load.png " + \
+            PATH_PAUSEMENU + "images/fba_load.png"
+        os.system(cmd)
+
+    
 def load_retroarch_cfg(dev_name):
     print 'Device Name: ', dev_name, '\n'
     

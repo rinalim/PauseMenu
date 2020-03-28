@@ -398,7 +398,7 @@ def draw_picture(buttons):
     
     # Generate current layout image
     pos = ["80x22+320+188", "80x22+400+162", "80x22+480+138", "80x22+320+253", "80x22+400+229", "80x22+480+203"]
-    cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+"0.png"
+    cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout0.png" + LAYOUT+"0.png"
     os.system(cmd)
     for i in range(1,7):
         btn = btn_map[user_key[str(i)]]
@@ -428,7 +428,7 @@ def draw_picture(buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2] 
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout0.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -463,7 +463,7 @@ def draw_picture(buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout0.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
@@ -519,7 +519,7 @@ def draw_picture(buttons):
                 print_map['4'] = buttons[0]
                 print_map['5'] = buttons[1]
                 print_map['6'] = buttons[2]
-            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout" + str(es_conf) + ".png" + LAYOUT+str(i)+".png"
+            cmd = "cp " + PATH_PAUSEMENU + "images/control/background/bg_layout0.png" + LAYOUT+str(i)+".png"
             os.system(cmd)
             for j in range(1,7):
                 btn = print_map[str(j)]
