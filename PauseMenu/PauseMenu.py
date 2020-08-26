@@ -919,11 +919,9 @@ def process_event(event):
                 stop_viewer()
                 start_viewer()
                 os.system("ps -ef | grep emulators | grep -v grep | awk '{print $2}' | xargs kill -SIGSTOP &")
-        elif SELECT_BTN_ON == True and UP_ON == True:
-            if is_running("omxiv-pause") == False:
-                start_viewer_osd()
-            else:
-                stop_viewer()
+        #elif SELECT_BTN_ON == True and UP_ON == True:
+        #    if is_running("omxiv-pause") == False:
+        #        start_viewer_osd()
         #elif SELECT_BTN_ON == True and DOWN_ON == True:
         #    if PAUSE_MODE_ON == False:
         #        stop_viewer()
