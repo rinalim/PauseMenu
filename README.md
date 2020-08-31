@@ -6,8 +6,7 @@ Pause Menu for Retropie
 cd /home/pi
 git clone https://github.com/rinalim/PauseMenu
 cd PauseMenu
-sudo chmod 755 ./*.sh
-sudo ./install.sh
+sudo sh ./install-rpi.sh
 ```
 
 ## Uninstall
