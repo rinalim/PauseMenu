@@ -7,7 +7,7 @@ sudo apt-get install imagemagick -y
 sudo apt-get install fonts-nanum -y
 sudo apt-get install fonts-nanum-extra -y
 sudo apt-get install python-pil -y
-sudo pip install keyboard
+sudo pip install keyboard==0.13.4
 
 rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
