@@ -2,11 +2,9 @@
 # https://github.com/RetroPie/RetroPie-Setup/blob/master/scriptmodules/supplementary/runcommand/joy2key.py
 # https://github.com/sana2dang/PauseMode
 
-sudo apt-get install libjpeg8 -y
-sudo apt-get install imagemagick -y
-sudo apt-get install fonts-nanum -y
-sudo apt-get install fonts-nanum-extra -y
-sudo apt-get install python-pil -y
+sudo apt install libjpeg8 imagemagick  -y
+sudo apt install fonts-nanum fonts-nanum-extra -y
+sudo apt install python-pil python-pyudev -y
 sudo pip install keyboard==0.13.4
 
 rm -rf /opt/retropie/configs/all/PauseMenu/
