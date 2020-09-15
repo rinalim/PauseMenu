@@ -680,8 +680,8 @@ def save_snapshot(index):
     '''
         
 def is_running(pname):
-    ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep")
-    if len(ps_grep) > 1 and "bash" not in ps_grep:
+    ps_grep = run_cmd("ps -ef | grep " + pname + " | grep -v grep | grep -v bash")
+    if len(ps_grep) > 1:
         return True
     else:
         return False
