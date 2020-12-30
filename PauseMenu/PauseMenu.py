@@ -644,7 +644,7 @@ def save_snapshot(index):
                 try:
                     image_thumb = Image.open(pngpath, "r")
                 except:
-                    print "Cannot read thumbnail"
+                    print("Cannot read thumbnail")
                     prev_size = cur_size
                     time.sleep(0.3)
                 else:
