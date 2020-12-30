@@ -4,8 +4,8 @@
 
 sudo apt install libjpeg8 imagemagick  -y
 sudo apt install fonts-nanum fonts-nanum-extra -y
-sudo apt install python-pil python-pyudev -y
-sudo pip install keyboard==0.13.4
+sudo apt install python3-pil python3-pyudev -y
+sudo pip install keyboard
 
 rm -rf /opt/retropie/configs/all/PauseMenu/
 mkdir /opt/retropie/configs/all/PauseMenu/
