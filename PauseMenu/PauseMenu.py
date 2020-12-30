@@ -727,7 +727,7 @@ def read_event(fd):
     while True:
         try:
             event = os.read(fd, event_size)
-        except OSError, e:
+        except OSError as e:
             if e.errno == errno.EWOULDBLOCK:
                 return None
             return False
