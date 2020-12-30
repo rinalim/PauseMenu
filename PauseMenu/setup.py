@@ -180,7 +180,7 @@ def process_event(event):
         return -1
 
     if js_type == JS_EVENT_BUTTON and js_value == 1:
-        print ">> button index:", js_number
+        print(">> button index:", js_number)
         return js_number
 
     return -1
@@ -198,7 +198,7 @@ event = -1
 f = open(PATH_PAUSEMENU + "button.cfg", 'w')
 js_devs, js_fds = open_devices()
 
-print "\nPush a button for SELECT"
+print("\nPush a button for SELECT")
 while btn_select == -1:
     for fd in js_fds:
         event = read_event(fd)
@@ -206,7 +206,7 @@ while btn_select == -1:
             btn_select = process_event(event)
     time.sleep(0.1)
 
-print "Push a button for START"
+print("Push a button for START")
 while btn_start == -1:
     for fd in js_fds:
         event = read_event(fd)
@@ -214,7 +214,7 @@ while btn_start == -1:
             btn_start = process_event(event)
     time.sleep(0.1)
 
-print "Push a button for ButtonA"
+print("Push a button for ButtonA")
 while btn_a == -1:
     for fd in js_fds:
         event = read_event(fd)
