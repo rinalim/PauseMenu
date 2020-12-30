@@ -16,8 +16,9 @@ import ast
 #        __u8 number;    /* axis/button number */
 #    };
 
-reload(sys)
-sys.setdefaultencoding('utf-8')
+if sys.version[0] == '2':
+    reload(sys)
+    sys.setdefaultencoding("utf-8")
 
 JS_MIN = -32768
 JS_MAX = 32768
