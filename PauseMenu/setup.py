@@ -42,19 +42,19 @@ def load_es_cfg():
     #tag = root.find('inputConfig')
     tags = root.findall('inputConfig')
     num = 1
-    print '\n'
+    print('\n')
     for i in tags:
-        print str(num) + ". " + i.attrib['deviceName']
+        print(str(num) + ". " + i.attrib['deviceName'])
         num = num+1
     dev_select = input('\nSelect your joystick: ')
 
     return tags[dev_select-1].attrib['deviceName']
 
 def set_layout():
-    print '\n -(1)-----  -(2)-----  -(3)----- '
-    print ' | X Y L |  | Y X L |  | L Y X | '
-    print ' | A B R |  | B A R |  | R B A | '
-    print ' ---------  ---------  --------- '
+    print('\n -(1)-----  -(2)-----  -(3)----- ')
+    print(' | X Y L |  | Y X L |  | L Y X | ')
+    print(' | A B R |  | B A R |  | R B A | ')
+    print(' ---------  ---------  --------- ')
 
     es_conf = input('\nSelect your joystick layout: ')
     
@@ -91,7 +91,7 @@ def set_layout():
         os.system("cp " + PATH_PAUSEMENU + "configs/fba/emulators.cfg " + OPT + "/configs/fba/")
     
 def load_retroarch_cfg(dev_name):
-    print 'Device Name: ', dev_name, '\n'
+    print('Device Name: ', dev_name, '\n')
     
     retroarch_key = {}
     f = open(RETROARCH_CFG + dev_name + '.cfg', 'r')
@@ -112,7 +112,7 @@ def load_retroarch_cfg(dev_name):
     if use_pause == 2:
         btn_pause = -1
         js_devs, js_fds = open_devices()
-        print "\nPush a button for PauseMenu"
+        print("\nPush a button for PauseMenu")
         while btn_pause == -1:
             for fd in js_fds:
                 event = read_event(fd)
@@ -121,7 +121,7 @@ def load_retroarch_cfg(dev_name):
             time.sleep(0.1)
         retroarch_key['pausemenu'] = str(btn_pause)
     else:
-        print "\n"
+        print("\n")
     
     f = open(PATH_PAUSEMENU + "button.cfg", 'w')
     f.write(str(retroarch_key)+'\n')
