@@ -1,5 +1,5 @@
 #-*-coding: utf-8 -*-
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import os, sys, struct, time, fcntl, termios, signal, keyboard, datetime
 import curses, errno
