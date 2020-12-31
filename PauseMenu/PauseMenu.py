@@ -204,7 +204,7 @@ def get_info():
     #game = root.find('./game[@romname=\"' + romname + '\"]')
     #if game == None:
         #print 'No Game Found'
-        name = str(unicode(game.get('gamename')))
+        name = str(game.get('gamename'))
         #print 'Generate pause images for ' + name
         player = game.find('player')
         controls = player.find('controls')
@@ -213,7 +213,7 @@ def get_info():
         button_num = 0
         for i in labels[0]:
             if 'BUTTON' in i.get('name'):
-                btn = str(unicode(i.get('value')))
+                btn = str(i.get('value'))
                 # Translate to Korean
                 for key in kor_map:
                     if key in btn:
@@ -353,10 +353,10 @@ def get_turbo_key():
 def draw_text(text, outfile):
     font_size = 54
     font = ImageFont.truetype('NanumBarunGothicBold.ttf', font_size)
-    image = Image.new('RGBA', (font.getsize(unicode(text))[0], font.getsize(unicode(text))[1]), (0, 0, 0, 0))
+    image = Image.new('RGBA', (font.getsize(str(text))[0], font.getsize(str(text))[1]), (0, 0, 0, 0))
     draw = ImageDraw.Draw(image)
     draw.fontmode = "1"
-    draw.text((0,0), unicode(text), font=font, fill="black")
+    draw.text((0,0), str(text), font=font, fill="black")
     image.save(outfile)
 
 def draw_picture(buttons):
