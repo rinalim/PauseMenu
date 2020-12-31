@@ -104,7 +104,10 @@ def run_cmd(cmd):
     # runs whatever in the cmd variable
     p = Popen(cmd, shell=True, stdout=PIPE)
     output = p.communicate()[0]
-    return output
+    return output.decode()
+
+def cmp(a, b):
+    return (a > b) - (a < b)
     
 def update_image(src, dst):
     os.system('echo "' + src + '" > ' + dst)
