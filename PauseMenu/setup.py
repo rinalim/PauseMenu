@@ -108,7 +108,7 @@ def load_retroarch_cfg(dev_name):
             retroarch_key[words[0]] = words[2].replace('"','')
     f.close()
 
-    use_pause = input('Use an extra Pause button? (1=No, 2=Yes): ')
+    use_pause = int(input('Use an extra Pause button? (1=No, 2=Yes): '))
     if use_pause == 2:
         btn_pause = -1
         js_devs, js_fds = open_devices()
