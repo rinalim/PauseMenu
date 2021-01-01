@@ -19,4 +19,4 @@ echo 'sudo pkill -ef PauseMenu.py' >> /opt/retropie/configs/all/runcommand-onend
 chgrp -R -v pi /opt/retropie/configs/all/PauseMenu/ > /dev/null 2>&1
 chown -R -v pi /opt/retropie/configs/all/PauseMenu/ > /dev/null 2>&1
 
-python3 ./PauseMenu/setup.py /dev/input/js0
+sudo python3 ./PauseMenu/setup.py /dev/input/js0
