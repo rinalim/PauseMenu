@@ -2,6 +2,7 @@
 
 FBIOGET_VSCREENINFO=0x4600
 FBIOPUT_VSCREENINFO=0x4601
+FBIOGET_FSCREENINFO=0x4602
 
 from mmap import mmap
 from fcntl import ioctl
