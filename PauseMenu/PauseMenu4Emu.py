@@ -1,5 +1,5 @@
 #-*-coding: utf-8 -*-
-#!/usr/bin/python3
+#!/opt/bin/python3
 
 import os, sys, struct, time, fcntl, termios, signal
 import curses, errno
@@ -122,8 +122,7 @@ def process_event(event):
         if js_value == 1:
             if js_number == btn_a:
                 if PAUSE_MODE_ON == True:
-                    #print "Kill"
-                    #stop_viewer()
+                    print("Kill")
                     os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
                     os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -INT")
                     PAUSE_MODE_ON = False;
@@ -154,17 +153,12 @@ def process_event(event):
                 PAUSE_MODE_ON = False
                 START_BTN_ON = False
                 print("Resume")
-                #stop_viewer()
                 os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
 
         if SELECT_BTN_ON == True and START_BTN_ON == True:
-            #print "Select+Start Pushed"
             print("Pause")
             if PAUSE_MODE_ON == False:
                 PAUSE_MODE_ON = True
-                MENU_INDEX = 1    # Resume
-                #stop_viewer()
-                #start_viewer()
                 os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -STOP &")
                 show_pause()
 
