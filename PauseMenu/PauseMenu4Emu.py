@@ -42,6 +42,9 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output.decode()
 
+def cmp(a, b):
+    return (a > b) - (a < b)
+
 def load_button():
     global retroarch_key
     f = open(PATH_PAUSEMENU + "button.cfg", 'r')
