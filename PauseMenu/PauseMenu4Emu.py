@@ -33,14 +33,8 @@ btn_select = -1
 btn_start = -1
 btn_pausemenu = -1
 btn_a = -1
-button_num = 0
-layout_num = 0
 
 retroarch_key = {}
-user_key = {}
-btn_map = {}
-
-es_conf = 1
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
@@ -179,7 +173,6 @@ def process_event(event):
 def main():
     
     global btn_select, btn_start, btn_a, btn_pausemenu
-    global romname, sysname, corename, button_num, layout_num, VIEW_MODE, VIEWER_OSD
 
     load_button()
     
