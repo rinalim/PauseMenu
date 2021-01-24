@@ -2,8 +2,7 @@ pip3 install pyudev
 
 cp -f -r ./PauseMenu /opt/
 
-if [! -f /usr/bin/fbdump ]
-then
+if [[ ! -f /usr/bin/fbdump ]]; then
     echo "Copy fbdump"
     cp /opt/PauseMenu/fbdump /opt/bin/
     chmod 755 /opt/bin/fbdump
