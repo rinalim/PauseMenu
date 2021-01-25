@@ -51,11 +51,16 @@ def load_button():
     retroarch_key = ast.literal_eval(f.readline())
     f.close()
 
-def show_pause():
+def show_menu():
     os.system('fbdump > /tmp/fbdump.ppm')
     img_dump = Image.open('/tmp/fbdump.ppm')
     img_pause = Image.open('/opt/PauseMenu/images/pause_emu.png')
     img_dump.paste(img_pause, (0,0), img_pause)
+    fb.save_img(img_dump)
+    os.system('cat /tmp/fbdump /tmp/fbdump > /dev/fb0')
+    
+def hide_menu():
+    img_dump = Image.open('/tmp/fbdump.ppm')
     fb.save_img(img_dump)
     os.system('cat /tmp/fbdump /tmp/fbdump > /dev/fb0')
     
@@ -156,6 +161,7 @@ def process_event(event):
                 PAUSE_MODE_ON = False
                 START_BTN_ON = False
                 print("Resume")
+                hide_menu()
                 os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
 
         if SELECT_BTN_ON == True and START_BTN_ON == True:
@@ -163,7 +169,7 @@ def process_event(event):
             if PAUSE_MODE_ON == False:
                 PAUSE_MODE_ON = True
                 os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -STOP &")
-                show_pause()
+                show_menu()
 
     return True
 
