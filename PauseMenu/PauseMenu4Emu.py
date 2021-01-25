@@ -131,6 +131,7 @@ def process_event(event):
             if js_number == btn_a:
                 if PAUSE_MODE_ON == True:
                     print("Kill")
+                    hide_menu()
                     os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
                     os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -INT")
                     PAUSE_MODE_ON = False;
