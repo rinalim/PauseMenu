@@ -52,7 +52,7 @@ def load_button():
     f.close()
 
 def show_pause():
-    os.system('/storage/fbdump > /tmp/fbdump.ppm')
+    os.system('fbdump > /tmp/fbdump.ppm')
     img_dump = Image.open('/tmp/fbdump.ppm')
     img_pause = Image.open('/opt/PauseMenu/images/pause_emu.png')
     img_dump.paste(img_pause, (0,0), img_pause)
