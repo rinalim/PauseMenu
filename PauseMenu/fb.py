@@ -118,7 +118,7 @@ def show_img(img):
     mmseekto(vx,vy+y)
     mm.write(b.read(s))
 
-def show_img_emuelec(img):
+def show_img_emuelec(img, dev):
   if not type(img) is bytes:
     if not RGB:
       if bpp == 24: # for RPI
@@ -137,7 +137,7 @@ def show_img_emuelec(img):
   f = open('/tmp/fbdump', 'wb')
   f.write(img)
   f.close()
-  os.system('cat /tmp/fbdump /tmp/fbdump > /dev/fb0')
+  os.system('cat /tmp/fbdump /tmp/fbdump > ' + dev)
 
 def save_img(img):
   if not type(img) is bytes:
