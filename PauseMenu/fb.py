@@ -95,6 +95,50 @@ def numpy_888_565(bt):
   arr = np.fromstring(bt, dtype=np.uint32)
   return (((0xF80000 & arr)>>8)|((0xFC00 & arr)>>5)|((0xF8 & arr)>>3)).astype(np.uint16).tostring()
 
+def show_img(img):
+  if not type(img) is bytes:
+    if not RGB:
+      if bpp == 24: # for RPI
+        img = img.tobytes('raw', 'BGR')
+      else:
+        img = img.convert('RGBA').tobytes('raw', 'BGRA')
+        if bpp == 16:
+          img = numpy_888_565(img)
+    else:
+      if bpp == 24:
+        img = img.tobytes()
+      else:
+        img = img.convert('RGBA').tobytes()
+        if bpp == 16:
+          img = numpy_888_565(img)
+  from io import BytesIO
+  b = BytesIO(img)
+  s = vw*bytepp
+  for y in range(vh): # virtual window drawing
+    mmseekto(vx,vy+y)
+    mm.write(b.read(s))
+
+def show_img_emuelec(img):
+  if not type(img) is bytes:
+    if not RGB:
+      if bpp == 24: # for RPI
+        img = img.tobytes('raw', 'BGR')
+      else:
+        img = img.convert('RGBA').tobytes('raw', 'BGRA')
+        if bpp == 16:
+          img = numpy_888_565(img)
+    else:
+      if bpp == 24:
+        img = img.tobytes()
+      else:
+        img = img.convert('RGBA').tobytes()
+        if bpp == 16:
+          img = numpy_888_565(img)
+  f = open('/tmp/fbdump', 'wb')
+  f.write(img)
+  f.close()
+  os.system('cat /tmp/fbdump /tmp/fbdump > /dev/fb0')
+
 def save_img(img):
   if not type(img) is bytes:
     if not RGB:
