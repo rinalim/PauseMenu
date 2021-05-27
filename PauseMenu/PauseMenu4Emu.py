@@ -132,8 +132,8 @@ def process_event(event):
                 if PAUSE_MODE_ON == True:
                     print("Kill")
                     hide_menu()
-                    os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
-                    os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -INT")
+                    os.system("/usr/bin/ps -ef | grep /storage/roms | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
+                    os.system("/usr/bin/ps -ef | grep /storage/roms | grep -v grep | awk '{print $1}' | xargs kill -INT")
                     PAUSE_MODE_ON = False;
                     #close_fds(js_fds)
                     #sys.exit(0)
@@ -163,13 +163,13 @@ def process_event(event):
                 START_BTN_ON = False
                 print("Resume")
                 hide_menu()
-                os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
+                os.system("/usr/bin/ps -ef | grep /storage/roms | grep -v grep | awk '{print $1}' | xargs kill -CONT &")
 
         if SELECT_BTN_ON == True and START_BTN_ON == True:
             print("Pause")
             if PAUSE_MODE_ON == False:
                 PAUSE_MODE_ON = True
-                os.system("/usr/bin/ps -ef | grep /usr/bin/retroarch | grep -v grep | awk '{print $1}' | xargs kill -STOP &")
+                os.system("/usr/bin/ps -ef | grep /storage/roms | grep -v grep | awk '{print $1}' | xargs kill -STOP &")
                 show_menu()
 
     return True
@@ -194,7 +194,7 @@ def main():
     js_fds=[]
     rescan_time = time.time()
     while True:
-        if is_running("/usr/bin/retroarch") == False:
+        if is_running("/storage/roms") == False:
             time.sleep(3)
             print('wait for launching game')
             continue
