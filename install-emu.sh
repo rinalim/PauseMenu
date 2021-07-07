@@ -4,7 +4,7 @@ cp -f -r ./PauseMenu /opt/
 
 if [[ ! -f /usr/bin/fbdump ]]; then
     echo "Copy fbdump"
-    cp /opt/PauseMenu/fbdump /opt/bin/
+    cp /opt/PauseMenu/fbdump-v1 /opt/bin/fbdump
     chmod 755 /opt/bin/fbdump
 fi
 /opt/bin/python3 ./PauseMenu/setup-emu.py /dev/input/js0
